@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Portfolio - Alukaz | Premium Aluminium Fabrication</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (Icons ke liye) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           Global Styles (completely unchanged)
+        ======================================== */
+        :root {
+            --primary: #d8492a;
+            --primary-dark: #b33a1f;
+            --primary-light: #e06b4a;
+            --secondary: #f97316;
+            --gradient-dark: linear-gradient(135deg, #0f0f17 0%, #1a1a2a 45%, #2a1f1c 90%, #3f2b20 100%);
+            --gradient: linear-gradient(135deg, #d8492a, #f97316);
+            --dark: #1e1e2f;
+            --dark-light: #2a2a3a;
+            --gray: #f8f9fa;
+            --text: #4a4a5a;
+            --light: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 40px rgba(216,73,42,0.15);
+            --transition: all 0.3s ease;
+            --ring: 0 0 0 4px rgba(216, 73, 42, 0.18);
+            --border: rgba(30, 30, 47, 0.08);
+            --surface: rgba(255,255,255,0.92);
+            --surface-strong: rgba(255,255,255,0.98);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(900px 600px at 10% 0%, rgba(216,73,42,0.08), transparent 60%),
+                radial-gradient(900px 600px at 90% 10%, rgba(249,115,22,0.08), transparent 55%),
+                linear-gradient(180deg, #f8fafc 0%, #f4f6fb 55%, #f8fafc 100%);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a, button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: none;
+            box-shadow: var(--ring);
+            border-radius: 12px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ========================================
+           Navigation – Sidebar opens from side (FIXED: close icon visible)
+        ======================================== */
+        .navbar {
+            background: transparent !important;
+            padding: 20px 0;
+            transition: var(--transition);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            overflow: hidden;
+        }
+
+        .navbar.scrolled {
+            background: var(--gradient-dark) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+            padding: 15px 0;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        @keyframes slideDown {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .navbar-brand img {
+            height: 55px;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .navbar-brand img {
+            height: 45px;
+        }
+
+        /* Desktop nav links - exactly as before */
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin: 0 8px;
+            position: relative;
+            font-size: 1rem;
+            padding: 8px 0 !important;
+            opacity: 0.9;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary-light);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            opacity: 1;
+            color: white !important;
+        }
+
+        /* ========================================
+           MODIFIED: Mobile sidebar with FIXED close icon
+        ======================================== */
+        @media (max-width: 991px) {
+            /* Hide the default Bootstrap collapse */
+            .navbar-collapse {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 280px;
+                height: 100vh;
+                background: var(--gradient-dark);
+                backdrop-filter: blur(15px);
+                padding: 100px 25px 40px;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1050;
+                display: block !important;
+                box-shadow: -10px 0 40px rgba(0,0,0,0.6);
+                border-left: 1px solid rgba(255,255,255,0.1);
+                overflow-y: auto;
+            }
+
+            .navbar-collapse.show {
+                right: 0;
+            }
+
+            /* Style nav items for sidebar */
+            .navbar-nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 8px;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                color: white !important;
+                padding: 15px 20px !important;
+                margin: 0;
+                border-radius: 12px;
+                transition: all 0.3s ease;
+                font-size: 1.1rem;
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.1);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .nav-link i {
+                width: 24px;
+                font-size: 1.2rem;
+                color: var(--primary-light);
+            }
+
+            .nav-link:hover {
+                background: var(--gradient);
+                border-color: transparent;
+                transform: translateX(5px);
+            }
+
+            .nav-link:hover i {
+                color: white;
+            }
+
+            .nav-link.active {
+                background: var(--gradient);
+                border-color: transparent;
+            }
+
+            .nav-link.active i {
+                color: white;
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+
+            /* ===== FIXED: Sidebar close button - now visible ===== */
+            .sidebar-close {
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                background: rgba(255,255,255,0.15);
+                border: 1px solid rgba(255,255,255,0.25);
+                color: white;
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                font-size: 1.3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 1060;
+                backdrop-filter: blur(5px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            }
+
+            .sidebar-close i {
+                font-size: 1.3rem;
+                color: white;
+            }
+
+            .sidebar-close:hover {
+                background: var(--primary);
+                transform: rotate(90deg);
+                border-color: var(--primary);
+            }
+
+            /* Sidebar header with logo */
+            .sidebar-header {
+                position: absolute;
+                top: 25px;
+                left: 25px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 1060;
+            }
+
+            .sidebar-header img {
+                height: 40px;
+                filter: brightness(0) invert(1);
+                opacity: 0.9;
+            }
+
+            .sidebar-header span {
+                color: white;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+
+            /* Overlay */
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(4px);
+                z-index: 1049;
+                display: none;
+            }
+            
+            .sidebar-overlay.show {
+                display: block;
+                animation: fadeIn 0.3s ease;
+            }
+
+            /* Toggler button */
+            .navbar-toggler {
+                border: 2px solid rgba(255,255,255,0.4);
+                background: rgba(0,0,0,0.3);
+                padding: 8px 12px;
+                border-radius: 14px;
+                margin-left: auto;
+                z-index: 1060;
+            }
+
+            .navbar-toggler:focus {
+                box-shadow: none;
+            }
+
+            .navbar-toggler-icon {
+                filter: brightness(0) invert(1);
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        }
+
+        /* Desktop override */
+        @media (min-width: 992px) {
+            .navbar-collapse {
+                display: flex !important;
+                flex-basis: auto;
+                position: static;
+                width: auto;
+                height: auto;
+                background: transparent;
+                padding: 0;
+                box-shadow: none;
+                border: none;
+            }
+            .sidebar-close, .sidebar-overlay, .sidebar-header {
+                display: none !important;
+            }
+        }
+
+        /* Original navbar elements preserved */
+        .navbar-toggler {
+            border: 2px solid rgba(255,255,255,0.4);
+            background: rgba(0,0,0,0.3);
+            padding: 8px 12px;
+            border-radius: 14px;
+        }
+
+        .navbar-toggler-icon {
+            filter: brightness(0) invert(1);
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), rgba(216,73,42,0.5), rgba(249,115,22,0.3), transparent);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.5s ease;
+        }
+
+        .navbar:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* ========================================
+           ALL OTHER STYLES (Page Header, Portfolio, Footer, Modal)
+           COMPLETELY UNCHANGED
+        ======================================== */
+        .page-header {
+            background: linear-gradient(rgba(10,10,18,0.95), rgba(20,15,20,0.95)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 150px 0 80px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .page-header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(700px 400px at 15% 30%, rgba(216,73,42,0.25), transparent 60%),
+                radial-gradient(700px 400px at 85% 25%, rgba(249,115,22,0.2), transparent 60%);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0.4;
+        }
+
+        .page-header > .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header h1 {
+            font-size: 3.6rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header-subtitle {
+            max-width: 820px;
+            margin: 0 auto 18px;
+            color: rgba(255,255,255,0.8);
+            font-size: 1.08rem;
+            line-height: 1.7;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            margin: 0;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header .breadcrumb-item,
+        .page-header .breadcrumb-item a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .page-header .breadcrumb-item.active {
+            color: var(--primary-light);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Portfolio Section - fully preserved */
+        .portfolio-section {
+            padding: 0 0 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .section-header .section-subtitle {
+            color: var(--text);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding: 12px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.65);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn {
+            padding: 12px 28px;
+            border: 1px solid rgba(30, 30, 47, 0.10);
+            border-radius: 50px;
+            background: var(--surface-strong);
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(216,73,42,0.40);
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 26px rgba(216,73,42,0.14);
+        }
+
+        .filter-btn.active {
+            background: var(--gradient);
+            color: white;
+            border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 10px 25px rgba(216,73,42,0.3);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 26px;
+            max-width: 1200px;
+            margin: 0 auto 44px;
+        }
+
+        .portfolio-card {
+            background: var(--surface);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(30, 30, 47, 0.08);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+            transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+            height: 100%;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .portfolio-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(216,73,42,0.55), rgba(249,115,22,0.35), rgba(30,30,47,0.12));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 250ms ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(216,73,42,0.25);
+            box-shadow: 0 26px 55px rgba(216,73,42,0.14), 0 12px 30px rgba(15,23,42,0.10);
+        }
+
+        .portfolio-card:hover::before {
+            opacity: 1;
+        }
+
+        .portfolio-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+
+        .portfolio-img-wrapper::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.0) 40%, rgba(0,0,0,0.18) 100%);
+            pointer-events: none;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(255,255,255,0.7);
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.78rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 30px rgba(15,23,42,0.12);
+        }
+
+        .card-badge i {
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .portfolio-card:hover .portfolio-img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(600px 350px at 50% 60%, rgba(216,73,42,0.45), rgba(30,30,47,0.55));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .overlay-content {
+            text-align: center;
+            color: white;
+            padding: 15px;
+            transform: translateY(20px);
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-card:hover .overlay-content {
+            transform: translateY(0);
+        }
+
+        .btn-view {
+            display: inline-block;
+            padding: 11px 16px;
+            background: rgba(255,255,255,0.98);
+            color: var(--primary);
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.35);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .btn-view:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        .portfolio-info {
+            padding: 16px 16px 18px;
+            background: rgba(255,255,255,0.98);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .portfolio-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .portfolio-info .location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .portfolio-info .location i {
+            color: var(--primary);
+            font-size: 0.85rem;
+            width: 16px;
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(216,73,42,0.1);
+            color: var(--primary);
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(216,73,42,0.14);
+        }
+
+        .portfolio-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .portfolio-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-top: 10px;
+            margin-top: 2px;
+            border-top: 1px solid rgba(30,30,47,0.08);
+        }
+
+        .btn-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            background: var(--gradient);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 14px 30px rgba(216,73,42,0.22);
+            transition: transform 200ms ease, box-shadow 200ms ease;
+        }
+
+        .btn-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 38px rgba(216,73,42,0.26);
+            color: white;
+        }
+
+        .pagination-wrapper {
+            background: rgba(255,255,255,0.82);
+            padding: 22px;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(15,23,42,0.06);
+            border: 1px solid rgba(255,255,255,0.7);
+            max-width: 800px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(30,30,47,0.12);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.95);
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: rgba(216,73,42,0.45);
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(216,73,42,0.12);
+        }
+
+        .page-btn.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(216,73,42,0.3);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 8px;
+        }
+
+        .items-per-page {
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        .items-per-page span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ========================================
+           MODAL STYLES – Full details with images (RESTORED)
+        ======================================== */
+        .modal-content {
+            border-radius: 22px;
+            border: none;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+        }
+
+        .modal-header {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 20px 25px;
+        }
+
+        .modal-header .modal-title {
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .modal-body {
+            padding: 25px;
+            background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 100%);
+        }
+
+        .project-details-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            max-height: 350px;
+            object-fit: cover;
+            border: 1px solid rgba(30,30,47,0.10);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .project-details h3 {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .project-details p {
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(216,73,42,0.03);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(216,73,42,0.07);
+        }
+
+        .detail-item i {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .detail-item span {
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .detail-item strong {
+            color: var(--dark);
+            margin-right: 5px;
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 60px 0 20px;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+
+        footer > .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .footer-logo img {
+            height: 60px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+            transition: var(--transition);
+        }
+        .footer-logo img:hover {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .footer-widget h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+            color: #fff;
+        }
+
+        .footer-widget h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-widget p, .footer-widget li, .footer-widget a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: var(--primary-light);
+            padding-left: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .newsletter-section {
+            background: rgba(250, 241, 241, 0.87);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 15px 35px rgba(167, 91, 91, 0.4);
+        }
+        .newsletter-section h3 {
+            color: black;
+            font-weight: 600;
+        }
+        .newsletter-section p {
+            color: black;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .newsletter-form .form-control {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(32, 21, 21, 0.39);
+            color: black;
+            padding: 15px 20px;
+            border-radius: 50px;
+        }
+        .newsletter-form .form-control::placeholder {
+            color: rgb(82, 75, 75);
+        }
+        .newsletter-form .form-control:focus {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 0 0 3px rgba(216,73,42,0.2);
+            outline: none;
+        }
+        .btn-newsletter {
+            padding: 15px 35px;
+            border: none;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-newsletter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(216,73,42,0.4);
+        }
+        .newsletter-checkbox {
+            margin-top: 15px;
+            color: rgb(0, 0, 0);
+            font-size: 0.85rem;
+        }
+        .newsletter-checkbox input[type="checkbox"] {
+            accent-color: var(--primary);
+            margin-right: 8px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: none;
+            z-index: 99;
+            transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(216,73,42,0.3);
+        }
+
+        #back-to-top.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(216,73,42,0.4);
+        }
+
+        @media (max-width: 1200px) {
+            .portfolio-grid { max-width: 1000px; gap: 20px; }
+        }
+        @media (max-width: 992px) {
+            .portfolio-grid { max-width: 800px; }
+            .section-header .section-title { font-size: 2rem; }
+            .page-header h1 { font-size: 2.8rem; }
+        }
+        @media (max-width: 768px) {
+            .page-header { padding: 120px 0 60px; }
+            .page-header h1 { font-size: 2.3rem; }
+            .page-header-subtitle { font-size: 0.98rem; }
+            .portfolio-grid { max-width: 400px; }
+            .filter-btn { padding: 10px 20px; font-size: 0.85rem; }
+            .section-header .section-title { font-size: 1.8rem; }
+            .newsletter-form { flex-direction: column; }
+            .btn-newsletter { width: 100%; justify-content: center; }
+        }
+        @media (max-width: 576px) {
+            .page-header h1 { font-size: 1.8rem; }
+            .pagination { flex-wrap: wrap; }
+            .filter-btn { width: calc(50% - 6px); padding: 8px 15px; font-size: 0.8rem; }
+            .portfolio-filter { gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation - Sidebar with visible close icon -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/ALUKAZ.png" alt="Alukaz Logo">
+            </a>
+            <button class="navbar-toggler" type="button" id="sidebarToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Sidebar overlay -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+            
+            <!-- Sidebar Navigation (opens from side) - FIXED: close icon now visible -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Sidebar Header with Logo -->
+                <div class="sidebar-header">
+                    <img src="images/ALUKAZ.png" alt="Alukaz">
+                    <span>Alukaz</span>
+                </div>
+                
+                <!-- Close Button - FIXED: icon now displays properly -->
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+                
+                <!-- Navigation Links with icons -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-info-circle"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="portfolio.html">
+                            <i class="fa-solid fa-briefcase"></i> Portfolio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">
+                            <i class="fa-solid fa-envelope"></i> Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header (unchanged) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Portfolio</h1>
+            <p class="page-header-subtitle">Explore a selection of our aluminium fabrication work — premium finishes, modern systems, and reliable installation across Karachi.</p>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Portfolio</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (completely unchanged) -->
+    <section class="portfolio-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Our Featured Projects</h2>
+                <p class="section-subtitle">Alukaz is involved in introducing the latest systems with highest quality products supplemented with best efficient services.</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="portfolio-filter" data-aos="fade-up" data-aos-delay="100">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="commercial">Commercial</button>
+                <button class="filter-btn" data-filter="residential">Residential</button>
+                <button class="filter-btn" data-filter="industrial">Industrial</button>
+                <button class="filter-btn" data-filter="facade">Facades</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- EXISTING PROJECT 1 - Saad Bhatti Building -->
+                <div class="portfolio-item commercial" data-category="commercial" data-aos="fade-up" data-aos-delay="150">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/SBB1.png" alt="Saad Bhatti Building" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-building"></i> Commercial</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal1">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Saad Bhatti Building</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>D.H.A. Karachi</span>
+                                </div>
+                                <span class="project-category">Commercial</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">Premium aluminium systems</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal1">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXISTING PROJECT 2 - Bol Tv Building -->
+                <div class="portfolio-item commercial" data-category="commercial" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/boltvmulti.jpg" alt="Bol Tv Building" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-building"></i> Commercial</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal2">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Bol Tv Building</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>Korangi Creek</span>
+                                </div>
+                                <span class="project-category">Commercial</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">Facade & partitions</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal2">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXISTING PROJECT 3 - Bank Al Habib -->
+                <div class="portfolio-item commercial" data-category="commercial" data-aos="fade-up" data-aos-delay="250">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/bankalhabibhafiz.jpg" alt="Bank Al Habib" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-building-columns"></i> Commercial</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal3">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Bank Al Habib</h4>
+                            <div class="portfolio-meta">
+                                <div class="location"><i class="fa-regular fa-location-dot"></i><span>DHA, Karachi</span></div>
+                                <span class="project-category">Commercial</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small>Security glazing</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal3">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW RESIDENTIAL PROJECT 1 - Emaar Pakistan (Residential) -->
+                <div class="portfolio-item residential" data-category="residential" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/emar.png" alt="Emaar Pakistan" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-house"></i> Residential</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal4">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Emaar Pakistan</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>DHA Phase VIII, Karachi</span>
+                                </div>
+                                <span class="project-category">Residential</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">Luxury residential</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal4">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW RESIDENTIAL PROJECT 2 - DHA Phase VIII Luxury Villa -->
+                <div class="portfolio-item residential" data-category="residential" data-aos="fade-up" data-aos-delay="350">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/asifnisarbldg.png" alt="DHA Phase VIII Luxury Villa" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-house"></i> Residential</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal5">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Asif Nisar's Building - DHA</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>DHA Phase VIII, Karachi</span>
+                                </div>
+                                <span class="project-category">Residential</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">Luxury finishes</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal5">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW RESIDENTIAL PROJECT 3 - Creek Vista Apartments -->
+                <div class="portfolio-item residential" data-category="residential" data-aos="fade-up" data-aos-delay="400">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/bahriaC.png" alt="Creek Vista Apartments" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-house"></i> Residential</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal6">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Bahria</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>DHA Creek, Karachi</span>
+                                </div>
+                                <span class="project-category">Residential</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">Modern apartments</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal6">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXISTING PROJECT 4 - Artistic Garments -->
+                <div class="portfolio-item industrial" data-category="industrial" data-aos="fade-up" data-aos-delay="450">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/artisticagi.jpg" alt="Artistic Garments" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-industry"></i> Industrial</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal7">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Artistic Garments</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>Korangi Industrial</span>
+                                </div>
+                                <span class="project-category">Industrial</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">Heavy-duty build</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal7">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXISTING PROJECT 5 - Bahria Complex -->
+                <div class="portfolio-item facade" data-category="facade" data-aos="fade-up" data-aos-delay="500">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/bahriaC.png" alt="Bahria Complex" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-layer-group"></i> Facade</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal8">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Bahria Complex</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>Clifton</span>
+                                </div>
+                                <span class="project-category">Facade</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">Curtain wall systems</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal8">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXISTING PROJECT 6 - Ocean Tower -->
+                <div class="portfolio-item commercial" data-category="commercial" data-aos="fade-up" data-aos-delay="550">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-wrapper">
+                            <img src="images/Projects/ocean-tower.jpg" alt="Ocean Tower" class="portfolio-img">
+                            <span class="card-badge"><i class="fa-solid fa-building"></i> Commercial</span>
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <a href="#" class="btn-view" data-bs-toggle="modal" data-bs-target="#projectModal9">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Ocean Tower</h4>
+                            <div class="portfolio-meta">
+                                <div class="location">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                    <span>Clifton</span>
+                                </div>
+                                <span class="project-category">Commercial</span>
+                            </div>
+                            <div class="portfolio-actions">
+                                <small style="color: rgba(74,74,90,0.75); font-weight: 500;">High-rise facade</small>
+                                <a href="#" class="btn-card" data-bs-toggle="modal" data-bs-target="#projectModal9">
+                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination (unchanged) -->
+            <div class="pagination-wrapper text-center" data-aos="fade-up" data-aos-delay="600">
+                <div class="pagination" id="pagination">
+                    <button class="page-btn prev" id="prevPage" disabled><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="page-numbers" id="pageNumbers">
+                        <button class="page-btn active" data-page="1">1</button>
+                        <button class="page-btn" data-page="2">2</button>
+                        <button class="page-btn" data-page="3">3</button>
+                    </div>
+                    <button class="page-btn next" id="nextPage"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="items-per-page">
+                    <span>Showing <span id="startCount">1</span>-<span id="endCount">6</span> of <span id="totalCount">12</span> projects</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         PROJECT MODALS – Full details with images (RESTORED)
+    ======================================== -->
+    <!-- Modal 1 - Saad Bhatti Building -->
+    <div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Saad Bhatti Building</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/SBB1.png" alt="Saad Bhatti Building" class="project-details-img">
+                        <h3>Saad Bhatti Building</h3>
+                        <p>A premium commercial project featuring state-of-the-art aluminium windows and facade systems. This project showcases our expertise in modern architectural solutions with custom-designed profiles and energy-efficient glazing.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> Khayaban e Shahbaz, D.H.A. Phase V, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> March 2024</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Commercial Building</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services Provided:</strong> Custom Windows, Main Entrance Doors, Full Facade System, Balcony Railings</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <span><strong>Project Area:</strong> 12,500 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 - Bol Tv Building -->
+    <div class="modal fade" id="projectModal2" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Bol TV Building</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/boltvmulti.jpg" alt="Bol Tv Building" class="project-details-img">
+                        <h3>Bol TV Building</h3>
+                        <p>Modern media house with advanced aluminium facade systems. This project demonstrates our capability in handling large-scale commercial projects with complex architectural requirements and tight deadlines.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> Korangi Creek Industrial Park, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> January 2024</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Commercial Media House</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services Provided:</strong> Full Building Facade, Interior Partitions, Soundproof Windows, Entrance Doors</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fa-solid fa-clock"></i>
+                            <span><strong>Project Duration:</strong> 4 months</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 - Bank Al Habib -->
+    <div class="modal fade" id="projectModal3" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Bank Al Habib</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/bankalhabibhafiz.jpg" alt="Bank Al Habib" class="project-details-img">
+                        <h3>Bank Al Habib - Hafiz Branch</h3>
+                        <p>Corporate banking facility requiring high-security glazing and premium aluminium solutions. This project demanded precision engineering and compliance with strict banking security standards.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> Khayaban-e-Hafiz, DHA Phase V, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> November 2023</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Commercial Bank</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services Provided:</strong> Security Windows, Bullet-Resistant Glazing, Main Entrance Doors, Office Partitions</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span><strong>Security Rating:</strong> FB-4 Level</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW Modal 4 - Emaar Pakistan (Residential) -->
+    <div class="modal fade" id="projectModal4" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Emaar Pakistan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/emar.png" alt="Emaar Pakistan" class="project-details-img">
+                        <h3>Emaar Pakistan Head Office & Residences</h3>
+                        <p>Luxury residential project with premium aluminium solutions. This project required elegant designs and high-quality finishes for both office spaces and residential units. Features include custom-designed sliding windows, French doors, and balcony railings with powder-coated finishes.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> D.H.A. Phase VIII, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> May 2023</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Residential Complex</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services Provided:</strong> Sliding Windows, French Doors, Balcony Railings, Thermal Break Systems</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <span><strong>Project Area:</strong> 25,000 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW Modal 5 - DHA Phase VIII Luxury Villa -->
+    <div class="modal fade" id="projectModal5" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Asif Nisar's Building - DHA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/asifnisarbldg.png" alt="DHA Phase VIII Luxury Villa" class="project-details-img">
+                        <h3>Luxury Villa - DHA Phase VIII</h3>
+                        <p>Exclusive residential villa featuring premium aluminium doors and windows with thermal break technology. The project includes custom-designed bi-fold doors that open to a private garden, floor-to-ceiling windows for maximum natural light, and elegant balcony railings.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> DHA Phase VIII, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> February 2024</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Luxury Residence</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services Provided:</strong> Bi-fold Doors, Sliding Windows, Thermal Break Profiles, Balcony Railings, Skylights</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <span><strong>Project Area:</strong> 8,500 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW Modal 6 - Creek Vista Apartments -->
+    <div class="modal fade" id="projectModal6" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Creek Vista Apartments</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/bahriaC.png" alt="Creek Vista Apartments" class="project-details-img">
+                        <h3>Creek Vista Apartments</h3>
+                        <p>Modern residential apartment complex with contemporary aluminium fenestration. This project features energy-efficient double-glazed windows, soundproof sliding doors, and stylish balcony enclosures that provide residents with comfort and stunning views of the creek.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> DHA Creek, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> December 2023</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Residential Apartments</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services Provided:</strong> Double-Glazed Windows, Sliding Doors, Balcony Railings, Ventilation Systems</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fa-solid fa-building"></i>
+                            <span><strong>Total Units:</strong> 36 apartments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 7 - Artistic Garments (Industrial) -->
+    <div class="modal fade" id="projectModal7" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Artistic Garments</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/artisticagi.jpg" alt="Artistic Garments" class="project-details-img">
+                        <h3>Artistic Garments Industries</h3>
+                        <p>Industrial facility with durable aluminium solutions. This project required heavy-duty windows and doors for industrial environment with high durability and security requirements.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> Korangi Industrial Area, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> September 2023</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Industrial Facility</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services:</strong> Industrial Windows, Loading Bay Doors</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 8 - Bahria Complex (Facade) -->
+    <div class="modal fade" id="projectModal8" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Bahria Complex</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/bahriaC.png" alt="Bahria Complex" class="project-details-img">
+                        <h3>Bahria Complex</h3>
+                        <p>Premium commercial complex with elegant facade solutions. This project showcases our expertise in curtain wall systems with custom-designed aluminium cladding and energy-efficient glazing.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> Gizri, Clifton, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> July 2023</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Commercial Complex</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services:</strong> Full Building Facade, Curtain Wall, Windows</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 9 - Ocean Tower (Commercial) -->
+    <div class="modal fade" id="projectModal9" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Details - Ocean Tower</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="project-details">
+                        <img src="images/Projects/ocean-tower.jpg" alt="Ocean Tower" class="project-details-img">
+                        <h3>Ocean Tower</h3>
+                        <p>High-rise commercial tower with state-of-the-art facade system. This project represents our capability in handling tall buildings with complex architectural requirements and wind load considerations.</p>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong>Location:</strong> Clifton, Karachi</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span><strong>Completed:</strong> March 2023</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-tag"></i>
+                            <span><strong>Category:</strong> Commercial Tower</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fa-solid fa-cube"></i>
+                            <span><strong>Services:</strong> Complete Facade, Curtain Wall, Windows</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (unchanged) -->
+    <footer>
+        <div class="container">
+            <!-- Newsletter Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="newsletter-section" data-aos="fade-up">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
+                                <p>Stay updated with our latest projects, offers, and aluminium fabrication insights. No spam, only valuable updates.</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <form class="newsletter-form" id="newsletterForm">
+                                    <input type="email" class="form-control" placeholder="Enter your email address" required>
+                                    <button type="submit" class="btn-newsletter">
+                                        Subscribe <i class="fa-regular fa-paper-plane"></i>
+                                    </button>
+                                </form>
+                                <div class="newsletter-checkbox">
+                                    <input type="checkbox" id="privacyPolicy" checked>
+                                    <label for="privacyPolicy">I agree to the privacy policy and terms of service</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Widgets with Logo -->
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <div class="footer-logo">
+                            <img src="images/ALUKAZ.png" alt="Alukaz Logo">
+                        </div>
+                        <p>ALUKAZ FABRICATION HOUSE - We Deal in all Type of Metal Fabrication. Premium aluminium fabrication solutions provider in Karachi since 2010.</p>
+                        <p><strong>Director:</strong> Syed Fahad Ali</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.html">About Us</a></li>
+                            <li><a href="portfolio.html">Our Portfolio</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Contact Info</h5>
+                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali (Director)</p>
+                        <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
+                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> syedfahadalikazmi@alukaz.com.pk</p>
+                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339 | 0331-3175114</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved. Designed with <i class="fa-solid fa-heart" style="color: var(--primary);"></i> for Alukaz</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="btn btn-primary rounded-circle">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 50
+        });
+
+        // Navbar scroll effect
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('#mainNav').addClass('scrolled');
+            } else {
+                $('#mainNav').removeClass('scrolled');
+            }
+            
+            // Back to top button
+            if ($(this).scrollTop() > 300) {
+                $('#back-to-top').addClass('show');
+            } else {
+                $('#back-to-top').removeClass('show');
+            }
+        });
+
+        $('#back-to-top').click(function() {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+        });
+
+        // Sidebar functionality - close icon now works
+        $(document).ready(function() {
+            const $sidebar = $('#navbarNav');
+            const $overlay = $('#sidebarOverlay');
+            const $toggle = $('#sidebarToggle');
+            const $closeBtn = $('#sidebarClose');
+
+            function openSidebar() {
+                $sidebar.addClass('show');
+                $overlay.addClass('show');
+                $('body').css('overflow', 'hidden');
+            }
+
+            function closeSidebar() {
+                $sidebar.removeClass('show');
+                $overlay.removeClass('show');
+                $('body').css('overflow', '');
+            }
+
+            $toggle.on('click', function(e) {
+                e.stopPropagation();
+                openSidebar();
+            });
+
+            $closeBtn.on('click', function(e) {
+                e.stopPropagation();
+                closeSidebar();
+            });
+
+            $overlay.on('click', function() {
+                closeSidebar();
+            });
+
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape' && $sidebar.hasClass('show')) {
+                    closeSidebar();
+                }
+            });
+
+            // Close sidebar when clicking a nav link
+            $('.nav-link').on('click', function() {
+                if ($(window).width() < 992) {
+                    closeSidebar();
+                }
+            });
+
+            // Adjust on resize
+            $(window).on('resize', function() {
+                if ($(window).width() >= 992) {
+                    $sidebar.removeClass('show');
+                    $overlay.removeClass('show');
+                    $('body').css('overflow', '');
+                }
+            });
+        });
+
+        // ALL ORIGINAL PORTFOLIO FILTER/PAGINATION LOGIC PRESERVED
+        $(document).ready(function() {
+            const itemsPerPage = 6;
+            let currentPage = 1;
+            let currentFilter = 'all';
+            let filteredItems = [];
+            
+            const allItems = $('.portfolio-item');
+            filteredItems = allItems;
+            
+            $('.filter-btn').click(function() {
+                const filter = $(this).data('filter');
+                $('.filter-btn').removeClass('active');
+                $(this).addClass('active');
+                currentFilter = filter;
+                currentPage = 1;
+                filteredItems = filter === 'all' ? allItems : allItems.filter(function() {
+                    return $(this).data('category') === filter;
+                });
+                updatePagination();
+                displayItems();
+                updatePaginationButtons();
+            });
+            
+            function displayItems() {
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                allItems.hide();
+                filteredItems.slice(start, end).show();
+                $('#startCount').text(filteredItems.length > 0 ? start + 1 : 0);
+                $('#endCount').text(Math.min(end, filteredItems.length));
+                $('#totalCount').text(filteredItems.length);
+            }
+            
+            function updatePagination() {
+                const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+                const $pageNumbers = $('#pageNumbers').empty();
+                for (let i = 1; i <= totalPages; i++) {
+                    const $btn = $('<button>').addClass('page-btn').attr('data-page', i).text(i);
+                    if (i === currentPage) $btn.addClass('active');
+                    $btn.click(function() {
+                        currentPage = i;
+                        displayItems();
+                        updatePaginationButtons();
+                        $('.page-btn[data-page]').removeClass('active');
+                        $(this).addClass('active');
+                        $('html, body').animate({ scrollTop: $('.portfolio-section').offset().top - 100 }, 500);
+                    });
+                    $pageNumbers.append($btn);
+                }
+                totalPages <= 1 ? $('#pagination').hide() : $('#pagination').show();
+            }
+            
+            function updatePaginationButtons() {
+                const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+                $('#prevPage').prop('disabled', currentPage === 1);
+                $('#nextPage').prop('disabled', currentPage === totalPages);
+            }
+            
+            $('#prevPage').click(function() {
+                if (currentPage > 1) { currentPage--; displayItems(); updatePaginationButtons(); }
+            });
+            
+            $('#nextPage').click(function() {
+                const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+                if (currentPage < totalPages) { currentPage++; displayItems(); updatePaginationButtons(); }
+            });
+
+            $('#newsletterForm').submit(function(e) {
+                e.preventDefault();
+                const privacyChecked = $('#privacyPolicy').is(':checked');
+                if (!privacyChecked) { alert('Please agree to the privacy policy.'); return; }
+                alert('Thank you for subscribing!');
+                $(this).find('input[type="email"]').val('');
+            });
+            
+            displayItems();
+            updatePagination();
+            updatePaginationButtons();
+        });
+    </script>
+</body>
+</html>

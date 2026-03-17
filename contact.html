@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Alukaz | Premium Aluminium Fabrication</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        /* ========================================
+           Global Styles
+        ======================================== */
+        :root {
+            --primary: #d8492a;
+            --primary-dark: #b33a1f;
+            --primary-light: #e06b4a;
+            --secondary: #f97316;
+            --gradient: linear-gradient(135deg, #d8492a, #f97316);
+            --gradient-dark: linear-gradient(135deg, #0f0f17 0%, #1a1a2a 45%, #2a1f1c 90%, #3f2b20 100%);
+            --dark: #1e1e2f;
+            --dark-light: #2a2a3a;
+            --gray: #f8f9fa;
+            --text: #4a4a5a;
+            --light: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 40px rgba(216,73,42,0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background: var(--gray);
+            overflow-x: hidden;
+        }
+
+        /* ========================================
+           Navigation – Updated with Sidebar (Same as Portfolio)
+        ======================================== */
+        .navbar {
+            background: transparent !important;
+            padding: 20px 0;
+            transition: var(--transition);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            overflow: hidden;
+        }
+
+        .navbar.scrolled {
+            background: var(--gradient-dark) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+            padding: 15px 0;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        @keyframes slideDown {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .navbar-brand img {
+            height: 55px;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .navbar-brand img {
+            height: 45px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin: 0 8px;
+            position: relative;
+            font-size: 1rem;
+            padding: 8px 0 !important;
+            opacity: 0.9;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary-light);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            opacity: 1;
+            color: white !important;
+        }
+
+        /* Mobile Sidebar Styles */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 280px;
+                height: 100vh;
+                background: var(--gradient-dark);
+                backdrop-filter: blur(15px);
+                padding: 100px 25px 40px;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1050;
+                display: block !important;
+                box-shadow: -10px 0 40px rgba(0,0,0,0.6);
+                border-left: 1px solid rgba(255,255,255,0.1);
+                overflow-y: auto;
+            }
+
+            .navbar-collapse.show {
+                right: 0;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 8px;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                color: white !important;
+                padding: 15px 20px !important;
+                margin: 0;
+                border-radius: 12px;
+                font-size: 1.1rem;
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.1);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .nav-link i {
+                width: 24px;
+                font-size: 1.2rem;
+                color: var(--primary-light);
+            }
+
+            .nav-link:hover {
+                background: var(--gradient);
+                transform: translateX(5px);
+            }
+
+            .nav-link:hover i {
+                color: white;
+            }
+
+            .nav-link.active {
+                background: var(--gradient);
+            }
+
+            .nav-link.active i {
+                color: white;
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+
+            .sidebar-close {
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                background: rgba(255,255,255,0.2);
+                border: 1px solid rgba(255,255,255,0.3);
+                color: white;
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                font-size: 1.3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 1060;
+                backdrop-filter: blur(5px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            }
+
+            .sidebar-close i {
+                font-size: 1.3rem;
+                color: white;
+            }
+
+            .sidebar-close:hover {
+                background: var(--primary);
+                transform: rotate(90deg);
+            }
+
+            .sidebar-header {
+                position: absolute;
+                top: 25px;
+                left: 25px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 1060;
+            }
+
+            .sidebar-header img {
+                height: 40px;
+                filter: brightness(0) invert(1);
+            }
+
+            .sidebar-header span {
+                color: white;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(4px);
+                z-index: 1049;
+                display: none;
+            }
+            
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+            .navbar-toggler {
+                border: 2px solid rgba(255,255,255,0.4);
+                background: rgba(0,0,0,0.3);
+                padding: 8px 12px;
+                border-radius: 14px;
+                margin-left: auto;
+                z-index: 1060;
+            }
+
+            .navbar-toggler:focus {
+                box-shadow: none;
+            }
+
+            .navbar-toggler-icon {
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar-collapse {
+                display: flex !important;
+                flex-basis: auto;
+                position: static;
+                background: transparent;
+            }
+            .sidebar-close, .sidebar-overlay, .sidebar-header {
+                display: none !important;
+            }
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), rgba(216,73,42,0.5), rgba(249,115,22,0.3), transparent);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.5s ease;
+        }
+
+        .navbar:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* ========================================
+           Page Header
+        ======================================== */
+        .page-header {
+            background: linear-gradient(rgba(10,10,18,0.95), rgba(20,15,20,0.95)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 150px 0 80px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease;
+        }
+
+        .page-header .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            margin: 0;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header .breadcrumb-item,
+        .page-header .breadcrumb-item a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .page-header .breadcrumb-item.active {
+            color: var(--primary-light);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========================================
+           Contact Info Cards (Unchanged)
+        ======================================== */
+        .contact-info-section {
+            padding: 0 0 60px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(216,73,42,0.1);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .info-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .info-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(216,73,42,0.1), rgba(249,115,22,0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover .info-icon {
+            background: var(--gradient);
+            transform: rotateY(360deg);
+        }
+
+        .info-icon i {
+            font-size: 2.2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .info-card:hover .info-icon i {
+            color: white;
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .info-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .info-link:hover {
+            color: var(--secondary);
+            gap: 12px;
+        }
+
+        .info-card.director {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .info-card.director .info-icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .info-card.director .info-icon i {
+            color: white;
+        }
+
+        .info-card.director h3,
+        .info-card.director p,
+        .info-card.director .info-link {
+            color: white;
+        }
+
+        .info-card.director .info-link:hover {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* ========================================
+           Main Contact Section (Unchanged)
+        ======================================== */
+        .contact-main-section {
+            padding: 0 0 80px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .form-wrapper {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(216,73,42,0.08);
+        }
+
+        .form-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-header-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, rgba(216,73,42,0.1), rgba(249,115,22,0.1));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-header-icon i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .form-header-text h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .form-header-text p {
+            color: #999;
+            margin: 5px 0 0;
+            font-size: 0.95rem;
+        }
+
+        .form-floating {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-floating > .form-control,
+        .form-floating > .form-select {
+            height: 65px;
+            border: 2px solid #e5e5e5;
+            border-radius: 18px;
+            padding: 1.2rem 1.25rem 0.4rem;
+            font-size: 1rem;
+            background: white;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .form-floating > .form-control:focus,
+        .form-floating > .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 5px rgba(216,73,42,0.08);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .form-floating > label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 1rem 1.25rem;
+            pointer-events: none;
+            border: 1px solid transparent;
+            transform-origin: 0 0;
+            transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+            color: #aaa;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-floating > label i {
+            font-size: 1rem;
+            color: var(--primary);
+            opacity: 0.7;
+        }
+
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label,
+        .form-floating > .form-select ~ label {
+            opacity: 0.8;
+            transform: scale(0.85) translateY(-0.8rem) translateX(0.15rem);
+            background: white;
+            padding: 0 10px;
+            height: auto;
+            width: auto;
+            left: 12px;
+            right: auto;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(216,73,42,0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        textarea.form-control {
+            height: 140px !important;
+            resize: none;
+            padding-top: 1.5rem !important;
+        }
+
+        textarea.form-control ~ label {
+            align-items: flex-start;
+            padding-top: 1.2rem;
+        }
+
+        .form-check-wrapper {
+            background: rgba(216,73,42,0.02);
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin: 25px 0 20px;
+            border: 1px solid rgba(216,73,42,0.08);
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+
+        .form-check-input {
+            width: 1.3rem;
+            height: 1.3rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0;
+            transition: var(--transition);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(216,73,42,0.15);
+        }
+
+        .form-check-label {
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .form-check-label a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .form-check-label a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .form-check-label a:hover::after {
+            width: 100%;
+        }
+
+        .btn-submit {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(216,73,42,0.2);
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-submit:active::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 35px rgba(216,73,42,0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-submit i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-submit:hover i {
+            transform: translateX(5px) scale(1.1);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(145deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            background: linear-gradient(145deg, #128C7E, #0e6b5c);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 35px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp i {
+            font-size: 1.3rem;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        @keyframes pulse-whatsapp {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .form-divider {
+            position: relative;
+            text-align: center;
+            margin: 25px 0 15px;
+        }
+
+        .form-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(216,73,42,0.3), transparent);
+        }
+
+        .form-divider span {
+            background: white;
+            padding: 0 20px;
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .map-wrapper {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: auto;
+            min-height: auto;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 300px !important;
+            min-height: 300px !important;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .hours-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            margin-top: 20px !important;
+            border: 1px solid rgba(216,73,42,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hours-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .hours-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(216,73,42,0.1), rgba(249,115,22,0.1));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hours-icon i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .hours-card h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: -0.3px;
+        }
+
+        .hours-timings {
+            margin-bottom: 25px;
+        }
+
+        .hours-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.08);
+        }
+
+        .hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .day-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .day {
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .today-badge {
+            background: var(--gradient);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+
+        .time-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .time-separator {
+            color: #ccc;
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+
+        .closed-row .day {
+            color: #999;
+        }
+
+        .closed-badge {
+            background: #f8f9fa;
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .closed-text {
+            color: #dc3545;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .hours-divider {
+            position: relative;
+            text-align: center;
+            margin: 0px 0 20px;
+        }   
+
+        .hours-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.3;
+        }
+
+        .hours-divider span {
+            background: white;
+            padding: 0 15px;
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .emergency-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .emergency-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            background: rgba(216,73,42,0.03);
+            border-radius: 16px;
+            transition: var(--transition);
+            border: 1px solid rgba(216,73,42,0.05);
+        }
+
+        .emergency-item:hover {
+            background: rgba(216,73,42,0.06);
+            transform: translateX(5px);
+            border-color: rgba(216,73,42,0.15);
+        }
+
+        .emergency-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(216,73,42,0.1);
+        }
+
+        .emergency-icon i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .emergency-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .emergency-label {
+            font-size: 0.75rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 2px;
+        }
+
+        .emergency-number {
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .emergency-number:hover {
+            color: var(--primary);
+        }
+
+        .current-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(40, 167, 69, 0.1));
+            border-radius: 50px;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            background: #28a745;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .status-indicator::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: rgba(40, 167, 69, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .current-status span {
+            color: #28a745;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        #statusText {
+            font-weight: 600;
+        }
+
+        /* Custom Alert Message - Removed (using SweetAlert now) */
+        .alert-message {
+            display: none;
+        }
+
+        /* ========================================
+           Footer – Updated with Logo (Same as Portfolio)
+        ======================================== */
+        footer {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 60px 0 20px;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+
+        footer > .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .footer-logo img {
+            height: 60px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+            transition: var(--transition);
+        }
+        .footer-logo img:hover {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .footer-widget h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+            color: #fff;
+        }
+
+        .footer-widget h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-widget p, .footer-widget li, .footer-widget a {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: var(--primary-light);
+            padding-left: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .newsletter-section {
+            background: rgba(250, 241, 241, 0.87);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 15px 35px rgba(167, 91, 91, 0.4);
+        }
+        .newsletter-section h3 {
+            color: black;
+            font-weight: 600;
+        }
+        .newsletter-section p {
+            color: black;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .newsletter-form .form-control {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(32, 21, 21, 0.39);
+            color: black;
+            padding: 15px 20px;
+            border-radius: 50px;
+        }
+        .newsletter-form .form-control::placeholder {
+            color: rgb(82, 75, 75);
+        }
+        .newsletter-form .form-control:focus {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 0 0 3px rgba(216,73,42,0.2);
+            outline: none;
+        }
+        .btn-newsletter {
+            padding: 15px 35px;
+            border: none;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-newsletter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(216,73,42,0.4);
+        }
+        .newsletter-checkbox {
+            margin-top: 15px;
+            color: rgb(0, 0, 0);
+            font-size: 0.85rem;
+        }
+        .newsletter-checkbox input[type="checkbox"] {
+            accent-color: var(--primary);
+            margin-right: 8px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: none;
+            z-index: 99;
+            transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(216,73,42,0.3);
+        }
+
+        #back-to-top.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(216,73,42,0.4);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+            .map-wrapper {
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 120px 0 60px;
+            }
+            .page-header h1 {
+                font-size: 2.3rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .form-wrapper {
+                padding: 30px 25px;
+            }
+            .form-header-text h2 {
+                font-size: 1.5rem;
+            }
+            .form-header-icon {
+                width: 45px;
+                height: 45px;
+            }
+            .form-header-icon i {
+                font-size: 1.5rem;
+            }
+            .form-floating > .form-control,
+            .form-floating > .form-select {
+                height: 60px;
+                border-radius: 16px;
+            }
+            .info-card {
+                padding: 25px;
+            }
+            .map-container {
+                height: 250px !important;
+                min-height: 250px !important;
+            }
+            .btn-submit, .btn-whatsapp {
+                padding: 16px 25px;
+                font-size: 1rem;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .btn-newsletter {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand img {
+                height: 45px;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            .form-wrapper {
+                padding: 25px 20px;
+            }
+            .form-header {
+                gap: 10px;
+            }
+            .form-header-text h2 {
+                font-size: 1.3rem;
+            }
+            .form-header-text p {
+                font-size: 0.85rem;
+            }
+            .form-check-wrapper {
+                padding: 15px;
+            }
+            .btn-submit, .btn-whatsapp {
+                padding: 14px 25px;
+                font-size: 1rem;
+            }
+            .map-container {
+                height: 220px !important;
+                min-height: 220px !important;
+            }
+            .hours-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation - Updated with Sidebar (Same as Portfolio) -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/ALUKAZ.png" alt="Alukaz Logo">
+            </a>
+            <button class="navbar-toggler" type="button" id="sidebarToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Sidebar overlay -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+            
+            <!-- Sidebar Navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Sidebar Header with Logo -->
+                <div class="sidebar-header">
+                    <img src="images/ALUKAZ.png" alt="Alukaz">
+                    <span>Alukaz</span>
+                </div>
+                
+                <!-- Close Button -->
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+                
+                <!-- Navigation Links with icons -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fa-solid fa-info-circle"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="portfolio.html">
+                            <i class="fa-solid fa-briefcase"></i> Portfolio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">
+                            <i class="fa-solid fa-envelope"></i> Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="contact-info-section">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Director Card -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-card director">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <h3>Syed Fahad Ali</h3>
+                        <p class="fw-bold">DIRECTOR</p>
+                        <p>ALUKAZ FABRICATION HOUSE</p>
+                        <p class="small">We Deal in all Type of Metal Fabrication</p>
+                        <a href="tel:03313175114" class="info-link">
+                            <i class="fa-solid fa-phone-alt"></i> 0331-3175114
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Contact Card -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <h3>Contact Information</h3>
+                        <p><strong>Phone:</strong><br>
+                        <a href="tel:+922135120339" class="info-link">021-35120339</a><br>
+                        <a href="tel:03313175114" class="info-link">0331-3175114</a></p>
+                        <p><strong>Email:</strong><br>
+                        <a href="mailto:syedfahadalikazmi@alukaz.com.pk" class="info-link">syedfahadalikazmi@alukaz.com.pk</a><br>
+                        <a href="mailto:syedfahadalikazmi@gmail.com" class="info-link">syedfahadalikazmi@gmail.com</a></p>
+                    </div>
+                </div>
+                
+                <!-- Location Card -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <h3>Office Address</h3>
+                        <p>Plot-No.AS-24, ST-3,<br>Korangi Industrial Area,<br>Karachi - Pakistan</p>
+                        <a href="https://maps.app.goo.gl/egbMfsAQNPWUTnmMA" target="_blank" class="info-link">
+                            <i class="fa-solid fa-map"></i> Get Directions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Contact Section -->
+    <section class="contact-main-section">
+        <div class="container-fluid p-5">
+            <div class="row g-5">
+                <!-- Contact Form -->
+                <div class="col-lg-7" data-aos="fade-right">
+                    <div class="form-wrapper">
+                        <div class="form-header">
+                            <div class="form-header-icon">
+                                <i class="fa-regular fa-message"></i>
+                            </div>
+                            <div class="form-header-text">
+                                <h2>Send Us a Message</h2>
+                                <p>Have a question or want to discuss your project? We're here to help!</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Alert Message (removed - using SweetAlert) -->
+                        
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" placeholder=" " required>
+                                        <label for="name"><i class="fa-regular fa-user"></i> Your Full Name *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder=" " required>
+                                        <label for="email"><i class="fa-regular fa-envelope"></i> Email Address *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="phone" placeholder=" " required>
+                                        <label for="phone"><i class="fa-solid fa-phone"></i> Phone Number *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="service" required>
+                                            <option value="" selected disabled></option>
+                                            <option value="Windows">Windows</option>
+                                            <option value="Doors">Doors</option>
+                                            <option value="Facade">Facade/Curtain Wall</option>
+                                            <option value="Partitions">Partitions</option>
+                                            <option value="Cladding">Aluminium Cladding</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <label for="service"><i class="fa-regular fa-building"></i> Service Required *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="subject" placeholder=" " required>
+                                <label for="subject"><i class="fa-regular fa-pen-to-square"></i> Subject *</label>
+                            </div>
+                            
+                            <div class="form-floating">
+                                <textarea class="form-control" id="message" placeholder=" " style="height: 140px" required></textarea>
+                                <label for="message"><i class="fa-regular fa-message"></i> Your Message *</label>
+                            </div>
+                            
+                            <div class="form-check-wrapper">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                    <label class="form-check-label" for="agreeTerms">
+                                        I agree to the <a href="#" class="text-decoration-none">Privacy Policy</a> and consent to being contacted.
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                <i class="fa-regular fa-paper-plane"></i> Send Message
+                            </button>
+                            
+                            <div class="form-divider">
+                                <span>OR</span>
+                            </div>
+                            
+                            <button type="button" class="btn-whatsapp" id="whatsappBtn">
+                                <i class="fa-brands fa-whatsapp"></i> Contact via WhatsApp
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Map & Hours -->
+                <div class="col-lg-5" data-aos="fade-left">
+                    <div class="map-wrapper">
+                        <!-- Map Container -->
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1651.651240478497!2d67.12303348193758!3d24.827902807030874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33ba477ca5283%3A0x591c9c5bff905d54!2sST%203%2C%20Nasir%20Colony%20Sector%2032%20D%20Korangi%2C%20Karachi%2C%20Pakistan!5e0!3m2!1sen!2sus!4v1772878266326!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                        
+                        <!-- Business Hours Card -->
+                        <div class="hours-card">
+                            <div class="d-flex align-items-center gap-2 mb-4">
+                                <div class="hours-icon">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+                                <h4 class="mb-0">Business Hours</h4>
+                            </div>
+                            
+                            <div class="hours-timings">
+                                <div class="hours-row">
+                                    <div class="day-group">
+                                        <span class="day">Monday - Friday</span>
+                                        <span class="today-badge" id="todayBadge1" style="display: none;">Today</span>
+                                    </div>
+                                    <div class="time-group">
+                                        <span class="time">9:00 AM</span>
+                                        <span class="time-separator">—</span>
+                                        <span class="time">6:00 PM</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="hours-row">
+                                    <div class="day-group">
+                                        <span class="day">Saturday</span>
+                                        <span class="today-badge" id="todayBadge2" style="display: none;">Today</span>
+                                    </div>
+                                    <div class="time-group">
+                                        <span class="time">10:00 AM</span>
+                                        <span class="time-separator">—</span>
+                                        <span class="time">2:00 PM</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="hours-row closed-row">
+                                    <div class="day-group">
+                                        <span class="day">Sunday</span>
+                                    </div>
+                                    <div class="closed-badge">
+                                        <span class="closed-text">Closed</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="hours-divider">
+                                <span>Emergency Contact</span>
+                            </div>
+                            
+                            <div class="emergency-cards">
+                                <div class="emergency-item">
+                                    <div class="emergency-icon">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <div class="emergency-details">
+                                        <span class="emergency-label">Office Landline</span>
+                                        <a href="tel:+922135120339" class="emergency-number">021-35120339</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="emergency-item">
+                                    <div class="emergency-icon">
+                                        <i class="fa-solid fa-mobile-screen"></i>
+                                    </div>
+                                    <div class="emergency-details">
+                                        <span class="emergency-label">Mobile</span>
+                                        <a href="tel:+923313175114" class="emergency-number">0331-3175114</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Current Status Badge -->
+                            <div class="current-status" id="currentStatus">
+                                <div class="status-indicator"></div>
+                                <span>We're <span id="statusText">Open</span> now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Updated with Logo (Same as Portfolio) -->
+    <footer>
+        <div class="container">
+            <!-- Newsletter Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="newsletter-section" data-aos="fade-up">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
+                                <p>Stay updated with our latest projects, offers, and aluminium fabrication insights. No spam, only valuable updates.</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <form class="newsletter-form" id="newsletterForm">
+                                    <input type="email" class="form-control" placeholder="Enter your email address" required>
+                                    <button type="submit" class="btn-newsletter">
+                                        Subscribe <i class="fa-regular fa-paper-plane"></i>
+                                    </button>
+                                </form>
+                                <div class="newsletter-checkbox">
+                                    <input type="checkbox" id="privacyPolicy" checked>
+                                    <label for="privacyPolicy">I agree to the privacy policy and terms of service</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Widgets with Logo -->
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <div class="footer-logo">
+                            <img src="images/ALUKAZ.png" alt="Alukaz Logo">
+                        </div>
+                        <p>ALUKAZ FABRICATION HOUSE - We Deal in all Type of Metal Fabrication. Premium aluminium fabrication solutions provider in Karachi since 2010.</p>
+                        <p><strong>Director:</strong> Syed Fahad Ali</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.html">About Us</a></li>
+                            <li><a href="portfolio.html">Our Portfolio</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Contact Info</h5>
+                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali (Director)</p>
+                        <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
+                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> syedfahadalikazmi@alukaz.com.pk</p>
+                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339 | 0331-3175114</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved. Designed with <i class="fa-solid fa-heart" style="color: var(--primary);"></i> for Alukaz</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="btn btn-primary rounded-circle">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 50
+        });
+
+        // Navbar scroll effect
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('#mainNav').addClass('scrolled');
+            } else {
+                $('#mainNav').removeClass('scrolled');
+            }
+            
+            // Back to top button
+            if ($(this).scrollTop() > 300) {
+                $('#back-to-top').addClass('show');
+            } else {
+                $('#back-to-top').removeClass('show');
+            }
+        });
+
+        $('#back-to-top').click(function() {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+        });
+
+        // Sidebar functionality
+        $(document).ready(function() {
+            const $sidebar = $('#navbarNav');
+            const $overlay = $('#sidebarOverlay');
+            const $toggle = $('#sidebarToggle');
+            const $closeBtn = $('#sidebarClose');
+
+            function openSidebar() {
+                $sidebar.addClass('show');
+                $overlay.addClass('show');
+                $('body').css('overflow', 'hidden');
+            }
+
+            function closeSidebar() {
+                $sidebar.removeClass('show');
+                $overlay.removeClass('show');
+                $('body').css('overflow', '');
+            }
+
+            $toggle.on('click', function(e) {
+                e.stopPropagation();
+                openSidebar();
+            });
+
+            $closeBtn.on('click', function(e) {
+                e.stopPropagation();
+                closeSidebar();
+            });
+
+            $overlay.on('click', function() {
+                closeSidebar();
+            });
+
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape' && $sidebar.hasClass('show')) {
+                    closeSidebar();
+                }
+            });
+
+            $('.nav-link').on('click', function() {
+                if ($(window).width() < 992) {
+                    closeSidebar();
+                }
+            });
+
+            $(window).on('resize', function() {
+                if ($(window).width() >= 992) {
+                    $sidebar.removeClass('show');
+                    $overlay.removeClass('show');
+                    $('body').css('overflow', '');
+                }
+            });
+        });
+
+        // EmailJS Initialization
+        (function() {
+            emailjs.init("dH99O-n31qe-HRMEa");
+        })();
+
+        // Dynamic Business Hours Status
+        function updateBusinessStatus() {
+            const now = new Date();
+            const day = now.getDay();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours * 60 + minutes;
+            
+            let isOpen = false;
+            let todayBadge1 = document.getElementById('todayBadge1');
+            let todayBadge2 = document.getElementById('todayBadge2');
+            let statusText = document.getElementById('statusText');
+            let statusIndicator = document.querySelector('.status-indicator');
+            let statusContainer = document.querySelector('.current-status');
+            
+            if (todayBadge1) todayBadge1.style.display = 'none';
+            if (todayBadge2) todayBadge2.style.display = 'none';
+            
+            if (day >= 1 && day <= 5) {
+                if (day === 1) todayBadge1.style.display = 'inline-block';
+                const start = 9 * 60;
+                const end = 18 * 60;
+                isOpen = currentTime >= start && currentTime < end;
+            }
+            else if (day === 6) {
+                todayBadge2.style.display = 'inline-block';
+                const start = 10 * 60;
+                const end = 14 * 60;
+                isOpen = currentTime >= start && currentTime < end;
+            }
+            
+            if (statusText) {
+                statusText.textContent = isOpen ? 'Open' : 'Closed';
+                statusText.style.color = isOpen ? '#28a745' : '#dc3545';
+            }
+            
+            if (statusIndicator) {
+                statusIndicator.style.background = isOpen ? '#28a745' : '#dc3545';
+            }
+            
+            if (statusContainer) {
+                statusContainer.style.background = isOpen 
+                    ? 'linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(40, 167, 69, 0.1))'
+                    : 'linear-gradient(135deg, rgba(220, 53, 69, 0.05), rgba(220, 53, 69, 0.1))';
+                statusContainer.style.borderColor = isOpen 
+                    ? 'rgba(40, 167, 69, 0.2)' 
+                    : 'rgba(220, 53, 69, 0.2)';
+            }
+        }
+
+        // Form submission with SweetAlert
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                service: document.getElementById('service').value,
+                subject: document.getElementById('subject').value.trim(),
+                message: document.getElementById('message').value.trim()
+            };
+            
+            if (!document.getElementById('agreeTerms').checked) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Terms & Conditions',
+                    text: 'Please agree to the terms and conditions',
+                    confirmButtonColor: '#d8492a',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+            
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+            
+            emailjs.send('service_mtwdox8', 'template_kgfcfmc', {
+                to_email: 'syedfahadalikazmi@gmail.com',
+                // to_email: 'munibaatiqaptech@gmail.com',
+                from_name: formData.name,
+                from_email: formData.email,
+                phone: formData.phone,
+                service: formData.service,
+                subject: formData.subject,
+                message: formData.message
+            })
+            .then(function() {
+                // Success SweetAlert
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Message Sent!',
+                    html: `<span style="font-size: 1.1rem">Thank you <strong>${formData.name}</strong>!<br>We'll contact you soon.</span>`,
+                    showConfirmButton: true,
+                    confirmButtonColor: '#d8492a',
+                    confirmButtonText: 'Great!',
+                    timer: 5000,
+                    timerProgressBar: true,
+                    background: '#fff',
+                    backdrop: `
+                        rgba(216,73,42,0.2)
+                        left top
+                        no-repeat
+                    `
+                }).then(() => {
+                    // Optional: Any action after alert closes
+                });
+                
+                document.getElementById('contactForm').reset();
+            })
+            .catch(function(error) {
+                // Error SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error sending message. Please try again.',
+                    confirmButtonColor: '#d8492a',
+                });
+            })
+            .finally(function() {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
+        
+        // WhatsApp button
+        document.getElementById('whatsappBtn').addEventListener('click', function() {
+            const name = document.getElementById('name').value || 'Customer';
+            const phone = document.getElementById('phone').value || '';
+            const service = document.getElementById('service').value || 'Aluminium Fabrication';
+            const message = document.getElementById('message').value || 'I would like to inquire about your services';
+            
+            const whatsappMsg = `Hello Alukaz,%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Service:* ${service}%0A*Message:* ${message}`;
+            window.open(`https://wa.me/923313175114?text=${whatsappMsg}`, '_blank');
+        });
+
+        // Update status on load and every minute
+        updateBusinessStatus();
+        setInterval(updateBusinessStatus, 60000);
+
+        // Newsletter Form
+        $('#newsletterForm').submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'success',
+                title: 'Subscribed!',
+                text: 'Thank you for subscribing to our newsletter!',
+                confirmButtonColor: '#d8492a',
+                timer: 3000,
+                timerProgressBar: true
+            });
+            $(this).find('input[type="email"]').val('');
+        });
+    </script>
+</body>
+</html> 
