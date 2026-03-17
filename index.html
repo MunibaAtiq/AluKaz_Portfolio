@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Alukaz - Premium Aluminium Fabrication Solutions</title>
 
     <link rel="icon" type="image/png" href="images/ALUKAZ.png">
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
     <!-- Owl Carousel -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -22,7 +21,7 @@
     
     <style>
         /* ========================================
-           Global Styles
+           GLOBAL VARIABLES & RESET
         ======================================== */
         :root {
             --primary: #d8492a;
@@ -48,15 +47,103 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             color: var(--text);
             background: var(--gray);
-            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* ========================================
-           Navigation – Updated with Sidebar (Same as Portfolio)
+           POPUP STYLES
+        ======================================== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 15px;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-card {
+            position: relative;
+            max-width: min(500px, 95%);
+            width: 100%;
+            margin: 0 auto;
+            background: transparent;
+            border-radius: clamp(15px, 4vw, 20px);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(216, 73, 42, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            border: 3px solid var(--primary);
+        }
+
+        .popup-overlay.show .popup-card {
+            transform: scale(1);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: clamp(8px, 3vw, 12px);
+            right: clamp(8px, 3vw, 12px);
+            width: clamp(35px, 8vw, 45px);
+            height: clamp(35px, 8vw, 45px);
+            background: var(--gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            border: 2px solid white;
+        }
+
+        .popup-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .popup-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* ========================================
+           NAVIGATION
         ======================================== */
         .navbar {
             background: transparent !important;
@@ -66,24 +153,14 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            overflow: hidden;
         }
 
         .navbar.scrolled {
             background: var(--gradient-dark) !important;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0,0,0,0.5);
             padding: 15px 0;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            animation: slideDown 0.5s ease forwards;
-        }
-
-        @keyframes slideDown {
-            0% { transform: translateY(-100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
         }
 
         .navbar-brand img {
@@ -128,16 +205,18 @@
             color: white !important;
         }
 
-        /* Mobile Sidebar Styles */
+        /* Mobile Sidebar */
         @media (max-width: 991px) {
             .navbar-collapse {
                 position: fixed;
                 top: 0;
-                right: -300px;
-                width: 280px;
+                right: -100%;
+                width: min(300px, 85%);
                 height: 100vh;
+                height: -webkit-fill-available;
                 background: var(--gradient-dark);
                 backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
                 padding: 100px 25px 40px;
                 transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 1050;
@@ -172,6 +251,7 @@
                 display: flex;
                 align-items: center;
                 gap: 12px;
+                min-height: 44px;
             }
 
             .nav-link i {
@@ -180,19 +260,13 @@
                 color: var(--primary-light);
             }
 
-            .nav-link:hover {
+            .nav-link:hover,
+            .nav-link.active {
                 background: var(--gradient);
                 transform: translateX(5px);
             }
 
-            .nav-link:hover i {
-                color: white;
-            }
-
-            .nav-link.active {
-                background: var(--gradient);
-            }
-
+            .nav-link:hover i,
             .nav-link.active i {
                 color: white;
             }
@@ -219,12 +293,9 @@
                 transition: all 0.3s ease;
                 z-index: 1060;
                 backdrop-filter: blur(5px);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            }
-
-            .sidebar-close i {
-                font-size: 1.3rem;
-                color: white;
+                -webkit-backdrop-filter: blur(5px);
+                min-width: 44px;
+                min-height: 44px;
             }
 
             .sidebar-close:hover {
@@ -261,6 +332,7 @@
                 height: 100%;
                 background: rgba(0,0,0,0.6);
                 backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
                 z-index: 1049;
                 display: none;
             }
@@ -276,10 +348,13 @@
                 border-radius: 14px;
                 margin-left: auto;
                 z-index: 1060;
+                position: relative;
+                min-height: 44px;
             }
 
             .navbar-toggler:focus {
                 box-shadow: none;
+                outline: none;
             }
 
             .navbar-toggler-icon {
@@ -299,28 +374,25 @@
             }
         }
 
-        .navbar::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        /* Body when sidebar is open */
+        body.sidebar-open {
+            overflow: hidden;
+            position: fixed;
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), rgba(216,73,42,0.5), rgba(249,115,22,0.3), transparent);
-            transform: scaleX(0);
-            transform-origin: center;
-            transition: transform 0.5s ease;
-        }
-
-        .navbar:hover::before {
-            transform: scaleX(1);
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
         /* ========================================
-           ENHANCED HERO SECTION - PROFESSIONAL UI
+           HERO SECTION
         ======================================== */
         .hero-section {
             height: 100vh;
+            height: 100dvh;
+            min-height: 540px;
+            max-height: 920px;
             position: relative;
             overflow: hidden;
         }
@@ -335,7 +407,6 @@
             position: relative;
         }
 
-        /* Professional overlay with gradient */
         .carousel-item::after {
             content: '';
             position: absolute;
@@ -343,12 +414,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background:
-                radial-gradient(700px 400px at 15% 30%, rgba(216,73,42,0.28), transparent 60%),
-                radial-gradient(700px 400px at 85% 25%, rgba(249,115,22,0.22), transparent 60%),
-                linear-gradient(135deg, rgba(0, 0, 0, 0.123), rgba(0,0,0,0.84));
+            background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
             z-index: 1;
-            pointer-events: none;
         }
 
         .carousel-item img {
@@ -356,7 +423,6 @@
             width: 100%;
             object-fit: cover;
             object-position: center;
-            transform: scale(1);
             animation: zoomEffect 12s ease infinite alternate;
         }
 
@@ -384,27 +450,25 @@
             color: white;
             animation: fadeInUp 1s ease;
             padding: 40px;
-            background: rgba(0,0,0,0.18);
-            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 30px;
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .slide-subtitle {
             display: inline-block;
-            font-size: 14px;  /* Font size reduced from 20px to 14px */
+            font-size: 14px;
             font-weight: 500;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 20px;
-            padding: 6px 20px;  /* Padding slightly reduced */
+            padding: 6px 20px;
             background: rgba(216, 73, 42, 0.25);
             border-radius: 50px;
             border-left: 3px solid var(--primary);
             border-right: 3px solid var(--primary);
-            backdrop-filter: blur(5px);
-            font-family: 'Montserrat', sans-serif;
             color: white;
         }
 
@@ -412,10 +476,7 @@
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
             line-height: 1.1;
-            letter-spacing: -1px;
-            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #ffffff, #f0f0f0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -426,21 +487,13 @@
             font-size: 1.8rem !important;
             font-weight: 400;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 15px rgba(0,0,0,0.5);
-            font-family: 'Montserrat', sans-serif;
             color: rgba(255,255,255,0.95);
-        }
-
-        .slide-description {
-            margin: 25px 0 30px;
         }
 
         .slide-description p {
             font-size: 1.1rem;
             line-height: 1.8;
             font-weight: 300;
-            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
-            font-family: 'Open Sans', sans-serif;
             color: rgba(255,255,255,0.9);
             max-width: 700px;
             margin: 0 auto;
@@ -459,14 +512,11 @@
             font-size: 1.1rem;
             font-weight: 600;
             border-radius: 60px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
             text-decoration: none;
+            display: inline-block;
         }
 
         .btn-hero-primary {
@@ -476,24 +526,8 @@
             box-shadow: 0 8px 25px rgba(216,73,42,0.4);
         }
 
-        .btn-hero-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f97316, #d8492a);
-            transition: left 0.4s ease;
-            z-index: -1;
-        }
-
-        .btn-hero-primary:hover::before {
-            left: 0;
-        }
-
         .btn-hero-primary:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(216,73,42,0.6);
         }
 
@@ -506,21 +540,11 @@
         .btn-hero-outline:hover {
             background: white;
             color: var(--primary);
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+            transform: translateY(-5px);
         }
 
-        /* Modern Indicators */
         .carousel-indicators {
-            position: absolute;
             bottom: 40px;
-            left: 0;
-            right: 0;
-            z-index: 3;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             gap: 12px;
         }
 
@@ -528,60 +552,15 @@
             width: 12px !important;
             height: 12px !important;
             border-radius: 12px !important;
-            background-color: rgba(255, 255, 255, 0.5) !important;
-            border: 2px solid transparent !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255,255,255,0.5) !important;
+            transition: all 0.4s ease !important;
         }
 
         .carousel-indicators button.active {
             width: 40px !important;
-            height: 12px !important;
             background: var(--primary) !important;
-            border-color: white !important;
-            box-shadow: 0 0 15px var(--primary);
         }
 
-        /* Control Buttons */
-        .carousel-control-prev,
-        .carousel-control-next {
-            width: 60px;
-            height: 60px;
-            background: rgba(216, 73, 42, 0.3);
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 4;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-        }
-
-        .carousel-control-prev {
-            left: 40px;
-        }
-
-        .carousel-control-next {
-            right: 40px;
-        }
-
-        .hero-section:hover .carousel-control-prev,
-        .hero-section:hover .carousel-control-next {
-            opacity: 1;
-        }
-
-        .carousel-control-prev:hover,
-        .carousel-control-next:hover {
-            background: var(--primary);
-            border-color: white;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
             bottom: 40px;
@@ -596,288 +575,43 @@
             animation: bounce 2.5s infinite;
         }
 
-        .scroll-indicator span {
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
-
-        .scroll-indicator i {
-            font-size: 1.8rem;
-            opacity: 0.8;
-        }
-
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-25px); }
-            60% { transform: translateX(-50%) translateY(-15px); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Hero */
-        @media (max-width: 1200px) {
-            .caption-content h1 { font-size: 4rem; }
-            .caption-content .lead { font-size: 1.6rem !important; }
-        }
-
-        @media (max-width: 992px) {
-            .caption-content h1 { font-size: 3.5rem; }
-            .caption-content .lead { font-size: 1.5rem !important; }
-            .carousel-control-prev,
-            .carousel-control-next {
-                width: 50px;
-                height: 50px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .caption-content h1 { font-size: 2.8rem; }
-            .caption-content .lead { font-size: 1.3rem !important; }
-            .slide-subtitle { font-size: 12px; letter-spacing: 3px; padding: 5px 15px; }
-            .slide-description p { font-size: 1rem; }
-            .btn-hero { padding: 12px 30px; font-size: 1rem; }
-        }
-
-        @media (max-width: 576px) {
-            .caption-content { padding: 25px; }
-            .caption-content h1 { font-size: 2.2rem; }
-            .caption-content .lead { font-size: 1.1rem !important; }
-            .slide-subtitle { font-size: 11px; letter-spacing: 2px; padding: 4px 12px; }
-            .slide-buttons { flex-direction: column; gap: 10px; }
-            .btn-hero { width: 100%; max-width: 280px; margin: 0 auto; }
-            .carousel-indicators { bottom: 30px; }
-            .scroll-indicator { display: none; }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
         }
 
         /* ========================================
-           Footer – Updated with Logo (Same as Portfolio)
+           SECTION TITLES
         ======================================== */
-        footer {
-            background: var(--gradient-dark);
-            color: white;
-            padding: 60px 0 20px;
-            margin-top: 40px;
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
             position: relative;
-            overflow: hidden;
+            padding-bottom: 1rem;
         }
 
-        footer::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.2);
-            pointer-events: none;
-        }
-
-        footer > .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .footer-logo img {
-            height: 60px;
-            width: auto;
-            filter: brightness(0) invert(1);
-            opacity: 0.95;
-            transition: var(--transition);
-        }
-        .footer-logo img:hover {
-            opacity: 1;
-            transform: scale(1.02);
-        }
-
-        .footer-widget h5 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 10px;
-            color: #fff;
-        }
-
-        .footer-widget h5::after {
+        .section-title::after {
             content: '';
             position: absolute;
             bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .section-title.text-start::after {
             left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--primary);
-        }
-
-        .footer-widget p, .footer-widget li, .footer-widget a {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        .footer-links a:hover {
-            color: var(--primary-light);
-            padding-left: 8px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .social-links a {
-            width: 38px;
-            height: 38px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: var(--transition);
-            font-size: 1rem;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .social-links a:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-5px);
-        }
-
-        .newsletter-section {
-            background: rgba(250, 241, 241, 0.87);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 30px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 15px 35px rgba(167, 91, 91, 0.4);
-        }
-        .newsletter-section h3 {
-            color: black;
-            font-weight: 600;
-        }
-        .newsletter-section p {
-            color: black;
-        }
-        .newsletter-form {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .newsletter-form .form-control {
-            flex: 1;
-            min-width: 250px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(32, 21, 21, 0.39);
-            color: black;
-            padding: 15px 20px;
-            border-radius: 50px;
-        }
-        .newsletter-form .form-control::placeholder {
-            color: rgb(82, 75, 75);
-        }
-        .newsletter-form .form-control:focus {
-            border-color: var(--primary);
-            background: rgba(255,255,255,0.15);
-            box-shadow: 0 0 0 3px rgba(216,73,42,0.2);
-            outline: none;
-        }
-        .btn-newsletter {
-            padding: 15px 35px;
-            border: none;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-newsletter:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(216,73,42,0.4);
-        }
-        .newsletter-checkbox {
-            margin-top: 15px;
-            color: rgb(0, 0, 0);
-            font-size: 0.85rem;
-        }
-        .newsletter-checkbox input[type="checkbox"] {
-            accent-color: var(--primary);
-            margin-right: 8px;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 40px;
-            margin-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.5);
-            font-size: 0.9rem;
-        }
-
-        /* Back to Top */
-        #back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
-            background: var(--gradient);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-            display: none;
-            z-index: 99;
-            transition: var(--transition);
-            box-shadow: 0 5px 20px rgba(216,73,42,0.3);
-        }
-
-        #back-to-top.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        #back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(216,73,42,0.4);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            transform: none;
         }
 
         /* ========================================
-           Feature Cards
+           FEATURE CARDS
         ======================================== */
         .features-section {
             padding: 5rem 0;
@@ -939,39 +673,903 @@
         }
 
         /* ========================================
-           Section Titles
+           STAT BOXES
         ======================================== */
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+        .stat-box {
             text-align: center;
-            position: relative;
-            padding-bottom: 1rem;
+            padding: 20px 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: var(--transition);
+            border: 1px solid rgba(216,73,42,0.1);
         }
 
-        .section-title::after {
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(216,73,42,0.15);
+            border-color: var(--primary);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--primary) !important;
+        }
+
+        /* ========================================
+           PROCESS SECTION
+        ======================================== */
+        .process-card {
+            background: white;
+            border-radius: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(216,73,42,0.1);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            height: 100%;
+        }
+
+        .process-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: rgba(216,73,42,0.1);
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(216,73,42,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: var(--transition);
+        }
+
+        .process-card:hover .icon-circle {
+            background: var(--gradient);
+        }
+
+        .process-card:hover .icon-circle i {
+            color: white;
+        }
+
+        .icon-circle i {
+            font-size: 2.2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        /* ========================================
+           SERVICES SECTION
+        ======================================== */
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid rgba(216,73,42,0.1);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            padding: 1.5rem;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(216,73,42,0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .service-icon i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .service-card h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ========================================
+           MEMBERS SECTION
+        ======================================== */
+        .members-section {
+            position: relative;
+            background: url('images/groupBg.jpg') center/cover fixed;
+            padding: 5rem 0;
+            z-index: 1;
+        }
+
+        .members-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: -1;
+        }
+
+        .top-logo {
+            max-height: 60px;
+            width: auto;
+            margin: 0 auto 25px;
+            display: block;
+        }
+
+        .members-section .section-title {
+            color: white;
+        }
+
+        .members-section .section-title::after {
+            background: var(--primary);
+        }
+
+        .member-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 2px solid var(--primary);
+            padding: 2rem;
+            height: 100%;
+            transition: var(--transition);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(216,73,42,0.3);
+        }
+
+        .member-logo {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            margin-right: 1.5rem;
+        }
+
+        .member-logo img {
+            max-width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+        }
+
+        .member-card h4 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-card .company-subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-card p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .member-card {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            .member-logo {
+                margin-right: 0 !important;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        /* ========================================
+           FEATURED PROJECTS
+        ======================================== */
+        .featured-projects {
+            padding: 5rem 0;
+            background: var(--gray);
+        }
+
+        .featured-projects .card {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid rgba(216,73,42,0.1);
+        }
+
+        .featured-projects .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .featured-projects .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .featured-projects .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .featured-projects .card-body {
+            padding: 1.5rem;
+        }
+
+        .featured-projects .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-projects .card-text {
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Project Button - Themed */
+        .project-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(216,73,42,0.2);
+            width: 100%;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .project-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f97316, #d8492a);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .project-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(216,73,42,0.4);
+            color: white;
+        }
+
+        .project-btn:hover::before {
+            left: 0;
+        }
+
+        /* ========================================
+           TESTIMONIALS
+        ======================================== */
+        .testimonials-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid rgba(216,73,42,0.1);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .quote-icon i {
+            color: var(--primary);
+            opacity: 0.2;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(216,73,42,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .client-avatar i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .client-info h6 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .client-info small {
+            color: var(--text);
+            font-size: 0.85rem;
+        }
+
+        /* ========================================
+           NEWS SECTION - THEMED
+        ======================================== */
+        .news-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            height: 100%;
+            border: 1px solid rgba(216,73,42,0.1);
+        }
+
+        .news-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 50px rgba(216,73,42,0.15);
+            border-color: var(--primary);
+        }
+
+        .news-img-wrapper {
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .news-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .news-card:hover .news-img-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .news-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--gradient);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(216,73,42,0.3);
+        }
+
+        .news-content {
+            padding: 1.8rem;
+        }
+
+        .news-date {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: inline-flex;
+            align-items: center;
+            background: rgba(216,73,42,0.08);
+            padding: 5px 12px;
+            border-radius: 30px;
+        }
+
+        .news-date i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .news-card:hover .news-title {
+            color: var(--primary);
+        }
+
+        .news-text {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .news-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            gap: 8px;
+        }
+
+        .news-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .news-link:hover {
+            color: var(--secondary);
+            gap: 12px;
+        }
+
+        .news-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-news-view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 60px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(216,73,42,0.25);
+            margin-top: 2rem;
+        }
+
+        .btn-news-view-all:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(216,73,42,0.4);
+            color: white;
+        }
+
+        /* ========================================
+           CTA SECTION - THEMED
+        ======================================== */
+        .cta-section {
+            background: var(--gradient-dark);
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(216,73,42,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatReverse 12s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100%{transform:translate(0,0)}50%{transform:translate(20px,20px)}
+        }
+        @keyframes floatReverse {
+            0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,-30px)}
+        }
+
+        .cta-wrapper {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(216,73,42,0.2);
+            border-radius: 40px;
+            padding: 3rem;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-description {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .cta-feature i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--gradient);
+            color: white;
+            padding: 16px 35px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 15px 30px rgba(216,73,42,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 45px rgba(216,73,42,0.5);
+            color: white;
+        }
+
+        .cta-phone a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .cta-phone a:hover {
+            color: var(--primary);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        footer {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 1rem;
+        }
+
+        .footer-widget h5 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-widget h5::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
         }
 
-        .section-title.text-start::after {
-            left: 0;
-            transform: none;
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .newsletter-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form .form-control {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+        }
+
+        .newsletter-form .form-control::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .btn-newsletter {
+            padding: 12px 30px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-newsletter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(216,73,42,0.4);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        /* ========================================
+           BACK TO TOP
+        ======================================== */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: none;
+            z-index: 99;
+            transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(216,73,42,0.3);
+        }
+
+        #back-to-top.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(216,73,42,0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========================================
+           OWL CAROUSEL DOTS
+        ======================================== */
+        .owl-dots {
+            margin-top: 30px !important;
+            text-align: center !important;
+        }
+        
+        .owl-dot span {
+            width: 12px !important;
+            height: 12px !important;
+            background: #ccc !important;
+            border-radius: 50% !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .owl-dot.active span {
+            background: var(--primary) !important;
+            width: 30px !important;
+            border-radius: 15px !important;
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 1200px) {
+            .caption-content h1 { font-size: 3rem; }
+            .cta-title { font-size: 2rem; }
+        }
+
+        @media (max-width: 992px) {
+            .hero-section { min-height: 500px; }
+            .caption-content h1 { font-size: 2.8rem; }
+            .section-title { font-size: 2rem; }
+            .news-img-wrapper { height: 200px; }
+            .cta-wrapper { padding: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section { min-height: 450px; }
+            .caption-content h1 { font-size: 2.2rem; }
+            .caption-content .lead { font-size: 1.2rem !important; }
+            .section-title { font-size: 1.8rem; }
+            .stat-number { font-size: 1.8rem; }
+            .feature-card { padding: 1.5rem; }
+            .news-img-wrapper { height: 180px; }
+            .news-title { font-size: 1.1rem; }
+            .cta-title { font-size: 1.5rem; }
+            .btn-cta { padding: 12px 25px; }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section { min-height: 400px; }
+            .caption-content { padding: 20px; }
+            .caption-content h1 { font-size: 1.8rem; }
+            .slide-subtitle { font-size: 11px; padding: 4px 12px; }
+            .btn-hero { padding: 10px 25px; font-size: 0.9rem; }
+            .section-title { font-size: 1.5rem; }
+            .news-img-wrapper { height: 160px; }
+            .cta-wrapper { padding: 1.5rem; }
+            .cta-features { flex-direction: column; gap: 10px; }
+            .btn-cta { width: 100%; justify-content: center; }
+            .btn-news-view-all { width: 100%; justify-content: center; }
         }
     </style>
-
 </head>
 <body>
-<!-- POPUP HTML - Add this after <body> tag -->
-<!-- POPUP HTML - Sirf Image ke liye -->
+
+<!-- POPUP -->
 <div class="popup-overlay" id="popupOverlay">
     <div class="popup-card">
         <button class="popup-close" id="popupClose">
@@ -981,624 +1579,458 @@
     </div>
 </div>
 
-<style>
-    /* ========================================
-       POPUP STYLES - SIRF IMAGE
-    ======================================== */
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        z-index: 99999;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .popup-overlay.show {
-        display: flex;
-        opacity: 1;
-    }
-
-    .popup-card {
-        position: relative;
-        max-width: 500px;
-        width: 90%;
-        margin: 20px;
-        background: transparent;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 20px 40px rgba(216, 73, 42, 0.4);
-        transform: scale(0.9);
-        transition: transform 0.3s ease;
-        border: 3px solid var(--primary);
-    }
-
-    .popup-overlay.show .popup-card {
-        transform: scale(1);
-    }
-
-    .popup-close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 40px;
-        height: 40px;
-        background: var(--gradient);
-        border: none;
-        border-radius: 50%;
-        color: white;
-        font-size: 1.2rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        z-index: 10;
-        border: 2px solid white;
-    }
-
-    .popup-close:hover {
-        transform: rotate(90deg) scale(1.1);
-        background: var(--primary-dark);
-    }
-
-    .popup-image {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: cover;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 576px) {
-        .popup-card {
-            width: 95%;
-        }
+<!-- NAVIGATION -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/ALUKAZ.png" alt="Alukaz Logo">
+        </a>
+        <button class="navbar-toggler" type="button" id="sidebarToggle" aria-label="Open menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         
-        .popup-close {
-            width: 35px;
-            height: 35px;
-            font-size: 1rem;
-            top: 8px;
-            right: 8px;
-        }
-    }
-</style>
-
-
-
-    <!-- Navigation - Updated with Sidebar (Same as Portfolio) -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="images/ALUKAZ.png" alt="Alukaz Logo">
-            </a>
-            <button class="navbar-toggler" type="button" id="sidebarToggle">
-                <span class="navbar-toggler-icon"></span>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="sidebar-header">
+                <img src="images/ALUKAZ.png" alt="Alukaz">
+                <span>Alukaz</span>
+            </div>
+            
+            <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
+                <i class="fa-solid fa-times"></i>
             </button>
             
-            <!-- Sidebar overlay -->
-            <div class="sidebar-overlay" id="sidebarOverlay"></div>
-            
-            <!-- Sidebar Navigation -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Sidebar Header with Logo -->
-                <div class="sidebar-header">
-                    <img src="images/ALUKAZ.png" alt="Alukaz">
-                    <span>Alukaz</span>
-                </div>
-                
-                <!-- Close Button -->
-                <button class="sidebar-close" id="sidebarClose">
-                    <i class="fa-solid fa-times"></i>
-                </button>
-                
-                <!-- Navigation Links with icons -->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">
-                            <i class="fa-solid fa-home"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">
-                            <i class="fa-solid fa-info-circle"></i> About
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="portfolio.html">
-                            <i class="fa-solid fa-briefcase"></i> Portfolio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">
-                            <i class="fa-solid fa-envelope"></i> Contact
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">
+                        <i class="fa-solid fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">
+                        <i class="fa-solid fa-info-circle"></i> About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="portfolio.html">
+                        <i class="fa-solid fa-briefcase"></i> Portfolio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">
+                        <i class="fa-solid fa-envelope"></i> Contact
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Hero Section with Enhanced UI and Animation -->
-    <section class="hero-section" id="home">
-        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="5"></button>
-            </div>
-            
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="images/banner1.jpg" class="d-block w-100" alt="Alukaz Banner 1">
-                    <div class="carousel-caption d-flex align-items-center">
-                        <div class="caption-content">
-                            <span class="slide-subtitle">Premium Aluminium Solutions</span>
-                            <h1>Bahria Complex</h1>
-                            <p class="lead">Gizri, Clifton, Karachi</p>
-                            <div class="slide-description">
-                                <p>State-of-the-art aluminium facade and curtain wall system</p>
-                            </div>
-                            <div class="slide-buttons">
-                                <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
-                                <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="carousel-item">
-                    <img src="images/banner2.jpg" class="d-block w-100" alt="Alukaz Banner 2">
-                    <div class="carousel-caption d-flex align-items-center">
-                        <div class="caption-content">
-                            <span class="slide-subtitle">Industrial Excellence</span>
-                            <h1>Artistic Milliners</h1>
-                            <p class="lead">Korangi Industrial Area, Karachi</p>
-                            <div class="slide-description">
-                                <p>Pakistan's first LEED Certified Garment Factory</p>
-                            </div>
-                            <div class="slide-buttons">
-                                <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
-                                <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="carousel-item">
-                    <img src="images/banner3.jpg" class="d-block w-100" alt="Alukaz Banner 3">
-                    <div class="carousel-caption d-flex align-items-center">
-                        <div class="caption-content">
-                            <span class="slide-subtitle">Commercial Excellence</span>
-                            <h1>Ocean Tower</h1>
-                            <p class="lead">Clifton, Karachi</p>
-                            <div class="slide-description">
-                                <p>Complete aluminium facade and curtain wall system</p>
-                            </div>
-                            <div class="slide-buttons">
-                                <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
-                                <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               
-                <div class="carousel-item">
-                    <img src="images/banner4.jpg" class="d-block w-100" alt="Alukaz Banner 4">
-                    <div class="carousel-caption d-flex align-items-center">
-                        <div class="caption-content">
-                            <span class="slide-subtitle">Sustainable Design</span>
-                            <h1>LEED Certified Factory</h1>
-                            <p class="lead">Pakistan's First LEED Certified Garment Factory</p>
-                            <div class="slide-description">
-                                <p>Alukaz contributed to this landmark project</p>
-                            </div>
-                            <div class="slide-buttons">
-                                <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
-                                <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="carousel-item">
-                    <img src="images/banner5.jpg" class="d-block w-100" alt="Alukaz Banner 5">
-                    <div class="carousel-caption d-flex align-items-center">
-                        <div class="caption-content">
-                            <span class="slide-subtitle">Modern Architecture</span>
-                            <h1>Saad Bhatti Building</h1>
-                            <p class="lead">Khayaban e Shahbaz, D.H.A., Karachi</p>
-                            <div class="slide-description">
-                                <p>Premium aluminium windows and facade solutions</p>
-                            </div>
-                            <div class="slide-buttons">
-                                <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
-                                <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="carousel-item">
-                    <img src="images/banner6.jpg" class="d-block w-100" alt="Alukaz Banner 6">
-                    <div class="carousel-caption d-flex align-items-center">
-                        <div class="caption-content">
-                            <span class="slide-subtitle">Luxury Living</span>
-                            <h1>Emaar Pakistan</h1>
-                            <p class="lead">D.H.A. Phase VIII, Karachi</p>
-                            <div class="slide-description">
-                                <p>Premium residential aluminium solutions</p>
-                            </div>
-                            <div class="slide-buttons">
-                                <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
-                                <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+<!-- HERO SECTION -->
+<section class="hero-section" id="home">
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="5"></button>
         </div>
         
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <i class="fa-solid fa-chevron-down"></i>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/banner1.jpg" class="d-block w-100" alt="Alukaz Banner 1">
+                <div class="carousel-caption d-flex align-items-center">
+                    <div class="caption-content">
+                        <span class="slide-subtitle">Premium Aluminium Solutions</span>
+                        <h1>Bahria Complex</h1>
+                        <p class="lead">Gizri, Clifton, Karachi</p>
+                        <div class="slide-description">
+                            <p>State-of-the-art aluminium facade and curtain wall system</p>
+                        </div>
+                        <div class="slide-buttons">
+                            <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
+                            <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-item">
+                <img src="images/banner2.jpg" class="d-block w-100" alt="Alukaz Banner 2">
+                <div class="carousel-caption d-flex align-items-center">
+                    <div class="caption-content">
+                        <span class="slide-subtitle">Industrial Excellence</span>
+                        <h1>Artistic Milliners</h1>
+                        <p class="lead">Korangi Industrial Area, Karachi</p>
+                        <div class="slide-description">
+                            <p>Pakistan's first LEED Certified Garment Factory</p>
+                        </div>
+                        <div class="slide-buttons">
+                            <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
+                            <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-item">
+                <img src="images/banner3.jpg" class="d-block w-100" alt="Alukaz Banner 3">
+                <div class="carousel-caption d-flex align-items-center">
+                    <div class="caption-content">
+                        <span class="slide-subtitle">Commercial Excellence</span>
+                        <h1>Ocean Tower</h1>
+                        <p class="lead">Clifton, Karachi</p>
+                        <div class="slide-description">
+                            <p>Complete aluminium facade and curtain wall system</p>
+                        </div>
+                        <div class="slide-buttons">
+                            <a href="portfolio.html" class="btn-hero btn-hero-primary">View Project</a>
+                            <a href="contact.html" class="btn-hero btn-hero-outline">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    
+    <div class="scroll-indicator">
+        <span>Scroll</span>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</section>
 
-   <!-- Features Section -->
-<section class="features-section py-5 bg-light">
+<!-- FEATURES SECTION -->
+<section class="features-section">
     <div class="container">
         <div class="row g-4">
-            <!-- Premium Quality Feature -->
             <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-card text-center p-4">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fa-solid fa-shield-halved fa-3x"></i>
+                        <i class="fa-solid fa-shield-halved"></i>
                     </div>
-                    <h4 class="mt-3">Premium Quality</h4>
-                    <p class="mb-0">Highest quality aluminium with superior strength and durability</p>
+                    <h4>Premium Quality</h4>
+                    <p>Highest quality aluminium with superior strength and durability</p>
                 </div>
             </div>
             
-            <!-- Custom Designs Feature -->
             <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-card text-center p-4">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fa-solid fa-pen-ruler fa-3x"></i>
+                        <i class="fa-solid fa-pen-ruler"></i>
                     </div>
-                    <h4 class="mt-3">Custom Designs</h4>
-                    <p class="mb-0">Tailored solutions matching your architectural requirements</p>
+                    <h4>Custom Designs</h4>
+                    <p>Tailored solutions matching your architectural requirements</p>
                 </div>
             </div>
             
-            <!-- Timely Delivery Feature -->
             <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-card text-center p-4">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fa-solid fa-clock fa-3x"></i>
+                        <i class="fa-solid fa-clock"></i>
                     </div>
-                    <h4 class="mt-3">Timely Delivery</h4>
-                    <p class="mb-0">Projects completed on schedule with guaranteed quality</p>
+                    <h4>Timely Delivery</h4>
+                    <p>Projects completed on schedule with guaranteed quality</p>
                 </div>
             </div>
             
-            <!-- Expert Support Feature -->
             <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="feature-card text-center p-4">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fa-solid fa-headset fa-3x"></i>
+                        <i class="fa-solid fa-headset"></i>
                     </div>
-                    <h4 class="mt-3">Expert Support</h4>
-                    <p class="mb-0">24/7 customer support and after-service care</p>
+                    <h4>Expert Support</h4>
+                    <p>24/7 customer support and after-service care</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-    <!-- About Section -->
-    <section class="about-section py-5" id="about">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <h2 class="section-title text-start">About Alukaz</h2>
-                    <p class="lead">Your Trusted Partner in Aluminium Fabrication Since 2010</p>
-                    <p>Alukaz is a premier provider of aluminium fabrication services in Karachi. Under the leadership of Director <strong>Syed Fahad Ali</strong>, we have built a reputation for excellence, reliability, and superior craftsmanship.</p>
-                    <p>We specialize in all types of fabrication work, including aluminium windows and doors of every variety sliding, rotating, fixed for both residential and commercial spaces. Our team of experts handles everything from consulting to installation, ensuring your project is executed with the utmost precision and care from concept to completion.</p>
-                    
-                    <!-- STATS SECTION -->
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="stat-box">
-                                <h3 class="stat-number text-primary fw-bold" data-count="152">152+</h3>
-                                <p>Projects Completed</p>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-box">
-                                <h3 class="stat-number text-primary fw-bold" data-count="15">15+</h3>
-                                <p>Expert Team Members</p>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-box">
-                                <h3 class="stat-number text-primary fw-bold" data-count="10">10+</h3>
-                                <p>Years Experience</p>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-box">
-                                <h3 class="stat-number text-primary fw-bold" data-count="100">100%</h3>
-                                <p>Client Satisfaction</p>
-                            </div>
+<!-- ABOUT SECTION -->
+<section class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="section-title text-start">About Alukaz</h2>
+                <p class="lead">Your Trusted Partner in Aluminium Fabrication Since 2010</p>
+                <p>Alukaz is a premier provider of aluminium fabrication services in Karachi. Under the leadership of Director <strong>Syed Fahad Ali</strong>, we have built a reputation for excellence, reliability, and superior craftsmanship.</p>
+                <p>We specialize in all types of fabrication work, including aluminium windows and doors of every variety for both residential and commercial spaces.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div class="stat-box">
+                            <h3 class="stat-number" data-count="152">152+</h3>
+                            <p>Projects Completed</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <img src="images/banner1.jpg" alt="About Alukaz" class="img-fluid rounded-4 shadow">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Our Process Section -->
-    <section class="process-section py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title">Our Process</h2>
-            <p class="text-center mb-5">Here is our process of work in just 3 simple steps.</p>
-            <div class="row g-4">
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="process-card text-center p-4 shadow-sm h-100">
-                        <div class="step-number">01</div>
-                        <div class="icon-circle mb-3">
-                            <i class="fa-solid fa-handshake fa-3x"></i>
+                    <div class="col-6">
+                        <div class="stat-box">
+                            <h3 class="stat-number" data-count="15">25+</h3>
+                            <p>Expert Team Members</p>
                         </div>
-                        <h4>Let's Meet!</h4>
-                        <p>Just call or email and one of our experienced team members will be happy to meet you for a free, no-obligation chat about your ideas, dreams and budget for your new home or building.</p>
                     </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="process-card text-center p-4 shadow-sm h-100">
-                        <div class="step-number">02</div>
-                        <div class="icon-circle mb-3">
-                            <i class="fa-solid fa-pen-ruler fa-3x"></i>
+                    <div class="col-6">
+                        <div class="stat-box">
+                            <h3 class="stat-number" data-count="10">10+</h3>
+                            <p>Years Experience</p>
                         </div>
-                        <h4>Your Design</h4>
-                        <p>We will produce a detailed concept design of your new home or building. We have sample design to provide inspiration, and you'll work with one of our expert Architectural Team.</p>
                     </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="process-card text-center p-4 shadow-sm h-100">
-                        <div class="step-number">03</div>
-                        <div class="icon-circle mb-3">
-                            <i class="fa-solid fa-hard-hat fa-3x"></i>
+                    <div class="col-6">
+                        <div class="stat-box">
+                            <h3 class="stat-number" data-count="100">100%</h3>
+                            <p>Client Satisfaction</p>
                         </div>
-                        <h4>Time to Build</h4>
-                        <p>Once your contract is signed, our engineers and designers will review and finalise your plans. Your personal project manager will guide you through the building process step by step.</p>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <img src="images/banner1.jpg" alt="About Alukaz" class="img-fluid rounded-4 shadow">
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Services Section -->
-    <section class="services-section py-5" id="services">
-        <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <p class="text-center mb-5">From design consultation to final installation — we deliver complete aluminium fabrication solutions for residential, commercial and industrial projects.</p>
-
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-card h-100 p-4">
-                        <div class="service-icon">
-                            <i class="fa-solid fa-window-maximize fa-2x"></i>
-                        </div>
-                        <h5 class="mt-3 mb-2">Aluminium Windows</h5>
-                        <p class="mb-0">Sliding, casement, fixed and custom systems with premium finishing and smooth operation.</p>
+<!-- PROCESS SECTION -->
+<section class="process-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Our Process</h2>
+        <p class="text-center mb-5">Here is our process of work in just 3 simple steps.</p>
+        
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-card">
+                    <div class="step-number">01</div>
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-handshake"></i>
                     </div>
+                    <h4>Let's Meet!</h4>
+                    <p>Just call or email and one of our experienced team members will be happy to meet you for a free consultation.</p>
                 </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
-                    <div class="service-card h-100 p-4">
-                        <div class="service-icon">
-                            <i class="fa-solid fa-door-open fa-2x"></i>
-                        </div>
-                        <h5 class="mt-3 mb-2">Doors & Entrances</h5>
-                        <p class="mb-0">Main doors, office entrances, balcony doors — strong build, clean look, reliable hardware.</p>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-card">
+                    <div class="step-number">02</div>
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-pen-ruler"></i>
                     </div>
+                    <h4>Your Design</h4>
+                    <p>We will produce a detailed concept design of your new home or building based on your requirements.</p>
                 </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-card h-100 p-4">
-                        <div class="service-icon">
-                            <i class="fa-solid fa-layer-group fa-2x"></i>
-                        </div>
-                        <h5 class="mt-3 mb-2">Facade & Curtain Wall</h5>
-                        <p class="mb-0">Modern facade systems for high-rises and commercial buildings with precise alignment.</p>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="process-card">
+                    <div class="step-number">03</div>
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-hard-hat"></i>
                     </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
-                    <div class="service-card h-100 p-4">
-                        <div class="service-icon">
-                            <i class="fa-solid fa-grip-lines-vertical fa-2x"></i>
-                        </div>
-                        <h5 class="mt-3 mb-2">Partitions</h5>
-                        <p class="mb-0">Office partitions and glass solutions that balance privacy, light and clean aesthetics.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-card h-100 p-4">
-                        <div class="service-icon">
-                            <i class="fa-solid fa-ruler-combined fa-2x"></i>
-                        </div>
-                        <h5 class="mt-3 mb-2">Design & Consultation</h5>
-                        <p class="mb-0">We help you choose the right system, profile, glass and finish to match your project.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
-                    <div class="service-card h-100 p-4">
-                        <div class="service-icon">
-                            <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
-                        </div>
-                        <h5 class="mt-3 mb-2">Installation & After Support</h5>
-                        <p class="mb-0">Professional installation with finishing detail — plus support for adjustments and care.</p>
-                    </div>
+                    <h4>Time to Build</h4>
+                    <p>Once your contract is signed, our team will guide you through the building process step by step.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Why Choose Aluminium Section -->
-    <section class="why-aluminium py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <h2 class="section-title text-start">Why Choose Aluminium Windows & Doors?</h2>
-                    <div class="aluminium-features">
-                        <div class="feature-item d-flex mb-4">
-                            <div class="feature-icon me-3">
-                                <i class="fa-solid fa-check-circle fa-2x"></i>
-                            </div>
-                            <div>
-                                <h5>Superior Strength</h5>
-                                <p>Strongest of all the available alternatives eg. Wood & uPVC. Does not warp, twist or get stuck with changes in temperature.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item d-flex mb-4">
-                            <div class="feature-icon me-3">
-                                <i class="fa-solid fa-check-circle fa-2x"></i>
-                            </div>
-                            <div>
-                                <h5>Better Aesthetics</h5>
-                                <p>Sleek, modern look that enhances the beauty of your home or office. Available in various finishes and colors.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item d-flex mb-4">
-                            <div class="feature-icon me-3">
-                                <i class="fa-solid fa-check-circle fa-2x"></i>
-                            </div>
-                            <div>
-                                <h5>Enhanced Security</h5>
-                                <p>Robust construction with multi-point locking systems for maximum security.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item d-flex mb-4">
-                            <div class="feature-icon me-3">
-                                <i class="fa-solid fa-check-circle fa-2x"></i>
-                            </div>
-                            <div>
-                                <h5>Low Maintenance</h5>
-                                <p>Unlike wood, aluminium doesn't require painting or regular maintenance. Just simple cleaning keeps it looking new.</p>
-                            </div>
-                        </div>
+<!-- SERVICES SECTION -->
+<section class="services-section py-5">
+    <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <p class="text-center mb-5">From design consultation to final installation — we deliver complete aluminium fabrication solutions.</p>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-window-maximize"></i>
                     </div>
+                    <h5>Aluminium Windows</h5>
+                    <p>Sliding, casement, fixed and custom systems with premium finishing.</p>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <img src="images/sidebarImage.png" alt="Aluminium Features" class="img-fluid rounded-4 shadow">
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-door-open"></i>
+                    </div>
+                    <h5>Doors & Entrances</h5>
+                    <p>Main doors, office entrances, balcony doors — strong build, clean look.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h5>Facade & Curtain Wall</h5>
+                    <p>Modern facade systems for high-rises and commercial buildings.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-grip-lines-vertical"></i>
+                    </div>
+                    <h5>Partitions</h5>
+                    <p>Office partitions and glass solutions that balance privacy and light.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-ruler-combined"></i>
+                    </div>
+                    <h5>Design & Consultation</h5>
+                    <p>We help you choose the right system, profile, glass and finish.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h5>Installation & Support</h5>
+                    <p>Professional installation with finishing detail plus after-support.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-  <!-- Members of "ALUKAZ" of Companies - 2+2 Layout -->
-<!-- Members of "The Product Group" of Companies -->
+<!-- WHY ALUMINIUM SECTION -->
+<section class="why-aluminium py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="section-title text-start">Why Choose Aluminium?</h2>
+                <div class="mt-4">
+                    <div class="d-flex mb-4">
+                        <div class="feature-icon me-3">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h5>Superior Strength</h5>
+                            <p>Strongest of all alternatives. Does not warp or twist with temperature changes.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="feature-icon me-3">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h5>Better Aesthetics</h5>
+                            <p>Sleek, modern look that enhances the beauty of your home or office.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="feature-icon me-3">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h5>Enhanced Security</h5>
+                            <p>Robust construction with multi-point locking systems.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="feature-icon me-3">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h5>Low Maintenance</h5>
+                            <p>Unlike wood, aluminium doesn't require painting or regular maintenance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <img src="images/sidebarImage.png" alt="Aluminium Features" class="img-fluid rounded-4 shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MEMBERS SECTION -->
 <section class="members-section py-5">
     <div class="container">
-        <!-- Top Logo - Fixed Size -->
         <div class="text-center mb-4">
-            <img src="images/ALUKAZ.png" alt="The Product Group" class="img-fluid top-logo">
+            <img src="images/ALUKAZ.png" alt="Alukaz" class="top-logo">
         </div>
         
-        <h2 class="section-title">Members of "The Alukaz" of Companies</h2>
+        <h2 class="section-title">Members of Alukaz Group of Companies</h2>
         
-        <!-- First Row - 2 Cards -->
-        <div class="row g-4 mb-4">
-            <!-- ALUKAZ Corporation - Left -->
-            <div class="col-lg-6" data-aos="fade-right">
-                <div class="member-card h-100 p-4 d-flex flex-column flex-md-row align-items-center">
-                    <div class="member-logo me-md-4 mb-3 mb-md-0">
-                        <img src="images/Alukaz_blackLogo.png" alt="ALUKAZ Corporation" class="img-fluid">
-                    </div>
-                    <div class="text-center text-md-start">
-                        <h4 class="text-primary mb-2">ALUKAZ Corporation</h4>
-                        <p class="mb-0">ALUKAZ is constantly being updated and keeping alive to the modernization, advancements with changes in technology and the new product developments by associating itself with the technology leaders to bring you the state of art Windows, Partitions and Aluminum Panel Claddings.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- SPC - Silicone Products Corporation - Right -->
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="member-card h-100 p-4 d-flex flex-column flex-md-row align-items-center">
-                    <div class="member-logo me-md-4 mb-3 mb-md-0">
-                        <img src="images/spclogo.png" alt="SPC" class="img-fluid">
-                    </div>
-                    <div class="text-center text-md-start">
-                        <h4 class="text-primary mb-1">SPC</h4>
-                        <h5 class="mb-2 company-subtitle">Silicone Products Corporation</h5>
-                        <p class="mb-0">SPC is a chemicals manufacturing company, catering to the textile industry for more than 20 years. SPC is also a supplier of A-thermoplastic & Polystyrene products.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Second Row - 2 Cards -->
         <div class="row g-4">
-            <!-- Urethane Systems & Products Corporation - Left -->
-            <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-                <div class="member-card h-100 p-4 d-flex flex-column flex-md-row align-items-center">
-                    <div class="member-logo me-md-4 mb-3 mb-md-0">
-                        <img src="images/usplogo.png" alt="Urethane Systems" class="img-fluid">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="member-card d-flex flex-column flex-md-row align-items-center">
+                    <div class="member-logo">
+                        <img src="images/Alukaz_blackLogo.png" alt="ALUKAZ Corporation">
                     </div>
                     <div class="text-center text-md-start">
-                        <h4 class="text-primary mb-2">Urethane Systems & Products Corporation</h4>
-                        <p class="mb-0">Urethane System & Products Corporation promotes and installs better building solution. The solution that is achieved through the application standards and demonstrate an aptitude of understanding building science by combining proper equipments maintenance and upgrades.</p>
+                        <h4>ALUKAZ Corporation</h4>
+                        <p>State of the art Windows, Partitions and Aluminum Panel Claddings.</p>
                     </div>
                 </div>
             </div>
             
-            <!-- PPC - Polymer Products Corporation - Right -->
-            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
-                <div class="member-card h-100 p-4 d-flex flex-column flex-md-row align-items-center">
-                    <div class="member-logo me-md-4 mb-3 mb-md-0">
-                        <img src="images/ppclogo.png" alt="PPC" class="img-fluid">
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="member-card d-flex flex-column flex-md-row align-items-center">
+                    <div class="member-logo">
+                        <img src="images/spclogo.png" alt="SPC">
                     </div>
                     <div class="text-center text-md-start">
-                        <h4 class="text-primary mb-1">PPC</h4>
-                        <h5 class="mb-2 company-subtitle">Polymer Products Corporation</h5>
-                        <p class="mb-0">Polymer Products Corporation is involved in multifarious operations ranging from Rubber, Plastics, Chemical, Aluminium, Glass and catering to the most demanding applications. Our mission is to drive the growth and innovation of the elastomeric insulation market through a commitment to: Our customers - by providing reliable, sustainable, and easy-to-use products.</p>
+                        <h4>SPC</h4>
+                        <p>Silicone Products Corporation - Chemicals manufacturing since 20+ years.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                <div class="member-card d-flex flex-column flex-md-row align-items-center">
+                    <div class="member-logo">
+                        <img src="images/usplogo.png" alt="Urethane Systems">
+                    </div>
+                    <div class="text-center text-md-start">
+                        <h4>Urethane Systems</h4>
+                        <p>Better building solutions through application standards.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
+                <div class="member-card d-flex flex-column flex-md-row align-items-center">
+                    <div class="member-logo">
+                        <img src="images/ppclogo.png" alt="PPC">
+                    </div>
+                    <div class="text-center text-md-start">
+                        <h4>PPC</h4>
+                        <p>Polymer Products Corporation - Rubber, Plastics, Chemical solutions.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Featured Projects Section -->
-<section class="featured-projects py-5" id="portfolio">
+
+<!-- FEATURED PROJECTS SECTION -->
+<section class="featured-projects" id="portfolio">
     <div class="container">
         <h2 class="section-title">Our Featured Projects</h2>
-        <p class="text-center mb-5">Alukaz is involved in introducing the latest systems with highest quality products supplemented with best efficient services.</p>
+        <p class="text-center mb-5">Alukaz is involved in introducing the latest systems with highest quality products.</p>
         
         <div class="owl-carousel owl-theme project-carousel">
             <div class="item">
@@ -1607,7 +2039,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Saad Bhatti Building</h5>
                         <p class="card-text">Khayaban e Shahbaz, D.H.A. Karachi</p>
-                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                        <a href="#" class="project-btn">View Details</a>
                     </div>
                 </div>
             </div>
@@ -1618,29 +2050,29 @@
                     <div class="card-body">
                         <h5 class="card-title">Bol Tv Building</h5>
                         <p class="card-text">Korangi Creek, Karachi</p>
-                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                        <a href="#" class="project-btn">View Details</a>
                     </div>
                 </div>
             </div>
             
             <div class="item">
                 <div class="card border-0 shadow">
-                    <img src="images/Projects/bankalhabibhafiz.jpg" class="card-img-top" alt="Bank Al Habib Office Tower">
+                    <img src="images/Projects/bankalhabibhafiz.jpg" class="card-img-top" alt="Bank Al Habib">
                     <div class="card-body">
-                        <h5 class="card-title">Bank Al Habib Office Tower</h5>
-                        <p class="card-text">Bank Al-Habib - KH - Hafiz - DHA - Karachi</p>
-                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                        <h5 class="card-title">Bank Al Habib</h5>
+                        <p class="card-text">DHA, Karachi</p>
+                        <a href="#" class="project-btn">View Details</a>
                     </div>
                 </div>
             </div>
             
             <div class="item">
                 <div class="card border-0 shadow">
-                    <img src="images/Projects/artisticagi.jpg" class="card-img-top" alt="Artistic Garments Industries">
+                    <img src="images/Projects/artisticagi.jpg" class="card-img-top" alt="Artistic Garments">
                     <div class="card-body">
-                        <h5 class="card-title">Artistic Garments Industries</h5>
-                        <p class="card-text">Korangi Industrial Area - Karachi</p>
-                        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                        <h5 class="card-title">Artistic Garments</h5>
+                        <p class="card-text">Korangi Industrial Area</p>
+                        <a href="#" class="project-btn">View Details</a>
                     </div>
                 </div>
             </div>
@@ -1648,272 +2080,294 @@
     </div>
 </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials-section py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title">What Our Clients Say</h2>
-            <p class="text-center mb-5">Our reputation is built on introducing the latest systems with highest quality products supplemented with best efficient services.</p>
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section">
+    <div class="container">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <p class="text-center mb-5">Our reputation is built on quality and service excellence.</p>
+        
+        <div class="owl-carousel owl-theme testimonial-carousel">
+            <div class="item">
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">"Alukaz provided excellent service for our office renovation. The aluminium partitions and windows are of top quality."</p>
+                    <div class="d-flex align-items-center">
+                        <div class="client-avatar">
+                            <i class="fa-solid fa-user-circle"></i>
+                        </div>
+                        <div class="client-info">
+                            <h6>Mr. Saad Bhatti</h6>
+                            <small>Building Owner, DHA</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="owl-carousel owl-theme testimonial-carousel">
-                <!-- Testimonial 1 - Saad Bhatti -->
-                <div class="testimonial-item">
-                    <div class="card border-0 shadow p-4">
-                        <div class="quote-icon mb-3">
-                            <i class="fa-solid fa-quote-left fa-3x" style="color: #d8492a; opacity: 0.2;"></i>
+            <div class="item">
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">"The team at Alukaz is very professional. They understood our requirements perfectly and delivered on time."</p>
+                    <div class="d-flex align-items-center">
+                        <div class="client-avatar">
+                            <i class="fa-solid fa-user-tie"></i>
                         </div>
-                        <p class="mb-4">"Alukaz provided excellent service for our office renovation. The aluminium partitions and windows are of top quality. Highly recommended!"</p>
-                        <div class="client-info d-flex align-items-center">
-                            <div class="client-avatar me-3">
-                                <i class="fa-solid fa-user-circle fa-3x" style="color: #d8492a;"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Mr. Saad Bhatti</h6>
-                                <small class="text-muted">Building Owner, DHA</small>
-                            </div>
+                        <div class="client-info">
+                            <h6>Junaid Vohra</h6>
+                            <small>VP, The Product Group</small>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Testimonial 2 - Junaid Vohra -->
-                <div class="testimonial-item">
-                    <div class="card border-0 shadow p-4">
-                        <div class="quote-icon mb-3">
-                            <i class="fa-solid fa-quote-left fa-3x" style="color: #d8492a; opacity: 0.2;"></i>
-                        </div>
-                        <p class="mb-4">"The team at Alukaz is very professional. They understood our requirements perfectly and delivered the project on time. The sliding doors are beautiful!"</p>
-                        <div class="client-info d-flex align-items-center">
-                            <div class="client-avatar me-3">
-                                <i class="fa-solid fa-user-tie fa-3x" style="color: #d8492a;"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Junaid Vohra</h6>
-                                <small class="text-muted">Vice President, The Product Group</small>
-                            </div>
-                        </div>
+            </div>
+            
+            <div class="item">
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fa-solid fa-quote-left"></i>
                     </div>
-                </div>
-                
-                <!-- Testimonial 3 - Ahmed Raza -->
-                <div class="testimonial-item">
-                    <div class="card border-0 shadow p-4">
-                        <div class="quote-icon mb-3">
-                            <i class="fa-solid fa-quote-left fa-3x" style="color: #d8492a; opacity: 0.2;"></i>
+                    <p class="testimonial-text">"Quality craftsmanship and excellent customer service. Will definitely use them again."</p>
+                    <div class="d-flex align-items-center">
+                        <div class="client-avatar">
+                            <i class="fa-regular fa-circle-user"></i>
                         </div>
-                        <p class="mb-4">"Quality craftsmanship and excellent customer service. They went above and beyond to ensure we were satisfied with the work. Will definitely use them again."</p>
-                        <div class="client-info d-flex align-items-center">
-                            <div class="client-avatar me-3">
-                                <i class="fa-regular fa-circle-user fa-3x" style="color: #d8492a;"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Ahmed Raza</h6>
-                                <small class="text-muted">Homeowner, Clifton</small>
-                            </div>
+                        <div class="client-info">
+                            <h6>Ahmed Raza</h6>
+                            <small>Homeowner, Clifton</small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Latest News Section -->
-    <!-- News Section -->
-    <section class="news-section py-5">
-        <div class="container">
-            <h2 class="section-title">Our Updated News</h2>
-            <p class="text-center mb-5">Here you can find information about Alukaz's most recent completed projects and achievements.</p>
+    </div>
+</section>
+
+<!-- NEWS SECTION - THEMED -->
+<section class="news-section">
+    <div class="container">
+        <h2 class="section-title">Our Updated News</h2>
+        <p class="text-center mb-5">Stay updated with our latest projects and achievements.</p>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="news-card">
+                    <div class="news-img-wrapper">
+                        <img src="images/Projects/SBB1.png" alt="Saad Bhatti Building">
+                        <div class="news-category">New Project</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">
+                            <i class="fa-regular fa-calendar"></i> March 15, 2024
+                        </div>
+                        <h5 class="news-title">Saad Bhatti Building</h5>
+                        <p class="news-text">Complete aluminium window and facade solution delivered at Khayaban e Shahbaz, D.H.A. Karachi.</p>
+                        <a href="#" class="news-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
             
-            <div class="row g-4">
-                <!-- News 1: Saad Bhatti Building -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="news-card h-100">
-                        <div class="news-img-wrapper">
-                            <img src="images/Projects/SBB1.png" class="card-img-top" alt="Saad Bhatti Building">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="news-card">
+                    <div class="news-img-wrapper">
+                        <img src="images/Projects/bankalhabibhafiz.jpg" alt="Bank Al Habib">
+                        <div class="news-category">Commercial</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">
+                            <i class="fa-regular fa-calendar"></i> February 28, 2024
                         </div>
-                        <div class="news-content">
-                            <div class="news-date">
-                                <i class="fa-regular fa-calendar me-2"></i>March 15, 2024
-                            </div>
-                            <h5 class="news-title">Saad Bhatti Building</h5>
-                            <p class="news-text">Saad Bhatti Bldg, Khayabn e Shahbaz, D.H.A. Karachi. Complete aluminium window and facade solution delivered.</p>
-                            <a href="#" class="news-link">Read More <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        <h5 class="news-title">Bank Al Habib Karachi</h5>
+                        <p class="news-text">Complete aluminium facade and curtain wall system installed at Ocean Tower, Clifton.</p>
+                        <a href="#" class="news-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="news-card">
+                    <div class="news-img-wrapper">
+                        <img src="images/Projects/artisticagi.jpg" alt="New Showroom">
+                        <div class="news-category">Announcement</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">
+                            <i class="fa-regular fa-calendar"></i> January 10, 2024
+                        </div>
+                        <h5 class="news-title">New Showroom Opening</h5>
+                        <p class="news-text">Alukaz opens new state-of-the-art showroom in Korangi Industrial Area.</p>
+                        <a href="#" class="news-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <a href="#" class="btn-news-view-all">
+                <span>View All News</span>
+                <i class="fa-solid fa-newspaper"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION - THEMED -->
+<section class="cta-section" id="contact">
+    <div class="container">
+        <div class="cta-wrapper">
+            <div class="row align-items-center">
+                <div class="col-lg-8 text-center text-lg-start">
+                    <h2 class="cta-title">Ready to Start Your Project?</h2>
+                    <p class="cta-description">Contact us today for a free consultation and quote. Our team of experts is ready to bring your vision to life with premium aluminium solutions.</p>
+                    <div class="cta-features d-flex flex-wrap justify-content-center justify-content-lg-start gap-4 mt-4">
+                        <div class="cta-feature">
+                            <i class="fa-regular fa-circle-check"></i>
+                            <span>Free Consultation</span>
+                        </div>
+                        <div class="cta-feature">
+                            <i class="fa-regular fa-circle-check"></i>
+                            <span>Expert Team</span>
+                        </div>
+                        <div class="cta-feature">
+                            <i class="fa-regular fa-circle-check"></i>
+                            <span>Best Prices</span>
                         </div>
                     </div>
                 </div>
-                
-                <!-- News 2: Ocean Tower Karachi -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="news-card h-100">
-                        <div class="news-img-wrapper">
-                            <img src="images/Projects/bankalhabibhafiz.jpg" class="card-img-top" alt="Ocean Tower Karachi">
-                        </div>
-                        <div class="news-content">
-                            <div class="news-date">
-                                <i class="fa-regular fa-calendar me-2"></i>February 28, 2024
-                            </div>
-                            <h5 class="news-title">Bank Al Habib Karachi</h5>
-                            <p class="news-text">Complete aluminium facade and curtain wall system installed at Ocean Tower, Clifton. State-of-the-art sliding windows and doors.</p>
-                            <a href="#" class="news-link">Read More <i class="fa-solid fa-arrow-right ms-2"></i></a>
-                        </div>
-                    </div>
+                <div class="col-lg-4 text-center text-lg-end mt-4 mt-lg-0">
+                    <a href="contact.html" class="btn-cta">
+                        <span>Get Free Quote</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
+                    <p class="cta-phone mt-3">
+                        <i class="fa-solid fa-phone"></i>
+                        <a href="tel:02135120339">021-35120339</a>
+                    </p>
                 </div>
-                
-                <!-- News 3: New Showroom Opening -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="news-card h-100">
-                        <div class="news-img-wrapper">
-                            <img src="images/Projects/artisticagi.jpg" class="card-img-top" alt="New Showroom Opening">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="newsletter-section" data-aos="fade-up">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
+                            <p>Stay updated with our latest projects and offers.</p>
                         </div>
-                        <div class="news-content">
-                            <div class="news-date">
-                                <i class="fa-regular fa-calendar me-2"></i>January 10, 2024
-                            </div>
-                            <h5 class="news-title">New Showroom Opening</h5>
-                            <p class="news-text">Alukaz opens new state-of-the-art showroom in Korangi Industrial Area showcasing latest aluminium products and innovative designs.</p>
-                            <a href="#" class="news-link">Read More <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                        <div class="col-lg-6">
+                            <form class="newsletter-form" id="newsletterForm">
+                                <input type="email" class="form-control" placeholder="Enter your email" required>
+                                <button type="submit" class="btn-newsletter">Subscribe</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Call to Action Section -->
-    <section class="cta-section py-5 text-white" id="contact">
-        <div class="container text-center">
-            <h2 class="display-5 fw-bold mb-4">Ready to Start Your Project?</h2>
-            <p class="lead mb-4">Contact us today for a free consultation and quote. Our team is ready to bring your vision to life.</p>
-            <a href="contact.html" class="btn btn-light btn-lg px-5 py-3">Get Free Quote</a>
-        </div>
-    </section>
 
-  <!-- Footer - Updated with Logo (Same as Portfolio) -->
-    <footer class="mt-0">
-        <div class="container">
-            <!-- Newsletter Section -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="newsletter-section" data-aos="fade-up">
-                        <div class="row align-items-center">
-                            <div class="col-lg-6">
-                                <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
-                                <p>Stay updated with our latest projects, offers, and aluminium fabrication insights. No spam, only valuable updates.</p>
-                            </div>
-                            <div class="col-lg-6">
-                                <form class="newsletter-form" id="newsletterForm">
-                                    <input type="email" class="form-control" placeholder="Enter your email address" required>
-                                    <button type="submit" class="btn-newsletter">
-                                        Subscribe <i class="fa-regular fa-paper-plane"></i>
-                                    </button>
-                                </form>
-                                <div class="newsletter-checkbox">
-                                    <input type="checkbox" id="privacyPolicy" checked>
-                                    <label for="privacyPolicy">I agree to the privacy policy and terms of service</label>
-                                </div>
-                            </div>
-                        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-widget">
+                    <div class="footer-logo">
+                        <img src="images/ALUKAZ.png" alt="Alukaz">
                     </div>
-                </div>
-            </div>
-
-            <!-- Footer Widgets with Logo -->
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-widget">
-                        <div class="footer-logo">
-                            <img src="images/ALUKAZ.png" alt="Alukaz Logo">
-                        </div>
-                        <p>ALUKAZ FABRICATION HOUSE - We Deal in all Type of Metal Fabrication. Premium aluminium fabrication solutions provider in Karachi since 2010.</p>
-                        <p><strong>Director:</strong> Syed Fahad Ali</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-widget">
-                        <h5>Quick Links</h5>
-                        <ul class="footer-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="portfolio.html">Our Portfolio</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-widget">
-                        <h5>Contact Info</h5>
-                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali (Director)</p>
-                        <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
-                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> syedfahadalikazmi@alukaz.com.pk</p>
-                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339 | 0331-3175114</p>
+                    <p>ALUKAZ FABRICATION HOUSE - Premium aluminium fabrication solutions in Karachi since 2010.</p>
+                    <p><strong>Director:</strong> Syed Fahad Ali</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
             
-            <div class="copyright">
-                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved. Designed with <i class="fa-solid fa-heart" style="color: var(--primary);"></i> for Alukaz</p>
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-widget">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-widget">
+                    <h5>Contact Info</h5>
+                    <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali</p>
+                    <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
+                    <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> syedfahadalikazmi@alukaz.com.pk</p>
+                    <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339</p>
+                </div>
             </div>
         </div>
-    </footer>
+        
+        <div class="copyright">
+            <p>&copy; 2024 Alukaz Fabrication House. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 
-    <!-- Back to Top Button -->
-    <button id="back-to-top" class="btn btn-primary rounded-circle">
-        <i class="fa-solid fa-arrow-up"></i>
-    </button>
+<!-- BACK TO TOP -->
+<button id="back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 50
-        });
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-        // Navbar scroll effect
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 50) {
-                $('#mainNav').addClass('scrolled');
-            } else {
-                $('#mainNav').removeClass('scrolled');
-            }
-            
-            // Back to top button
-            if ($(this).scrollTop() > 300) {
-                $('#back-to-top').addClass('show');
-            } else {
-                $('#back-to-top').removeClass('show');
-            }
-        });
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 50
+    });
 
-        $('#back-to-top').click(function() {
-            $('html, body').animate({ scrollTop: 0 }, 600);
-        });
+    // Navbar scroll
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 50) {
+            $('#mainNav').addClass('scrolled');
+        } else {
+            $('#mainNav').removeClass('scrolled');
+        }
+        
+        if ($(this).scrollTop() > 300) {
+            $('#back-to-top').addClass('show');
+        } else {
+            $('#back-to-top').removeClass('show');
+        }
+    });
 
-        // Sidebar functionality
-        $(document).ready(function() {
-             // Show popup after 3 seconds
+    $('#back-to-top').click(function() {
+        $('html, body').animate({ scrollTop: 0 }, 600);
+    });
+
+    // Popup
+    $(document).ready(function() {
         setTimeout(function() {
             $('#popupOverlay').addClass('show');
             $('body').css('overflow', 'hidden');
         }, 3000);
 
-        // Close popup when clicking close button
         $('#popupClose').click(function() {
             $('#popupOverlay').removeClass('show');
             $('body').css('overflow', 'auto');
         });
 
-        // Close popup when clicking outside
         $('#popupOverlay').click(function(e) {
             if ($(e.target).is('#popupOverlay')) {
                 $('#popupOverlay').removeClass('show');
@@ -1921,106 +2375,83 @@
             }
         });
 
-        // Close popup with Escape key
-        $(document).keyup(function(e) {
-            if (e.key === 'Escape' && $('#popupOverlay').hasClass('show')) {
-                $('#popupOverlay').removeClass('show');
-                $('body').css('overflow', 'auto');
-            }
-        });
-            const $sidebar = $('#navbarNav');
-            const $overlay = $('#sidebarOverlay');
-            const $toggle = $('#sidebarToggle');
-            const $closeBtn = $('#sidebarClose');
+        // Sidebar
+        const $sidebar = $('#navbarNav');
+        const $overlay = $('#sidebarOverlay');
+        const $toggle = $('#sidebarToggle');
+        const $closeBtn = $('#sidebarClose');
+        const $body = $('body');
+        const $window = $(window);
 
-            function openSidebar() {
-                $sidebar.addClass('show');
-                $overlay.addClass('show');
-                $('body').css('overflow', 'hidden');
-            }
+        function openSidebar() {
+            const scrollY = $window.scrollTop();
+            $sidebar.addClass('show');
+            $overlay.addClass('show');
+            $body.addClass('sidebar-open').data('scroll-position', scrollY).css('top', -scrollY + 'px');
+            $toggle.attr('aria-expanded', 'true');
+        }
 
-            function closeSidebar() {
-                $sidebar.removeClass('show');
-                $overlay.removeClass('show');
-                $('body').css('overflow', '');
-            }
+        function closeSidebar() {
+            const scrollY = $body.data('scroll-position');
+            $sidebar.removeClass('show');
+            $overlay.removeClass('show');
+            $body.removeClass('sidebar-open').css('top', '');
+            if (scrollY !== undefined) $window.scrollTop(scrollY);
+            $toggle.attr('aria-expanded', 'false');
+        }
 
-            $toggle.on('click', function(e) {
-                e.stopPropagation();
-                openSidebar();
-            });
-
-            $closeBtn.on('click', function(e) {
-                e.stopPropagation();
-                closeSidebar();
-            });
-
-            $overlay.on('click', function() {
-                closeSidebar();
-            });
-
-            $(document).on('keydown', function(e) {
-                if (e.key === 'Escape' && $sidebar.hasClass('show')) {
-                    closeSidebar();
-                }
-            });
-
-            $('.nav-link').on('click', function() {
-                if ($(window).width() < 992) {
-                    closeSidebar();
-                }
-            });
-
-            $(window).on('resize', function() {
-                if ($(window).width() >= 992) {
-                    $sidebar.removeClass('show');
-                    $overlay.removeClass('show');
-                    $('body').css('overflow', '');
-                }
-            });
-        });
-
-        // Newsletter Form
-        $('#newsletterForm').submit(function(e) {
+        $toggle.on('click', function(e) {
             e.preventDefault();
-            alert('Thank you for subscribing to our newsletter!');
-            $(this).find('input[type="email"]').val('');
+            $sidebar.hasClass('show') ? closeSidebar() : openSidebar();
         });
 
-        // Initialize Owl Carousels
-        $(document).ready(function(){
-            $('.project-carousel').owlCarousel({
-                loop: true,
-                margin: 30,
-                nav: false,
-                dots: true,
-                autoplay: true,
-                autoplayTimeout: 5000,
-                autoplayHoverPause: true,
-                smartSpeed: 800,
-                responsive: {
-                    0: { items: 1 },
-                    768: { items: 2 },
-                    992: { items: 3 }
-                }
-            });
-
-            $('.testimonial-carousel').owlCarousel({
-                loop: true,
-                margin: 30,
-                nav: false,
-                dots: true,
-                autoplay: true,
-                autoplayTimeout: 6000,
-                autoplayHoverPause: true,
-                smartSpeed: 800,
-                responsive: {
-                    0: { items: 1 },
-                    768: { items: 2 },
-                    992: { items: 3 }
-                }
-            });
+        $closeBtn.on('click', closeSidebar);
+        $overlay.on('click', closeSidebar);
+        
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' && $sidebar.hasClass('show')) closeSidebar();
         });
-    </script>
+
+        $('.nav-link').on('click', function() {
+            if ($window.width() < 992) closeSidebar();
+        });
+
+        $window.on('resize', function() {
+            if ($window.width() >= 992 && $sidebar.hasClass('show')) closeSidebar();
+        });
+    });
+
+    // Newsletter
+    $('#newsletterForm').submit(function(e) {
+        e.preventDefault();
+        alert('Thank you for subscribing!');
+        $(this).find('input[type="email"]').val('');
+    });
+
+    // Owl Carousels
+    $(document).ready(function(){
+        $('.project-carousel').owlCarousel({
+            loop: true, margin: 30, nav: false, dots: true, autoplay: true,
+            autoplayTimeout: 5000, smartSpeed: 800,
+            responsive: { 0: { items: 1 }, 768: { items: 2 }, 992: { items: 3 } }
+        });
+
+        $('.testimonial-carousel').owlCarousel({
+            loop: true, margin: 30, nav: false, dots: true, autoplay: true,
+            autoplayTimeout: 6000, smartSpeed: 800,
+            responsive: { 0: { items: 1 }, 768: { items: 2 }, 992: { items: 3 } }
+        });
+    });
+
+    // iOS height fix
+    function setVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        $('.hero-section').css('height', window.innerHeight + 'px');
+    }
+    setVH();
+    $(window).on('resize', setVH);
+</script>
+
 </body>
 </html>
