@@ -161,6 +161,8 @@
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0,0,0,0.5);
             padding: 15px 0;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius:30px;
         }
 
         .navbar-brand img {
@@ -1416,7 +1418,7 @@
         }
 
         .newsletter-section {
-            background: rgba(255,255,255,0.05);
+            background: rgba(223, 218, 218, 0.705);
             border-radius: 30px;
             padding: 2rem;
             margin-bottom: 3rem;
@@ -1433,13 +1435,13 @@
             min-width: 250px;
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.2);
-            color: white;
+            color: rgb(0, 0, 0);
             padding: 12px 20px;
             border-radius: 50px;
         }
 
         .newsletter-form .form-control::placeholder {
-            color: rgba(255,255,255,0.5);
+            color: rgba(80, 77, 77, 0.849);
         }
 
         .btn-newsletter {
@@ -2250,73 +2252,80 @@
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="newsletter-section" data-aos="fade-up">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
-                            <p>Stay updated with our latest projects and offers.</p>
-                        </div>
-                        <div class="col-lg-6">
-                            <form class="newsletter-form" id="newsletterForm">
-                                <input type="email" class="form-control" placeholder="Enter your email" required>
-                                <button type="submit" class="btn-newsletter">Subscribe</button>
-                            </form>
+   <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="newsletter-section" data-aos="fade-up">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <h3 class="text-dark"><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
+                                <p class="text-dark">Stay updated with our latest projects, offers, and aluminium fabrication insights.</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <form class="newsletter-form" id="newsletterForm">
+                                    <input type="email" class="form-control" placeholder="Enter your email address" required>
+                                    <button type="submit" class="btn-newsletter">
+                                        Subscribe <i class="fa-regular fa-paper-plane"></i>
+                                    </button>
+                                </form>
+                                <div class="newsletter-checkbox">
+                                    <input type="checkbox" id="privacyPolicy" checked>
+                                    <label class="text-dark" for="privacyPolicy">I agree to the privacy policy</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="footer-widget">
-                    <div class="footer-logo">
-                        <img src="images/ALUKAZ.png" alt="Alukaz">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <div class="footer-logo">
+                            <img src="images/ALUKAZ.png" alt="Alukaz Logo">
+                        </div>
+                        <p>ALUKAZ FABRICATION HOUSE - Premium aluminium fabrication solutions in Karachi since 2010.</p>
+                        <p><strong>Director:</strong> Syed Fahad Ali</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                        </div>
                     </div>
-                    <p>ALUKAZ FABRICATION HOUSE - Premium aluminium fabrication solutions in Karachi since 2010.</p>
-                    <p><strong>Director:</strong> Syed Fahad Ali</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="portfolio.html">Our Portfolio</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Contact Info</h5>
+                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali</p>
+                        <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
+                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> info@alukaz.com.pk</p>
+                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339</p>
                     </div>
                 </div>
             </div>
             
-            <div class="col-lg-4 col-md-6">
-                <div class="footer-widget">
-                    <h5>Quick Links</h5>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="footer-widget">
-                    <h5>Contact Info</h5>
-                    <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali</p>
-                    <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
-                    <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> syedfahadalikazmi@alukaz.com.pk</p>
-                    <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339</p>
-                </div>
+            <div class="copyright">
+                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved.</p>
             </div>
         </div>
-        
-        <div class="copyright">
-            <p>&copy; 2024 Alukaz Fabrication House. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
+    </footer>
+
 
 <!-- BACK TO TOP -->
 <button id="back-to-top">
