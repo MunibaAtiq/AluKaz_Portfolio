@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>About Us - Alukaz | Premium Aluminium Fabrication</title>
     
     <!-- Bootstrap CSS -->
@@ -16,12 +16,11 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     
     <style>
         /* ========================================
-           Global Styles
+           GLOBAL VARIABLES & RESET
         ======================================== */
         :root {
             --primary: #d8492a;
@@ -29,6 +28,7 @@
             --primary-light: #e06b4a;
             --secondary: #f97316;
             --gradient: linear-gradient(135deg, #d8492a, #f97316);
+            --gradient-hover: linear-gradient(135deg, #f97316, #d8492a);
             --gradient-dark: linear-gradient(135deg, #0f0f17 0%, #1a1a2a 45%, #2a1f1c 90%, #3f2b20 100%);
             --dark: #1e1e2f;
             --dark-light: #2a2a3a;
@@ -38,6 +38,16 @@
             --shadow: 0 10px 30px rgba(0,0,0,0.1);
             --shadow-hover: 0 20px 40px rgba(216,73,42,0.15);
             --transition: all 0.3s ease;
+            --transition-slow: all 0.5s ease;
+            
+            /* Responsive Font Sizes */
+            --fs-xs: clamp(0.75rem, 2vw, 0.875rem);
+            --fs-sm: clamp(0.875rem, 2.5vw, 1rem);
+            --fs-md: clamp(1rem, 3vw, 1.125rem);
+            --fs-lg: clamp(1.125rem, 4vw, 1.5rem);
+            --fs-xl: clamp(1.5rem, 5vw, 2rem);
+            --fs-xxl: clamp(2rem, 6vw, 3rem);
+            --fs-hero: clamp(2.5rem, 8vw, 4rem);
         }
 
         * {
@@ -46,428 +56,55 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             color: var(--text);
             background: var(--gray);
-            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* ========================================
-           Parallax Effect Styles
-        ======================================== */
-        .parallax-section {
-            position: relative;
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            overflow: hidden;
-        }
-
-        .parallax-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1;
-        }
-
-        .parallax-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
-
-        /* Page Header with Parallax */
-        .page-header {
-            background: linear-gradient(rgba(10,10,18,0.85), rgba(20,15,20,0.85)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            padding: 180px 0 100px;
-            text-align: center;
-            position: relative;
-            margin-bottom: 0;
-        }
-
-        .page-header::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(700px 400px at 15% 30%, rgba(216,73,42,0.3), transparent 60%),
-                radial-gradient(700px 400px at 85% 25%, rgba(249,115,22,0.25), transparent 60%);
-            pointer-events: none;
-            mix-blend-mode: overlay;
-            opacity: 0.5;
-        }
-
-        .page-header h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
-            animation: fadeInDown 1s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .page-header p {
-            font-size: 1.3rem;
-            color: rgba(255,255,255,0.95);
-            max-width: 600px;
-            margin: 0 auto;
-            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 2;
-        }
-
-        .page-header .breadcrumb {
-            background: transparent;
-            justify-content: center;
-            margin: 20px 0 0;
-            animation: fadeInUp 1s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .page-header .breadcrumb-item,
-        .page-header .breadcrumb-item a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .page-header .breadcrumb-item.active {
-            color: var(--primary-light);
-        }
-
-        /* Story Section with Parallax */
-        .story-section {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            position: relative;
-        }
-
-        .story-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.02), transparent);
-            pointer-events: none;
-        }
-
-        /* Mission Vision Section with Parallax Background */
-        .mission-vision {
-            padding: 70px 0;
-            position: relative;
-            background: linear-gradient(135deg, rgba(216,73,42,0.02), rgba(249,115,22,0.02));
-        }
-
-        .mission-vision::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.05;
-            pointer-events: none;
-        }
-
-        /* Values Section with Parallax Effect */
-        .values-section {
-            padding: 70px 0;
-            position: relative;
-            background: linear-gradient(135deg, #ffffff, #f8f9fa);
-        }
-
-        .values-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.03;
-            pointer-events: none;
-        }
-
-        /* ========================================
-           NEW CTA ANIMATIONS - Modern & Professional
-        ======================================== */
-        .cta-section {
-            background: var(--gradient) !important;
-            padding: 70px 0 !important;
-            position: relative;
-            overflow: hidden;
-            isolation: isolate;
-        }
-
-        /* Animated Background Particles */
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 25%),
-                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.12) 0%, transparent 22%),
-                radial-gradient(circle at 90% 20%, rgba(255,255,255,0.08) 0%, transparent 30%);
-            animation: floatParticles 15s ease-in-out infinite;
-            z-index: 1;
-        }
-
-        /* Floating Shapes */
-        .cta-section::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 30px,
-                    rgba(255,255,255,0.03) 30px,
-                    rgba(255,255,255,0.03) 60px
-                );
-            animation: rotatePattern 30s linear infinite;
-            z-index: 1;
-        }
-
-        /* Floating Particles Animation */
-        @keyframes floatParticles {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.8;
-            }
-            25% {
-                transform: translate(2%, 1%) scale(1.02);
-                opacity: 1;
-            }
-            50% {
-                transform: translate(-1%, 2%) scale(0.98);
-                opacity: 0.9;
-            }
-            75% {
-                transform: translate(1%, -1%) scale(1.01);
-                opacity: 1;
-            }
-        }
-
-        /* Rotating Pattern Animation */
-        @keyframes rotatePattern {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(5deg) scale(1.05);
-            }
-            100% {
-                transform: rotate(10deg) scale(1);
-            }
-        }
-
-        /* Text Animation - Glow Effect */
-        .cta-section h2 {
-            font-size: 2.5rem !important;
-            margin-bottom: 15px !important;
-            position: relative;
-            z-index: 3;
-            animation: textGlow 3s ease-in-out infinite;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        @keyframes textGlow {
-            0%, 100% {
-                text-shadow: 0 0 10px rgba(255,255,255,0.5);
-                transform: scale(1);
-            }
-            50% {
-                text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.3);
-                transform: scale(1.02);
-            }
-        }
-
-        /* Paragraph Animation */
-        .cta-section p {
-            font-size: 1.2rem !important;
-            margin-bottom: 25px !important;
-            position: relative;
-            z-index: 3;
-            animation: slideUp 2s ease-out infinite;
-            opacity: 0.95;
-        }
-
-        @keyframes slideUp {
-            0%, 100% {
-                transform: translateY(0);
-                opacity: 0.95;
-            }
-            50% {
-                transform: translateY(-3px);
-                opacity: 1;
-            }
-        }
-
-        /* Button Animation - Professional Pulse */
-        .cta-section .btn-light {
-            border-radius: 50px;
-            padding: 14px 40px !important;
-            font-weight: 600;
-            border: 2px solid transparent;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 3;
-            background: white;
-            color: var(--primary);
-            overflow: hidden;
-            animation: buttonPulse 2.5s ease-in-out infinite;
-        }
-
-        .cta-section .btn-light::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-            z-index: -1;
-        }
-
-        .cta-section .btn-light:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
-            background: transparent;
-            color: white;
-            border-color: white;
-        }
-
-        .cta-section .btn-light:hover::before {
-            width: 300px;
-            height: 300px;
-            background: rgba(255,255,255,0.2);
-        }
-
-        @keyframes buttonPulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            }
-        }
-
-        /* Ripple Effect on Button Click (JavaScript will handle) */
-        .cta-section .btn-light:active {
-            transform: scale(0.95);
-            transition: transform 0.2s;
-        }
-
-        /* Floating Icons Animation */
-        .cta-section .floating-icon {
-            position: absolute;
-            color: rgba(255,255,255,0.1);
-            font-size: 2rem;
-            z-index: 2;
-            animation: floatIcon 10s ease-in-out infinite;
-        }
-
-        .cta-section .floating-icon:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .cta-section .floating-icon:nth-child(2) {
-            bottom: 30%;
-            right: 15%;
-            animation-delay: 3s;
-        }
-
-        .cta-section .floating-icon:nth-child(3) {
-            top: 40%;
-            right: 25%;
-            animation-delay: 6s;
-        }
-
-        @keyframes floatIcon {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.1;
-            }
-            50% {
-                transform: translateY(-20px) rotate(10deg);
-                opacity: 0.2;
-            }
-        }
-
-        /* ========================================
-           Navigation – Same as Portfolio/Contact
+           NAVIGATION - FIXED WITH SIDEBAR
         ======================================== */
         .navbar {
             background: transparent !important;
-            padding: 20px 0;
+            padding: clamp(15px, 3vw, 20px) 0;
             transition: var(--transition);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            overflow: hidden;
         }
 
         .navbar.scrolled {
             background: var(--gradient-dark) !important;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-            padding: 15px 0;
+            padding: clamp(12px, 2.5vw, 15px) 0;
             border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            animation: slideDown 0.5s ease forwards;
-        }
-
-        @keyframes slideDown {
-            0% { transform: translateY(-100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+            border-bottom-right-radius:30px;
         }
 
         .navbar-brand img {
-            height: 55px;
+            height: clamp(40px, 6vw, 55px);
             transition: var(--transition);
         }
 
         .navbar.scrolled .navbar-brand img {
-            height: 45px;
+            height: clamp(35px, 5vw, 45px);
         }
 
         .nav-link {
@@ -475,7 +112,7 @@
             font-weight: 500;
             margin: 0 8px;
             position: relative;
-            font-size: 1rem;
+            font-size: var(--fs-sm);
             padding: 8px 0 !important;
             opacity: 0.9;
         }
@@ -503,16 +140,18 @@
             color: white !important;
         }
 
-        /* Mobile Sidebar Styles */
+        /* Mobile Sidebar - FIXED */
         @media (max-width: 991px) {
             .navbar-collapse {
                 position: fixed;
                 top: 0;
-                right: -300px;
-                width: 280px;
+                right: -100%;
+                width: min(300px, 85%);
                 height: 100vh;
+                height: -webkit-fill-available;
                 background: var(--gradient-dark);
                 backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
                 padding: 100px 25px 40px;
                 transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 1050;
@@ -541,33 +180,28 @@
                 padding: 15px 20px !important;
                 margin: 0;
                 border-radius: 12px;
-                font-size: 1.1rem;
+                font-size: var(--fs-md);
                 background: rgba(255,255,255,0.05);
                 border: 1px solid rgba(255,255,255,0.1);
                 display: flex;
                 align-items: center;
                 gap: 12px;
+                min-height: 44px;
             }
 
             .nav-link i {
                 width: 24px;
-                font-size: 1.2rem;
+                font-size: var(--fs-lg);
                 color: var(--primary-light);
             }
 
-            .nav-link:hover {
+            .nav-link:hover,
+            .nav-link.active {
                 background: var(--gradient);
                 transform: translateX(5px);
             }
 
-            .nav-link:hover i {
-                color: white;
-            }
-
-            .nav-link.active {
-                background: var(--gradient);
-            }
-
+            .nav-link:hover i,
             .nav-link.active i {
                 color: white;
             }
@@ -580,13 +214,13 @@
                 position: absolute;
                 top: 25px;
                 right: 25px;
-                background: rgba(255,255,255,0.2);
-                border: 1px solid rgba(255,255,255,0.3);
+                background: rgba(255,255,255,0.15);
+                border: 1px solid rgba(255,255,255,0.25);
                 color: white;
                 width: 45px;
                 height: 45px;
                 border-radius: 50%;
-                font-size: 1.3rem;
+                font-size: var(--fs-lg);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -594,11 +228,14 @@
                 transition: all 0.3s ease;
                 z-index: 1060;
                 backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
                 box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                min-width: 44px;
+                min-height: 44px;
             }
 
             .sidebar-close i {
-                font-size: 1.3rem;
+                font-size: var(--fs-lg);
                 color: white;
             }
 
@@ -625,7 +262,7 @@
             .sidebar-header span {
                 color: white;
                 font-weight: 600;
-                font-size: 1.1rem;
+                font-size: var(--fs-md);
             }
 
             .sidebar-overlay {
@@ -636,12 +273,14 @@
                 height: 100%;
                 background: rgba(0,0,0,0.6);
                 backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
                 z-index: 1049;
                 display: none;
             }
             
             .sidebar-overlay.show {
                 display: block;
+                animation: fadeIn 0.3s ease;
             }
 
             .navbar-toggler {
@@ -651,15 +290,33 @@
                 border-radius: 14px;
                 margin-left: auto;
                 z-index: 1060;
+                min-height: 44px;
             }
 
             .navbar-toggler:focus {
                 box-shadow: none;
+                outline: none;
             }
 
             .navbar-toggler-icon {
                 filter: brightness(0) invert(1);
             }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        }
+
+        /* Body when sidebar is open */
+        body.sidebar-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
         @media (min-width: 992px) {
@@ -674,28 +331,60 @@
             }
         }
 
-        .navbar::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), rgba(216,73,42,0.5), rgba(249,115,22,0.3), transparent);
-            transform: scaleX(0);
-            transform-origin: center;
-            transition: transform 0.5s ease;
+        /* ========================================
+           PAGE HEADER - FULLY RESPONSIVE
+        ======================================== */
+        .page-header {
+            background: linear-gradient(rgba(10,10,18,0.85), rgba(20,15,20,0.85)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            padding: clamp(120px, 20vw, 180px) 0 clamp(60px, 10vw, 100px);
+            text-align: center;
+            position: relative;
         }
 
-        .navbar:hover::before {
-            transform: scaleX(1);
+        .page-header h1 {
+            font-size: var(--fs-hero);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+            padding: 0 15px;
+        }
+
+        .page-header p {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: rgba(255,255,255,0.95);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .page-header .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            margin: 20px 0 0;
+            flex-wrap: wrap;
+            padding: 0 15px;
+        }
+
+        .page-header .breadcrumb-item,
+        .page-header .breadcrumb-item a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .page-header .breadcrumb-item.active {
+            color: var(--primary-light);
         }
 
         /* ========================================
-           Section Titles
+           SECTION TITLES - RESPONSIVE
         ======================================== */
         .section-title {
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 20px;
@@ -708,7 +397,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 70px;
+            width: min(70px, 20vw);
             height: 4px;
             background: var(--gradient);
             border-radius: 2px;
@@ -720,48 +409,354 @@
         }
 
         /* ========================================
-           About Content Section
+           MISSION VISION CARDS - FIXED UI WITH ANIMATIONS
         ======================================== */
-        .about-content {
-            padding: 80px 0;
+        .mission-vision {
+            padding: clamp(40px, 8vw, 70px) 0;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        }
+
+        .mission-card, .vision-card {
             background: white;
+            border-radius: 24px;
+            padding: clamp(25px, 5vw, 35px) !important;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(216,73,42,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+        }
+
+        /* Animated gradient border */
+        .mission-card::before, .vision-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #d8492a, #f97316, #d8492a, #f97316);
+            background-size: 400% 400%;
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        .mission-card:hover::before, .vision-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .mission-card::after, .vision-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .mission-card:hover::after, .vision-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .mission-card:hover, .vision-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 50px rgba(216,73,42,0.2);
+        }
+
+        .icon-circle {
+            width: clamp(70px, 10vw, 80px);
+            height: clamp(70px, 10vw, 80px);
+            background: linear-gradient(135deg, rgba(216,73,42,0.1), rgba(249,115,22,0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
             position: relative;
         }
 
-        .about-content::before {
+        .icon-circle::before {
             content: '';
             position: absolute;
-            top: -50px;
+            inset: -3px;
+            border-radius: 50%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .mission-card:hover .icon-circle::before,
+        .vision-card:hover .icon-circle::before {
+            opacity: 1;
+        }
+
+        .mission-card:hover .icon-circle,
+        .vision-card:hover .icon-circle {
+            transform: rotateY(180deg) scale(1.1);
+            background: var(--gradient);
+        }
+
+        .icon-circle i {
+            font-size: clamp(2rem, 4vw, 2.5rem) !important;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.4s ease;
+        }
+
+        .mission-card:hover .icon-circle i,
+        .vision-card:hover .icon-circle i {
+            background: white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: scale(1.1) rotateY(180deg);
+        }
+
+        .mission-card h3, .vision-card h3 {
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+            transition: color 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .mission-card h3::after, .vision-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .mission-card:hover h3::after, .vision-card:hover h3::after {
+            width: 100%;
+        }
+
+        .mission-card p, .vision-card p {
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 0;
+            transition: color 0.3s ease;
+        }
+
+        .mission-card:hover p, .vision-card:hover p {
+            color: var(--dark);
+        }
+
+        /* ========================================
+           VALUES CARDS - FIXED UI WITH ANIMATIONS
+        ======================================== */
+        .values-section {
+            padding: clamp(40px, 8vw, 70px) 0;
+            background: white;
+        }
+
+        .value-card {
+            background: white;
+            border-radius: 20px;
+            padding: clamp(25px, 4vw, 30px) clamp(15px, 3vw, 20px);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(216,73,42,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+        }
+
+        /* Animated background */
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
             left: 0;
             right: 0;
-            height: 100px;
-            background: linear-gradient(to top, transparent, rgba(216,73,42,0.02));
-            pointer-events: none;
+            bottom: 0;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        /* Corner accents */
+        .value-card::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            border-top: 3px solid var(--primary);
+            border-left: 3px solid var(--primary);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .value-card .corner-accent {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            border-bottom: 3px solid var(--secondary);
+            border-right: 3px solid var(--secondary);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .value-card:hover::after,
+        .value-card:hover .corner-accent {
+            opacity: 1;
+            width: 80px;
+            height: 80px;
+        }
+
+        .value-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 50px rgba(216,73,42,0.25);
+            border-color: transparent;
+        }
+
+        .value-card i {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            transition: all 0.4s ease;
+            display: inline-block;
+        }
+
+        .value-card:hover i {
+            transform: scale(1.2) rotateY(360deg);
+            background: white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .value-card h5 {
+            font-size: clamp(1.1rem, 3vw, 1.2rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .value-card h5::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .value-card:hover h5 {
+            color: white;
+        }
+
+        .value-card:hover h5::after {
+            width: 50px;
+        }
+
+        .value-card p {
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 0;
+            transition: color 0.3s ease;
+        }
+
+        .value-card:hover p {
+            color: white;
+        }
+
+        /* Animation delays for value cards */
+        .value-card[data-aos-delay="100"] { transition-delay: 0.1s; }
+        .value-card[data-aos-delay="200"] { transition-delay: 0.2s; }
+        .value-card[data-aos-delay="300"] { transition-delay: 0.3s; }
+        .value-card[data-aos-delay="400"] { transition-delay: 0.4s; }
+
+        /* ========================================
+           ABOUT CONTENT - RESPONSIVE
+        ======================================== */
+        .about-content {
+            padding: clamp(40px, 8vw, 80px) 0;
+            background: white;
         }
 
         .about-image {
             border-radius: 30px;
             overflow: hidden;
             box-shadow: var(--shadow-hover);
-            transition: var(--transition);
-            transform: perspective(1000px) rotateY(0deg);
+            transition: var(--transition-slow);
+            margin-top: clamp(20px, 5vw, 0);
+            position: relative;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .about-image:hover {
-            transform: perspective(1000px) rotateY(2deg) scale(1.02);
+            transform: scale(1.02) rotate(1deg);
+            box-shadow: 0 30px 60px rgba(216,73,42,0.25);
+        }
+
+        .about-image:hover::before {
+            opacity: 0.1;
         }
 
         /* ========================================
-           GENERATED SIGNATURE STYLES
+           SIGNATURE - FULLY RESPONSIVE
         ======================================== */
         .signature-box {
-            padding: 25px 30px;
+            padding: clamp(20px, 4vw, 25px) clamp(20px, 5vw, 30px);
             background: linear-gradient(135deg, rgba(216,73,42,0.03), rgba(249,115,22,0.05));
             border-radius: 20px;
             border-left: 5px solid var(--primary);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(216,73,42,0.1);
+            transition: var(--transition);
         }
 
         .signature-box::before {
@@ -771,86 +766,51 @@
             right: -50%;
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, rgba(216,73,42,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(216,73,42,0.1), transparent 70%);
             border-radius: 50%;
-            pointer-events: none;
+            transition: var(--transition-slow);
+        }
+
+        .signature-box:hover::before {
+            transform: scale(1.5);
         }
 
         .generated-signature {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.2rem;
+            font-size: clamp(2rem, 6vw, 3.2rem);
             font-weight: 400;
-            color: var(--primary);
-            line-height: 1;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 1px;
+            line-height: 1.2;
+            transition: var(--transition);
+            position: relative;
+            display: inline-block;
         }
 
-        .generated-signature::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--gradient);
-            transform: scaleX(0.3);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .signature-box:hover .generated-signature::after {
-            transform: scaleX(1);
-        }
-
-        .signature-title {
-            font-size: 1rem;
-            color: var(--text);
-            margin-top: 5px;
-        }
-
-        .signature-title strong {
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .signature-divider {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 15px 0 10px;
-        }
-
-        .signature-divider-line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
-        }
-
-        .signature-divider-icon {
-            color: var(--primary);
-            font-size: 1.2rem;
-            opacity: 0.7;
+        .signature-box:hover .generated-signature {
+            transform: scale(1.05);
+            letter-spacing: 2px;
         }
 
         /* ========================================
-           Timeline Section
+           TIMELINE - RESPONSIVE
         ======================================== */
         .story-section {
-            padding: 80px 0;
+            padding: clamp(40px, 8vw, 80px) 0;
             background: linear-gradient(135deg, #f8f9fa, #ffffff);
         }
 
         .timeline-item {
             position: relative;
-            padding-left: 30px;
+            padding-left: clamp(20px, 4vw, 30px);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
         }
 
         .timeline-item::before {
@@ -858,30 +818,24 @@
             position: absolute;
             left: 0;
             top: 24px;
-            width: 15px;
-            height: 15px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: var(--gradient);
             box-shadow: 0 0 0 4px rgba(216,73,42,0.2);
-            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+            z-index: 2;
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 4px rgba(216,73,42,0.2);
-            }
-            50% {
-                box-shadow: 0 0 0 8px rgba(216,73,42,0.1);
-            }
-            100% {
-                box-shadow: 0 0 0 4px rgba(216,73,42,0.2);
-            }
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+            box-shadow: 0 0 0 6px rgba(216,73,42,0.3);
         }
 
         .timeline-item::after {
             content: '';
             position: absolute;
-            left: 7px;
+            left: 9px;
             top: 44px;
             width: 2px;
             height: calc(100% - 30px);
@@ -895,179 +849,139 @@
         .timeline-year {
             background: var(--gradient) !important;
             border-radius: 50px !important;
-            padding: 8px 20px !important;
-            font-size: 1rem;
-            box-shadow: 0 5px 15px rgba(216,73,42,0.2);
+            padding: clamp(8px, 2vw, 10px) clamp(20px, 4vw, 25px) !important;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            font-weight: 700;
+            color: white !important;
+            box-shadow: 0 10px 20px rgba(216,73,42,0.2);
+            transition: var(--transition);
+            border: none !important;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .timeline-item:hover .timeline-year {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(216,73,42,0.3);
         }
 
         .timeline-content h5 {
-            font-weight: 600;
-            color: var(--dark);
+            font-size: clamp(1.1rem, 3vw, 1.2rem);
+            font-weight: 700;
             margin-bottom: 5px;
+            color: var(--dark);
         }
 
         .timeline-content p {
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
             color: var(--text);
-            margin: 0;
+        }
+
+        @media (max-width: 576px) {
+            .timeline-item {
+                flex-wrap: wrap;
+            }
+            .timeline-year {
+                margin-bottom: 10px;
+                width: 100%;
+            }
         }
 
         /* ========================================
-           Mission Vision Cards – PADDING REDUCED
+           CTA SECTION - FULLY RESPONSIVE
         ======================================== */
-        .mission-card, .vision-card {
-            background: linear-gradient(145deg, #ffffff, #f8f9fa) !important;
-            border: 1px solid rgba(216,73,42,0.1);
-            transition: var(--transition);
+        .cta-section {
+            background: var(--gradient) !important;
+            padding: clamp(50px, 8vw, 80px) 0 !important;
             position: relative;
             overflow: hidden;
-            padding: 25px !important;
-            border-radius: 20px !important;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        .mission-card::before, .vision-card::before {
+        .cta-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: var(--gradient);
-            transform: scaleX(0);
-            transition: transform 0.5s ease;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.2), transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255,255,255,0.2), transparent 50%);
+            animation: pulseGlow 3s ease-in-out infinite;
         }
 
-        .mission-card:hover::before, .vision-card:hover::before {
-            transform: scaleX(1);
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
-        .mission-card:hover, .vision-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem) !important;
+            color: white;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: slideUpFade 1s ease;
         }
 
-        .icon-circle {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, rgba(216,73,42,0.1), rgba(249,115,22,0.1));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
+        .cta-section p {
+            font-size: clamp(1.1rem, 3.5vw, 1.3rem) !important;
+            color: rgba(255,255,255,0.95);
+            animation: slideUpFade 1s ease 0.2s both;
         }
 
-        .icon-circle i {
-            font-size: 2rem !important;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .mission-card h3, .vision-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-
-        .mission-card p, .vision-card p {
-            font-size: 0.95rem !important;
-            line-height: 1.6;
-            margin-bottom: 0;
-            color: var(--text);
-        }
-
-        /* ========================================
-           Values Section
-        ======================================== */
-        .values-section {
-            padding: 70px 0;
-        }
-
-        .value-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            height: 100%;
-            border: 1px solid rgba(216,73,42,0.08);
-            padding: 25px;
-            backdrop-filter: blur(10px);
-        }
-
-        .value-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .value-card i {
-            font-size: 2rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .value-card h5 {
+        .cta-section .btn-light {
+            border-radius: 60px;
+            padding: clamp(14px, 3vw, 18px) clamp(35px, 8vw, 50px) !important;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
+            border: 2px solid transparent;
+            background: white;
+            color: var(--primary);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            animation: slideUpFade 1s ease 0.4s both;
         }
 
-        .value-card p {
-            color: var(--text);
-            margin: 0;
-            font-size: 0.9rem;
+        .cta-section .btn-light:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ========================================
-           Footer – Same as Portfolio/Contact
+           FOOTER
         ======================================== */
         footer {
             background: var(--gradient-dark);
             color: white;
-            padding: 60px 0 20px;
-            position: relative;
-            overflow: hidden;
+            padding: 4rem 0 2rem;
         }
 
-        footer::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.2);
-            pointer-events: none;
-        }
-
-        footer > .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
         .footer-logo img {
-            height: 60px;
-            width: auto;
+            height: 50px;
             filter: brightness(0) invert(1);
-            opacity: 0.95;
-            transition: var(--transition);
-        }
-        .footer-logo img:hover {
-            opacity: 1;
-            transform: scale(1.02);
+            margin-bottom: 1rem;
         }
 
         .footer-widget h5 {
+            color: white;
             font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 1.5rem;
             position: relative;
-            padding-bottom: 10px;
-            color: #fff;
+            padding-bottom: 0.5rem;
         }
 
         .footer-widget h5::after {
@@ -1080,246 +994,159 @@
             background: var(--primary);
         }
 
-        .footer-widget p, .footer-widget li, .footer-widget a {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
         .footer-links {
             list-style: none;
             padding: 0;
         }
+
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 0.8rem;
         }
+
         .footer-links a {
             color: rgba(255,255,255,0.7);
             text-decoration: none;
             transition: var(--transition);
         }
+
         .footer-links a:hover {
-            color: var(--primary-light);
-            padding-left: 8px;
+            color: var(--primary);
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
+
         .social-links a {
             width: 38px;
             height: 38px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             transition: var(--transition);
-            font-size: 1rem;
-            border: 1px solid rgba(255,255,255,0.1);
         }
+
         .social-links a:hover {
             background: var(--primary);
-            color: white;
             transform: translateY(-5px);
         }
 
         .newsletter-section {
-            background: rgba(250, 241, 241, 0.87);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 30px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 15px 35px rgba(167, 91, 91, 0.4);
+            background: rgba(223, 218, 218, 0.705);
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 3rem;
         }
-        .newsletter-section h3 {
-            color: black;
-            font-weight: 600;
-        }
-        .newsletter-section p {
-            color: black;
-        }
+
         .newsletter-form {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
+
         .newsletter-form .form-control {
             flex: 1;
             min-width: 250px;
             background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(32, 21, 21, 0.39);
-            color: black;
-            padding: 15px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgb(0, 0, 0);
+            padding: 12px 20px;
             border-radius: 50px;
         }
+
         .newsletter-form .form-control::placeholder {
-            color: rgb(82, 75, 75);
+            color: rgba(80, 77, 77, 0.849);
         }
-        .newsletter-form .form-control:focus {
-            border-color: var(--primary);
-            background: rgba(255,255,255,0.15);
-            box-shadow: 0 0 0 3px rgba(216,73,42,0.2);
-            outline: none;
-        }
+
         .btn-newsletter {
-            padding: 15px 35px;
-            border: none;
+            padding: 12px 30px;
             background: var(--gradient);
             color: white;
+            border: none;
             border-radius: 50px;
             font-weight: 600;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            transition: var(--transition);
         }
+
         .btn-newsletter:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(216,73,42,0.4);
         }
-        .newsletter-checkbox {
-            margin-top: 15px;
-            color: rgb(0, 0, 0);
-            font-size: 0.85rem;
-        }
-        .newsletter-checkbox input[type="checkbox"] {
-            accent-color: var(--primary);
-            margin-right: 8px;
-        }
 
         .copyright {
             text-align: center;
-            padding-top: 40px;
-            margin-top: 40px;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             color: rgba(255,255,255,0.5);
             font-size: 0.9rem;
         }
 
         /* ========================================
-           Back to Top
+           BACK TO TOP - RESPONSIVE
         ======================================== */
         #back-to-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
+            bottom: clamp(20px, 5vw, 30px);
+            right: clamp(20px, 5vw, 30px);
+            width: clamp(45px, 8vw, 50px);
+            height: clamp(45px, 8vw, 50px);
             background: var(--gradient);
             border: none;
             border-radius: 50%;
             color: white;
-            font-size: 1.1rem;
+            font-size: clamp(1.1rem, 2.5vw, 1.2rem);
             cursor: pointer;
             display: none;
             z-index: 99;
-            transition: var(--transition);
-            box-shadow: 0 5px 20px rgba(216,73,42,0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(216,73,42,0.3);
         }
 
         #back-to-top.show {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         #back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(216,73,42,0.4);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 20px 40px rgba(216,73,42,0.4);
         }
 
         /* ========================================
-           Responsive
+           UTILITY CLASSES
         ======================================== */
-        @media (max-width: 991px) {
-            .page-header h1 {
-                font-size: 3rem;
+        .container {
+            padding-left: clamp(15px, 4vw, 24px);
+            padding-right: clamp(15px, 4vw, 24px);
+        }
+
+        /* iOS Fix */
+        @supports (-webkit-touch-callout: none) {
+            .navbar-collapse {
+                height: -webkit-fill-available;
             }
             .page-header {
-                padding: 150px 0 80px;
-            }
-            .cta-section h2 {
-                font-size: 2rem !important;
-            }
-            .floating-icon {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2.5rem;
-            }
-            .page-header p {
-                font-size: 1.1rem;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
-            .about-content .col-lg-6:first-child {
-                margin-bottom: 30px;
-            }
-            .timeline-item {
-                padding-left: 25px;
-            }
-            .newsletter-form {
-                flex-direction: column;
-            }
-            .btn-newsletter {
-                width: 100%;
-                justify-content: center;
-            }
-            .generated-signature {
-                font-size: 2.5rem;
-            }
-            .cta-section h2 {
-                font-size: 1.8rem !important;
-            }
-            .cta-section p {
-                font-size: 1rem !important;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .navbar-brand img {
-                height: 45px;
-            }
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            .page-header p {
-                font-size: 1rem;
-            }
-            .generated-signature {
-                font-size: 2rem;
-            }
-            .mission-card, .vision-card {
-                padding: 20px !important;
-            }
-            .cta-section {
-                padding: 50px 0 !important;
+                background-attachment: scroll;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation - Same as Portfolio/Contact -->
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="index.html">
@@ -1329,23 +1156,18 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <!-- Sidebar overlay -->
             <div class="sidebar-overlay" id="sidebarOverlay"></div>
             
-            <!-- Sidebar Navigation -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Sidebar Header with Logo -->
                 <div class="sidebar-header">
                     <img src="images/ALUKAZ.png" alt="Alukaz">
                     <span>Alukaz</span>
                 </div>
                 
-                <!-- Close Button -->
                 <button class="sidebar-close" id="sidebarClose">
                     <i class="fa-solid fa-times"></i>
                 </button>
                 
-                <!-- Navigation Links with icons -->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
@@ -1372,7 +1194,7 @@
         </div>
     </nav>
 
-    <!-- Page Header with Parallax -->
+    <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <h1>About Alukaz</h1>
@@ -1389,34 +1211,28 @@
     <!-- About Content -->
     <section class="about-content">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6" data-aos="fade-right">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
                     <h2 class="section-title">Who We Are</h2>
-                    <p class="lead">Alukaz is a premier provider of aluminium fabrication services in Karachi, delivering excellence since 2010.</p>
+                    <p class="lead fs-5">Alukaz is a premier provider of aluminium fabrication services in Karachi, delivering excellence since 2010.</p>
                     <p>Under the leadership of Director <strong>Syed Fahad Ali</strong>, we have established a reputation for excellence, reliability, and superior craftsmanship. We specialize in all types of fabrication work, including aluminium windows and doors of every variety—sliding, rotating, fixed—and much more for both residential and commercial spaces.</p>
-                    <p>Our team employs experts involved in consulting and installation, ensuring that your project is handled with the utmost precision and care from concept to completion. Every project we undertake is a testament to our commitment to quality and customer satisfaction.</p>
+                    <p>Our team employs experts involved in consulting and installation, ensuring that your project is handled with the utmost precision and care from concept to completion.</p>
                     
-                    <!-- GENERATED SIGNATURE - No image needed -->
-                    <div class="signature-box mt-4">
-                        <div class="signature-divider">
-                            <span class="signature-divider-line"></span>
-                            <span class="signature-divider-icon"><i class="fa-solid fa-feather"></i></span>
-                            <span class="signature-divider-line"></span>
+                    <div class="signature-box mt-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <span class="flex-grow-1" style="height:1px; background:linear-gradient(90deg, transparent, var(--primary-light), transparent)"></span>
+                            <span class="text-primary"><i class="fa-solid fa-feather"></i></span>
+                            <span class="flex-grow-1" style="height:1px; background:linear-gradient(90deg, transparent, var(--primary-light), transparent)"></span>
                         </div>
-                        <div class="generated-signature">
+                        <div class="generated-signature text-center">
                             Syed Fahad Ali
                         </div>
-                        <div class="signature-title">
+                        <div class="signature-title text-center mt-2">
                             <strong>Director</strong> & Founder, Alukaz
-                        </div>
-                        <div class="signature-divider">
-                            <span class="signature-divider-line"></span>
-                            <span class="signature-divider-icon"><i class="fa-regular fa-star"></i></span>
-                            <span class="signature-divider-line"></span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
                     <div class="about-image">
                         <img src="images/sidebarImage.png" alt="Alukaz Team" class="img-fluid w-100">
                     </div>
@@ -1425,41 +1241,69 @@
         </div>
     </section>
 
-    <!-- Our Story Section with Parallax Background -->
+    <!-- Mission Vision Section - FIXED UI WITH ANIMATIONS -->
+    <section class="mission-vision">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="mission-card">
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>To provide the highest quality aluminium products and services while maintaining the highest standards of customer satisfaction, innovation, and professionalism.</p>
+                        <div class="corner-accent"></div>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="vision-card">
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h3>Our Vision</h3>
+                        <p>To be the leading provider of aluminium solutions in Pakistan, recognized for excellence, innovation, and contributing to the architectural landscape of the country.</p>
+                        <div class="corner-accent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
     <section class="story-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6" data-aos="fade-right">
+            <div class="row g-5">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
                     <h2 class="section-title">Our Story</h2>
                     <p>Alukaz was founded with a vision to provide premium quality aluminium solutions to the Pakistani market. What started as a small workshop in Korangi Industrial Area has now grown into one of the most trusted names in aluminium fabrication.</p>
                     <p>Over the years, we have completed hundreds of projects ranging from small residential windows to large commercial facades. Our commitment to quality and customer satisfaction has earned us the trust of architects, builders, and homeowners alike.</p>
                     <p>We are constantly updating ourselves with the latest advancements in technology and new product developments by associating ourselves with technology leaders to bring you state-of-the-art Windows, Partitions, and Aluminium Panel Claddings.</p>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
                     <div class="timeline">
-                        <div class="timeline-item d-flex mb-4">
-                            <div class="timeline-year bg-primary text-white p-3 rounded-3 me-4 fw-bold">2010</div>
+                        <div class="timeline-item d-flex flex-column flex-sm-row align-items-start gap-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="timeline-year text-white fw-bold">2010</div>
                             <div class="timeline-content">
                                 <h5>Company Founded</h5>
                                 <p>Alukaz established in Korangi Industrial Area</p>
                             </div>
                         </div>
-                        <div class="timeline-item d-flex mb-4">
-                            <div class="timeline-year bg-primary text-white p-3 rounded-3 me-4 fw-bold">2015</div>
+                        <div class="timeline-item d-flex flex-column flex-sm-row align-items-start gap-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="timeline-year text-white fw-bold">2015</div>
                             <div class="timeline-content">
                                 <h5>Expansion</h5>
                                 <p>Expanded operations with new machinery and team</p>
                             </div>
                         </div>
-                        <div class="timeline-item d-flex mb-4">
-                            <div class="timeline-year bg-primary text-white p-3 rounded-3 me-4 fw-bold">2018</div>
+                        <div class="timeline-item d-flex flex-column flex-sm-row align-items-start gap-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                            <div class="timeline-year text-white fw-bold">2018</div>
                             <div class="timeline-content">
                                 <h5>International Partners</h5>
                                 <p>Partnered with UAE technology leaders</p>
                             </div>
                         </div>
-                        <div class="timeline-item d-flex mb-4">
-                            <div class="timeline-year bg-primary text-white p-3 rounded-3 me-4 fw-bold">2024</div>
+                        <div class="timeline-item d-flex flex-column flex-sm-row align-items-start gap-3 mb-4" data-aos="fade-up" data-aos-delay="400">
+                            <div class="timeline-year text-white fw-bold">2024</div>
                             <div class="timeline-content">
                                 <h5>500+ Projects</h5>
                                 <p>Celebrated completing 500+ successful projects</p>
@@ -1471,65 +1315,43 @@
         </div>
     </section>
 
-    <!-- Mission Vision Section – with Parallax Background -->
-    <section class="mission-vision py-4">
-        <div class="container">
-            <div class="row g-3">
-                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="mission-card rounded-4 h-100">
-                        <div class="icon-circle">
-                            <i class="fa-solid fa-bullseye fa-2x"></i>
-                        </div>
-                        <h3>Our Mission</h3>
-                        <p>To provide the highest quality aluminium products and services while maintaining the highest standards of customer satisfaction, innovation, and professionalism.</p>
-                    </div>
-                </div>
-                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="vision-card rounded-4 h-100">
-                        <div class="icon-circle">
-                            <i class="fa-solid fa-eye fa-2x"></i>
-                        </div>
-                        <h3>Our Vision</h3>
-                        <p>To be the leading provider of aluminium solutions in Pakistan, recognized for excellence, innovation, and contributing to the architectural landscape of the country.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Values Section with Parallax Background -->
+    <!-- Values Section - FIXED UI WITH ANIMATIONS -->
     <section class="values-section">
         <div class="container">
-            <h2 class="section-title text-center">Our Core Values</h2>
-            <p class="text-center mb-4">The principles that guide our work every day</p>
+            <h2 class="section-title text-center" data-aos="fade-up">Our Core Values</h2>
+            <p class="text-center mb-5 fs-6" data-aos="fade-up" data-aos-delay="100">The principles that guide our work every day</p>
             
-            <div class="row g-3">
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="100">
                     <div class="value-card text-center">
-                        <i class="fa-solid fa-gem mb-3"></i>
+                        <i class="fa-solid fa-gem"></i>
                         <h5>Quality</h5>
                         <p>Uncompromising quality in every project</p>
+                        <div class="corner-accent"></div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="200">
                     <div class="value-card text-center">
-                        <i class="fa-solid fa-handshake mb-3"></i>
+                        <i class="fa-solid fa-handshake"></i>
                         <h5>Integrity</h5>
                         <p>Honest and transparent business practices</p>
+                        <div class="corner-accent"></div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="300">
                     <div class="value-card text-center">
-                        <i class="fa-solid fa-lightbulb mb-3"></i>
+                        <i class="fa-solid fa-lightbulb"></i>
                         <h5>Innovation</h5>
                         <p>Embracing new technologies and methods</p>
+                        <div class="corner-accent"></div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="400">
                     <div class="value-card text-center">
-                        <i class="fa-solid fa-heart mb-3"></i>
+                        <i class="fa-solid fa-heart"></i>
                         <h5>Customer Focus</h5>
                         <p>Putting our clients first always</p>
+                        <div class="corner-accent"></div>
                     </div>
                 </div>
             </div>
@@ -1537,25 +1359,24 @@
     </section>
 
     <!-- Call to Action Section -->
-    <section class="cta-section py-5 text-white" id="contact">
+    <section class="cta-section text-white">
         <div class="container text-center">
-            <h2 class="display-5 fw-bold mb-4">Ready to Start Your Project?</h2>
-            <p class="lead mb-4">Contact us today for a free consultation and quote. Our team is ready to bring your vision to life.</p>
-            <a href="contact.html" class="btn btn-light btn-lg px-5 py-3">Get Free Quote</a>
+            <h2 class="fw-bold">Ready to Start Your Project?</h2>
+            <p class="lead">Contact us today for a free consultation and quote. Our team is ready to bring your vision to life.</p>
+            <a href="contact.html" class="btn btn-light">Get Free Quote</a>
         </div>
     </section>
 
-    <!-- Footer - Same as Portfolio/Contact -->
+  <!-- Footer -->
     <footer>
         <div class="container">
-            <!-- Newsletter Section -->
             <div class="row">
                 <div class="col-12">
                     <div class="newsletter-section" data-aos="fade-up">
                         <div class="row align-items-center">
                             <div class="col-lg-6">
-                                <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
-                                <p>Stay updated with our latest projects, offers, and aluminium fabrication insights. No spam, only valuable updates.</p>
+                                <h3 class="text-dark"><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
+                                <p class="text-dark">Stay updated with our latest projects, offers, and aluminium fabrication insights.</p>
                             </div>
                             <div class="col-lg-6">
                                 <form class="newsletter-form" id="newsletterForm">
@@ -1566,7 +1387,7 @@
                                 </form>
                                 <div class="newsletter-checkbox">
                                     <input type="checkbox" id="privacyPolicy" checked>
-                                    <label for="privacyPolicy">I agree to the privacy policy and terms of service</label>
+                                    <label class="text-dark" for="privacyPolicy">I agree to the privacy policy</label>
                                 </div>
                             </div>
                         </div>
@@ -1574,14 +1395,13 @@
                 </div>
             </div>
 
-            <!-- Footer Widgets with Logo -->
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-widget">
                         <div class="footer-logo">
                             <img src="images/ALUKAZ.png" alt="Alukaz Logo">
                         </div>
-                        <p>ALUKAZ FABRICATION HOUSE - We Deal in all Type of Metal Fabrication. Premium aluminium fabrication solutions provider in Karachi since 2010.</p>
+                        <p>ALUKAZ FABRICATION HOUSE - Premium aluminium fabrication solutions in Karachi since 2010.</p>
                         <p><strong>Director:</strong> Syed Fahad Ali</p>
                         <div class="social-links">
                             <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -1607,22 +1427,23 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-widget">
                         <h5>Contact Info</h5>
-                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali (Director)</p>
+                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali</p>
                         <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
-                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> syedfahadalikazmi@alukaz.com.pk</p>
-                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339 | 0331-3175114</p>
+                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> info@alukaz.com.pk</p>
+                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339</p>
                     </div>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved. Designed with <i class="fa-solid fa-heart" style="color: var(--primary);"></i> for Alukaz</p>
+                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="btn btn-primary rounded-circle">
+    <button id="back-to-top">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
@@ -1634,9 +1455,10 @@
     <script>
         // Initialize AOS
         AOS.init({
-            duration: 1000,
+            duration: 800,
             once: true,
-            offset: 50
+            offset: 50,
+            disable: window.innerWidth < 768
         });
 
         // Navbar scroll effect
@@ -1647,7 +1469,6 @@
                 $('#mainNav').removeClass('scrolled');
             }
             
-            // Back to top button
             if ($(this).scrollTop() > 300) {
                 $('#back-to-top').addClass('show');
             } else {
@@ -1659,31 +1480,40 @@
             $('html, body').animate({ scrollTop: 0 }, 600);
         });
 
-        // Sidebar functionality
+        // Sidebar functionality - FIXED
         $(document).ready(function() {
             const $sidebar = $('#navbarNav');
             const $overlay = $('#sidebarOverlay');
             const $toggle = $('#sidebarToggle');
             const $closeBtn = $('#sidebarClose');
+            const $body = $('body');
+            const $window = $(window);
 
             function openSidebar() {
+                const scrollY = $window.scrollTop();
                 $sidebar.addClass('show');
                 $overlay.addClass('show');
-                $('body').css('overflow', 'hidden');
+                $body.addClass('sidebar-open').data('scroll-position', scrollY).css('top', -scrollY + 'px');
+                $toggle.attr('aria-expanded', 'true');
             }
 
             function closeSidebar() {
+                const scrollY = $body.data('scroll-position');
                 $sidebar.removeClass('show');
                 $overlay.removeClass('show');
-                $('body').css('overflow', '');
+                $body.removeClass('sidebar-open').css('top', '');
+                if (scrollY !== undefined) $window.scrollTop(scrollY);
+                $toggle.attr('aria-expanded', 'false');
             }
 
             $toggle.on('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
-                openSidebar();
+                $sidebar.hasClass('show') ? closeSidebar() : openSidebar();
             });
 
             $closeBtn.on('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
                 closeSidebar();
             });
@@ -1699,16 +1529,14 @@
             });
 
             $('.nav-link').on('click', function() {
-                if ($(window).width() < 992) {
+                if ($window.width() < 992) {
                     closeSidebar();
                 }
             });
 
-            $(window).on('resize', function() {
-                if ($(window).width() >= 992) {
-                    $sidebar.removeClass('show');
-                    $overlay.removeClass('show');
-                    $('body').css('overflow', '');
+            $window.on('resize', function() {
+                if ($window.width() >= 992 && $sidebar.hasClass('show')) {
+                    closeSidebar();
                 }
             });
         });
@@ -1716,26 +1544,21 @@
         // Newsletter Form
         $('#newsletterForm').submit(function(e) {
             e.preventDefault();
-            alert('Thank you for subscribing to our newsletter!');
+            if (!$('#privacyPolicy').is(':checked')) { 
+                alert('Please agree to the privacy policy.'); 
+                return; 
+            }
+            alert('Thank you for subscribing!');
             $(this).find('input[type="email"]').val('');
         });
 
-        // Add ripple effect to CTA button
-        document.querySelector('.cta-section .btn-light').addEventListener('click', function(e) {
-            let ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            this.appendChild(ripple);
-            
-            let x = e.clientX - e.target.offsetLeft;
-            let y = e.clientY - e.target.offsetTop;
-            
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
+        // iOS height fix
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        setVH();
+        $(window).on('resize', setVH);
     </script>
 </body>
 </html>
