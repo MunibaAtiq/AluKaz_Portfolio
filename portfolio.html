@@ -852,25 +852,26 @@
         }
 
         /* ========================================
-           Footer - Fully Responsive
+           FOOTER
         ======================================== */
         footer {
             background: var(--gradient-dark);
             color: white;
-            padding: clamp(40px, 8vw, 60px) 0 clamp(20px, 4vw, 30px);
-            margin-top: 40px;
+            padding: 4rem 0 2rem;
         }
 
         .footer-logo img {
-            height: clamp(45px, 8vw, 60px);
+            height: 50px;
             filter: brightness(0) invert(1);
+            margin-bottom: 1rem;
         }
 
         .footer-widget h5 {
-            font-size: clamp(1.1rem, 3vw, 1.2rem);
-            margin-bottom: 20px;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 0.5rem;
         }
 
         .footer-widget h5::after {
@@ -883,21 +884,13 @@
             background: var(--primary);
         }
 
-        .footer-widget p,
-        .footer-widget li,
-        .footer-widget a {
-            color: rgba(255,255,255,0.7);
-            font-size: clamp(0.85rem, 2.2vw, 0.95rem);
-            line-height: 1.8;
-        }
-
         .footer-links {
             list-style: none;
             padding: 0;
         }
 
         .footer-links li {
-            margin-bottom: 8px;
+            margin-bottom: 0.8rem;
         }
 
         .footer-links a {
@@ -907,29 +900,27 @@
         }
 
         .footer-links a:hover {
-            color: var(--primary-light);
-            padding-left: 8px;
+            color: var(--primary);
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
-            gap: clamp(10px, 2vw, 15px);
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
         .social-links a {
-            width: clamp(35px, 6vw, 38px);
-            height: clamp(35px, 6vw, 38px);
-            background: rgba(255,255,255,0.08);
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             transition: var(--transition);
-            font-size: clamp(0.9rem, 2.2vw, 1rem);
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .social-links a:hover {
@@ -938,23 +929,10 @@
         }
 
         .newsletter-section {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: clamp(20px, 4vw, 30px);
-            margin-bottom: 30px;
-        }
-
-        .newsletter-section h3 {
-            color: white;
-            font-size: clamp(1.2rem, 3.5vw, 1.5rem);
-            margin-bottom: 10px;
-        }
-
-        .newsletter-section p {
-            color: rgba(255,255,255,0.8);
-            font-size: clamp(0.9rem, 2.2vw, 1rem);
+            background: rgba(223, 218, 218, 0.705);
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 3rem;
         }
 
         .newsletter-form {
@@ -965,53 +943,39 @@
 
         .newsletter-form .form-control {
             flex: 1;
-            min-width: 200px;
+            min-width: 250px;
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: clamp(12px, 2.5vw, 15px) clamp(15px, 3vw, 20px);
+            color: rgb(0, 0, 0);
+            padding: 12px 20px;
             border-radius: 50px;
-            font-size: clamp(0.9rem, 2.2vw, 1rem);
+        }
+
+        .newsletter-form .form-control::placeholder {
+            color: rgba(80, 77, 77, 0.849);
         }
 
         .btn-newsletter {
-            padding: clamp(12px, 2.5vw, 15px) clamp(20px, 4vw, 35px);
-            border: none;
+            padding: 12px 30px;
             background: var(--gradient);
             color: white;
+            border: none;
             border-radius: 50px;
             font-weight: 600;
-            font-size: clamp(0.9rem, 2.2vw, 1rem);
             transition: var(--transition);
-            white-space: nowrap;
-        }
-
-        @media (max-width: 768px) {
-            .newsletter-form {
-                flex-direction: column;
-            }
-            .btn-newsletter {
-                width: 100%;
-            }
         }
 
         .btn-newsletter:hover {
             transform: translateY(-2px);
-        }
-
-        .newsletter-checkbox {
-            margin-top: 15px;
-            color: rgba(255,255,255,0.7);
-            font-size: clamp(0.8rem, 2vw, 0.85rem);
+            box-shadow: 0 10px 25px rgba(216,73,42,0.4);
         }
 
         .copyright {
             text-align: center;
-            padding-top: 30px;
-            margin-top: 30px;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             color: rgba(255,255,255,0.5);
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-size: 0.9rem;
         }
 
         /* ========================================
@@ -1822,8 +1786,8 @@
                     <div class="newsletter-section" data-aos="fade-up">
                         <div class="row align-items-center">
                             <div class="col-lg-6">
-                                <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
-                                <p>Stay updated with our latest projects, offers, and aluminium fabrication insights.</p>
+                                <h3 class="text-dark"><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
+                                <p class="text-dark">Stay updated with our latest projects, offers, and aluminium fabrication insights.</p>
                             </div>
                             <div class="col-lg-6">
                                 <form class="newsletter-form" id="newsletterForm">
@@ -1834,7 +1798,7 @@
                                 </form>
                                 <div class="newsletter-checkbox">
                                     <input type="checkbox" id="privacyPolicy" checked>
-                                    <label for="privacyPolicy">I agree to the privacy policy</label>
+                                    <label class="text-dark" for="privacyPolicy">I agree to the privacy policy</label>
                                 </div>
                             </div>
                         </div>
