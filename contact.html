@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Contact Us - Alukaz | Premium Aluminium Fabrication</title>
     
     <!-- Bootstrap CSS -->
@@ -25,7 +25,7 @@
     
     <style>
         /* ========================================
-           Global Styles
+           GLOBAL VARIABLES & RESET
         ======================================== */
         :root {
             --primary: #d8492a;
@@ -42,6 +42,15 @@
             --shadow: 0 10px 30px rgba(0,0,0,0.1);
             --shadow-hover: 0 20px 40px rgba(216,73,42,0.15);
             --transition: all 0.3s ease;
+            
+            /* Responsive Font Sizes */
+            --fs-xs: clamp(0.75rem, 2vw, 0.875rem);
+            --fs-sm: clamp(0.875rem, 2.5vw, 1rem);
+            --fs-md: clamp(1rem, 3vw, 1.125rem);
+            --fs-lg: clamp(1.125rem, 4vw, 1.5rem);
+            --fs-xl: clamp(1.5rem, 5vw, 2rem);
+            --fs-xxl: clamp(2rem, 6vw, 3rem);
+            --fs-hero: clamp(2.5rem, 8vw, 3.5rem);
         }
 
         * {
@@ -50,51 +59,55 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             color: var(--text);
             background: var(--gray);
-            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* ========================================
-           Navigation – Updated with Sidebar (Same as Portfolio)
+           NAVIGATION - FIXED WITH SIDEBAR
         ======================================== */
         .navbar {
             background: transparent !important;
-            padding: 20px 0;
+            padding: clamp(15px, 3vw, 20px) 0;
             transition: var(--transition);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            overflow: hidden;
         }
 
         .navbar.scrolled {
             background: var(--gradient-dark) !important;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-            padding: 15px 0;
+            padding: clamp(12px, 2.5vw, 15px) 0;
             border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            animation: slideDown 0.5s ease forwards;
-        }
-
-        @keyframes slideDown {
-            0% { transform: translateY(-100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+            border-bottom-right-radius:30px;
         }
 
         .navbar-brand img {
-            height: 55px;
+            height: clamp(40px, 6vw, 55px);
             transition: var(--transition);
         }
 
         .navbar.scrolled .navbar-brand img {
-            height: 45px;
+            height: clamp(35px, 5vw, 45px);
         }
 
         .nav-link {
@@ -102,7 +115,7 @@
             font-weight: 500;
             margin: 0 8px;
             position: relative;
-            font-size: 1rem;
+            font-size: var(--fs-sm);
             padding: 8px 0 !important;
             opacity: 0.9;
         }
@@ -130,16 +143,18 @@
             color: white !important;
         }
 
-        /* Mobile Sidebar Styles */
+        /* Mobile Sidebar - FIXED */
         @media (max-width: 991px) {
             .navbar-collapse {
                 position: fixed;
                 top: 0;
-                right: -300px;
-                width: 280px;
+                right: -100%;
+                width: min(300px, 85%);
                 height: 100vh;
+                height: -webkit-fill-available;
                 background: var(--gradient-dark);
                 backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
                 padding: 100px 25px 40px;
                 transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 1050;
@@ -168,33 +183,28 @@
                 padding: 15px 20px !important;
                 margin: 0;
                 border-radius: 12px;
-                font-size: 1.1rem;
+                font-size: var(--fs-md);
                 background: rgba(255,255,255,0.05);
                 border: 1px solid rgba(255,255,255,0.1);
                 display: flex;
                 align-items: center;
                 gap: 12px;
+                min-height: 44px;
             }
 
             .nav-link i {
                 width: 24px;
-                font-size: 1.2rem;
+                font-size: var(--fs-lg);
                 color: var(--primary-light);
             }
 
-            .nav-link:hover {
+            .nav-link:hover,
+            .nav-link.active {
                 background: var(--gradient);
                 transform: translateX(5px);
             }
 
-            .nav-link:hover i {
-                color: white;
-            }
-
-            .nav-link.active {
-                background: var(--gradient);
-            }
-
+            .nav-link:hover i,
             .nav-link.active i {
                 color: white;
             }
@@ -207,13 +217,13 @@
                 position: absolute;
                 top: 25px;
                 right: 25px;
-                background: rgba(255,255,255,0.2);
-                border: 1px solid rgba(255,255,255,0.3);
+                background: rgba(255,255,255,0.15);
+                border: 1px solid rgba(255,255,255,0.25);
                 color: white;
                 width: 45px;
                 height: 45px;
                 border-radius: 50%;
-                font-size: 1.3rem;
+                font-size: var(--fs-lg);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -221,11 +231,14 @@
                 transition: all 0.3s ease;
                 z-index: 1060;
                 backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
                 box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                min-width: 44px;
+                min-height: 44px;
             }
 
             .sidebar-close i {
-                font-size: 1.3rem;
+                font-size: var(--fs-lg);
                 color: white;
             }
 
@@ -252,7 +265,7 @@
             .sidebar-header span {
                 color: white;
                 font-weight: 600;
-                font-size: 1.1rem;
+                font-size: var(--fs-md);
             }
 
             .sidebar-overlay {
@@ -263,12 +276,14 @@
                 height: 100%;
                 background: rgba(0,0,0,0.6);
                 backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
                 z-index: 1049;
                 display: none;
             }
             
             .sidebar-overlay.show {
                 display: block;
+                animation: fadeIn 0.3s ease;
             }
 
             .navbar-toggler {
@@ -278,15 +293,33 @@
                 border-radius: 14px;
                 margin-left: auto;
                 z-index: 1060;
+                min-height: 44px;
             }
 
             .navbar-toggler:focus {
                 box-shadow: none;
+                outline: none;
             }
 
             .navbar-toggler-icon {
                 filter: brightness(0) invert(1);
             }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        }
+
+        /* Body when sidebar is open */
+        body.sidebar-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
         @media (min-width: 992px) {
@@ -319,40 +352,41 @@
         }
 
         /* ========================================
-           Page Header
+           PAGE HEADER - RESPONSIVE
         ======================================== */
         .page-header {
             background: linear-gradient(rgba(10,10,18,0.95), rgba(20,15,20,0.95)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            padding: 150px 0 80px;
+            padding: clamp(120px, 20vw, 150px) 0 clamp(50px, 8vw, 80px);
             text-align: center;
             position: relative;
-            margin-bottom: 50px;
+            margin-bottom: clamp(30px, 5vw, 50px);
         }
 
         .page-header h1 {
-            font-size: 3.5rem;
+            font-size: var(--fs-hero);
             font-weight: 700;
             color: white;
             margin-bottom: 15px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            animation: fadeInDown 1s ease;
+            padding: 0 15px;
         }
 
         .page-header .breadcrumb {
             background: transparent;
             justify-content: center;
             margin: 0;
-            animation: fadeInUp 1s ease;
+            flex-wrap: wrap;
+            padding: 0 15px;
         }
 
         .page-header .breadcrumb-item,
         .page-header .breadcrumb-item a {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         }
 
         .page-header .breadcrumb-item.active {
@@ -370,16 +404,16 @@
         }
 
         /* ========================================
-           Contact Info Cards (Unchanged)
+           CONTACT INFO CARDS - RESPONSIVE
         ======================================== */
         .contact-info-section {
-            padding: 0 0 60px;
+            padding: 0 0 clamp(40px, 6vw, 60px);
         }
 
         .info-card {
             background: white;
             border-radius: 20px;
-            padding: 35px 25px;
+            padding: clamp(25px, 5vw, 35px) clamp(15px, 4vw, 25px);
             text-align: center;
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -411,14 +445,14 @@
         }
 
         .info-icon {
-            width: 80px;
-            height: 80px;
+            width: clamp(60px, 10vw, 80px);
+            height: clamp(60px, 10vw, 80px);
             background: linear-gradient(135deg, rgba(216,73,42,0.1), rgba(249,115,22,0.1));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 25px;
+            margin: 0 auto 20px;
             transition: var(--transition);
         }
 
@@ -428,7 +462,7 @@
         }
 
         .info-icon i {
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
             color: var(--primary);
             transition: var(--transition);
         }
@@ -438,7 +472,7 @@
         }
 
         .info-card h3 {
-            font-size: 1.3rem;
+            font-size: clamp(1.2rem, 3vw, 1.3rem);
             font-weight: 600;
             color: var(--dark);
             margin-bottom: 15px;
@@ -448,7 +482,8 @@
             color: var(--text);
             line-height: 1.7;
             margin-bottom: 15px;
-            font-size: 0.95rem;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+            word-break: break-word;
         }
 
         .info-link {
@@ -459,7 +494,8 @@
             align-items: center;
             gap: 8px;
             transition: var(--transition);
-            font-size: 0.95rem;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+            word-break: break-word;
         }
 
         .info-link:hover {
@@ -487,19 +523,19 @@
             color: white;
         }
 
-        .info-card.director .info-link:hover {
-            color: rgba(255,255,255,0.8);
-        }
-
         /* ========================================
-           Main Contact Section (Unchanged)
+           MAIN CONTACT SECTION - RESPONSIVE
         ======================================== */
         .contact-main-section {
-            padding: 0 0 80px;
+            padding: 0 0 clamp(40px, 8vw, 80px);
+        }
+
+        .container-fluid.p-5 {
+            padding: clamp(20px, 4vw, 48px) !important;
         }
 
         .section-title {
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 20px;
@@ -512,7 +548,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 70px;
+            width: min(70px, 20vw);
             height: 4px;
             background: var(--gradient);
             border-radius: 2px;
@@ -521,7 +557,7 @@
         .form-wrapper {
             background: linear-gradient(145deg, #ffffff, #f8f9fa);
             border-radius: 30px;
-            padding: 40px;
+            padding: clamp(25px, 5vw, 40px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.05);
             height: 100%;
             position: relative;
@@ -542,13 +578,14 @@
         .form-header {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: clamp(10px, 3vw, 15px);
             margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
         .form-header-icon {
-            width: 55px;
-            height: 55px;
+            width: clamp(45px, 8vw, 55px);
+            height: clamp(45px, 8vw, 55px);
             background: linear-gradient(135deg, rgba(216,73,42,0.1), rgba(249,115,22,0.1));
             border-radius: 18px;
             display: flex;
@@ -557,22 +594,21 @@
         }
 
         .form-header-icon i {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 3.5vw, 1.8rem);
             color: var(--primary);
         }
 
         .form-header-text h2 {
-            font-size: 1.8rem;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
             font-weight: 700;
             color: var(--dark);
             margin: 0;
-            letter-spacing: -0.5px;
         }
 
         .form-header-text p {
             color: #999;
             margin: 5px 0 0;
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
         }
 
         .form-floating {
@@ -582,21 +618,19 @@
 
         .form-floating > .form-control,
         .form-floating > .form-select {
-            height: 65px;
+            height: clamp(55px, 8vw, 65px);
             border: 2px solid #e5e5e5;
-            border-radius: 18px;
+            border-radius: clamp(14px, 3vw, 18px);
             padding: 1.2rem 1.25rem 0.4rem;
-            font-size: 1rem;
+            font-size: var(--fs-sm);
             background: white;
             transition: var(--transition);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
         .form-floating > .form-control:focus,
         .form-floating > .form-select:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 5px rgba(216,73,42,0.08);
-            background: white;
             transform: translateY(-2px);
         }
 
@@ -612,14 +646,14 @@
             transform-origin: 0 0;
             transition: opacity .1s ease-in-out, transform .1s ease-in-out;
             color: #aaa;
-            font-weight: 400;
+            font-size: var(--fs-sm);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .form-floating > label i {
-            font-size: 1rem;
+            font-size: var(--fs-sm);
             color: var(--primary);
             opacity: 0.7;
         }
@@ -634,7 +668,6 @@
             height: auto;
             width: auto;
             left: 12px;
-            right: auto;
             border-radius: 30px;
             box-shadow: 0 2px 8px rgba(216,73,42,0.1);
             color: var(--primary);
@@ -642,21 +675,16 @@
         }
 
         textarea.form-control {
-            height: 140px !important;
+            height: clamp(120px, 20vw, 140px) !important;
             resize: none;
             padding-top: 1.5rem !important;
-        }
-
-        textarea.form-control ~ label {
-            align-items: flex-start;
-            padding-top: 1.2rem;
         }
 
         .form-check-wrapper {
             background: rgba(216,73,42,0.02);
             border-radius: 16px;
-            padding: 18px 20px;
-            margin: 25px 0 20px;
+            padding: clamp(15px, 3vw, 18px) clamp(15px, 4vw, 20px);
+            margin: 20px 0 20px;
             border: 1px solid rgba(216,73,42,0.08);
         }
 
@@ -665,6 +693,7 @@
             align-items: center;
             gap: 12px;
             margin: 0;
+            flex-wrap: wrap;
         }
 
         .form-check-input {
@@ -673,20 +702,18 @@
             border: 2px solid #ddd;
             border-radius: 6px;
             cursor: pointer;
-            margin: 0;
-            transition: var(--transition);
+            flex-shrink: 0;
         }
 
         .form-check-input:checked {
             background-color: var(--primary);
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(216,73,42,0.15);
         }
 
         .form-check-label {
             color: var(--text);
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
             flex: 1;
         }
 
@@ -694,31 +721,15 @@
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
-            position: relative;
-        }
-
-        .form-check-label a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .form-check-label a:hover::after {
-            width: 100%;
         }
 
         .btn-submit {
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 18px 35px;
+            padding: clamp(14px, 3vw, 18px) clamp(25px, 5vw, 35px);
             border-radius: 20px;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.8vw, 1.1rem);
             font-weight: 600;
             width: 100%;
             cursor: pointer;
@@ -727,27 +738,7 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            position: relative;
-            overflow: hidden;
             box-shadow: 0 10px 25px rgba(216,73,42,0.2);
-        }
-
-        .btn-submit::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-submit:active::before {
-            width: 400px;
-            height: 400px;
         }
 
         .btn-submit:hover:not(:disabled) {
@@ -755,27 +746,13 @@
             box-shadow: 0 20px 35px rgba(216,73,42,0.3);
         }
 
-        .btn-submit:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .btn-submit i {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .btn-submit:hover i {
-            transform: translateX(5px) scale(1.1);
-        }
-
         .btn-whatsapp {
             background: linear-gradient(145deg, #25D366, #128C7E);
             color: white;
             border: none;
-            padding: 18px 35px;
+            padding: clamp(14px, 3vw, 18px) clamp(25px, 5vw, 35px);
             border-radius: 20px;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.8vw, 1.1rem);
             font-weight: 600;
             width: 100%;
             cursor: pointer;
@@ -785,24 +762,11 @@
             justify-content: center;
             gap: 12px;
             margin-top: 15px;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.2);
         }
 
         .btn-whatsapp:hover {
-            background: linear-gradient(145deg, #128C7E, #0e6b5c);
             transform: translateY(-4px);
             box-shadow: 0 20px 35px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-whatsapp i {
-            font-size: 1.3rem;
-            animation: pulse-whatsapp 2s infinite;
-        }
-
-        @keyframes pulse-whatsapp {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
         }
 
         .form-divider {
@@ -828,8 +792,6 @@
             font-weight: 500;
             font-size: 0.9rem;
             position: relative;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .fa-spinner {
@@ -841,19 +803,20 @@
             to { transform: rotate(360deg); }
         }
 
+        /* ========================================
+           MAP & HOURS - RESPONSIVE
+        ======================================== */
         .map-wrapper {
             background: white;
             border-radius: 30px;
-            padding: 20px;
+            padding: clamp(15px, 3vw, 20px);
             box-shadow: var(--shadow);
             height: auto;
-            min-height: auto;
         }
 
         .map-container {
             width: 100%;
-            height: 300px !important;
-            min-height: 300px !important;
+            height: clamp(220px, 40vw, 300px) !important;
             border-radius: 20px;
             overflow: hidden;
         }
@@ -867,9 +830,9 @@
         .hours-card {
             background: linear-gradient(145deg, #ffffff, #f8f9fa);
             border-radius: 24px;
-            padding: 28px;
+            padding: clamp(20px, 4vw, 28px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            margin-top: 20px !important;
+            margin-top: 20px;
             border: 1px solid rgba(216,73,42,0.08);
             position: relative;
             overflow: hidden;
@@ -893,6 +856,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .hours-icon i {
@@ -901,10 +865,9 @@
         }
 
         .hours-card h4 {
-            font-size: 1.3rem;
+            font-size: clamp(1.2rem, 3vw, 1.3rem);
             font-weight: 600;
             color: var(--dark);
-            letter-spacing: -0.3px;
         }
 
         .hours-timings {
@@ -917,22 +880,21 @@
             justify-content: space-between;
             padding: 14px 0;
             border-bottom: 1px dashed rgba(0,0,0,0.08);
-        }
-
-        .hours-row:last-child {
-            border-bottom: none;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .day-group {
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .day {
             font-weight: 500;
             color: var(--dark);
-            font-size: 1rem;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
         }
 
         .today-badge {
@@ -942,29 +904,23 @@
             font-weight: 500;
             padding: 3px 8px;
             border-radius: 30px;
-            letter-spacing: 0.3px;
         }
 
         .time-group {
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .time {
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.95rem;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
         }
 
         .time-separator {
             color: #ccc;
-            font-weight: 300;
-            font-size: 0.9rem;
-        }
-
-        .closed-row .day {
-            color: #999;
         }
 
         .closed-badge {
@@ -983,8 +939,8 @@
         .hours-divider {
             position: relative;
             text-align: center;
-            margin: 0px 0 20px;
-        }   
+            margin: 20px 0;
+        }
 
         .hours-divider::before {
             content: '';
@@ -1004,8 +960,6 @@
             font-weight: 500;
             font-size: 0.9rem;
             position: relative;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .emergency-cards {
@@ -1024,12 +978,7 @@
             border-radius: 16px;
             transition: var(--transition);
             border: 1px solid rgba(216,73,42,0.05);
-        }
-
-        .emergency-item:hover {
-            background: rgba(216,73,42,0.06);
-            transform: translateX(5px);
-            border-color: rgba(216,73,42,0.15);
+            flex-wrap: wrap;
         }
 
         .emergency-icon {
@@ -1040,7 +989,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(216,73,42,0.1);
+            flex-shrink: 0;
         }
 
         .emergency-icon i {
@@ -1050,24 +999,15 @@
 
         .emergency-details {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .emergency-label {
-            font-size: 0.75rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            margin-bottom: 2px;
+            min-width: 150px;
         }
 
         .emergency-number {
             color: var(--dark);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
             text-decoration: none;
-            transition: var(--transition);
+            word-break: break-word;
         }
 
         .emergency-number:hover {
@@ -1082,14 +1022,15 @@
             background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(40, 167, 69, 0.1));
             border-radius: 50px;
             border: 1px solid rgba(40, 167, 69, 0.2);
+            flex-wrap: wrap;
         }
 
         .status-indicator {
             width: 10px;
             height: 10px;
-            background: #28a745;
             border-radius: 50%;
             position: relative;
+            flex-shrink: 0;
         }
 
         .status-indicator::before {
@@ -1105,80 +1046,39 @@
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
 
         .current-status span {
-            color: #28a745;
-            font-weight: 500;
-            font-size: 0.95rem;
+            font-size: clamp(0.9rem, 2.5vw, 0.95rem);
         }
 
         #statusText {
             font-weight: 600;
         }
 
-        /* Custom Alert Message - Removed (using SweetAlert now) */
-        .alert-message {
-            display: none;
-        }
-
         /* ========================================
-           Footer – Updated with Logo (Same as Portfolio)
+           FOOTER
         ======================================== */
         footer {
             background: var(--gradient-dark);
             color: white;
-            padding: 60px 0 20px;
-            margin-top: 40px;
-            position: relative;
-            overflow: hidden;
+            padding: 4rem 0 2rem;
         }
 
-        footer::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.2);
-            pointer-events: none;
-        }
-
-        footer > .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
         .footer-logo img {
-            height: 60px;
-            width: auto;
+            height: 50px;
             filter: brightness(0) invert(1);
-            opacity: 0.95;
-            transition: var(--transition);
-        }
-        .footer-logo img:hover {
-            opacity: 1;
-            transform: scale(1.02);
+            margin-bottom: 1rem;
         }
 
         .footer-widget h5 {
+            color: white;
             font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 1.5rem;
             position: relative;
-            padding-bottom: 10px;
-            color: #fff;
+            padding-bottom: 0.5rem;
         }
 
         .footer-widget h5::after {
@@ -1191,138 +1091,113 @@
             background: var(--primary);
         }
 
-        .footer-widget p, .footer-widget li, .footer-widget a {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
         .footer-links {
             list-style: none;
             padding: 0;
         }
+
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 0.8rem;
         }
+
         .footer-links a {
             color: rgba(255,255,255,0.7);
             text-decoration: none;
             transition: var(--transition);
         }
+
         .footer-links a:hover {
-            color: var(--primary-light);
-            padding-left: 8px;
+            color: var(--primary);
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
+
         .social-links a {
             width: 38px;
             height: 38px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             transition: var(--transition);
-            font-size: 1rem;
-            border: 1px solid rgba(255,255,255,0.1);
         }
+
         .social-links a:hover {
             background: var(--primary);
-            color: white;
             transform: translateY(-5px);
         }
 
         .newsletter-section {
-            background: rgba(250, 241, 241, 0.87);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 30px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 15px 35px rgba(167, 91, 91, 0.4);
+            background: rgba(223, 218, 218, 0.705);
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 3rem;
         }
-        .newsletter-section h3 {
-            color: black;
-            font-weight: 600;
-        }
-        .newsletter-section p {
-            color: black;
-        }
+
         .newsletter-form {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
+
         .newsletter-form .form-control {
             flex: 1;
             min-width: 250px;
             background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(32, 21, 21, 0.39);
-            color: black;
-            padding: 15px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgb(0, 0, 0);
+            padding: 12px 20px;
             border-radius: 50px;
         }
+
         .newsletter-form .form-control::placeholder {
-            color: rgb(82, 75, 75);
+            color: rgba(80, 77, 77, 0.849);
         }
-        .newsletter-form .form-control:focus {
-            border-color: var(--primary);
-            background: rgba(255,255,255,0.15);
-            box-shadow: 0 0 0 3px rgba(216,73,42,0.2);
-            outline: none;
-        }
+
         .btn-newsletter {
-            padding: 15px 35px;
-            border: none;
+            padding: 12px 30px;
             background: var(--gradient);
             color: white;
+            border: none;
             border-radius: 50px;
             font-weight: 600;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            transition: var(--transition);
         }
+
         .btn-newsletter:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(216,73,42,0.4);
         }
-        .newsletter-checkbox {
-            margin-top: 15px;
-            color: rgb(0, 0, 0);
-            font-size: 0.85rem;
-        }
-        .newsletter-checkbox input[type="checkbox"] {
-            accent-color: var(--primary);
-            margin-right: 8px;
-        }
 
         .copyright {
             text-align: center;
-            padding-top: 40px;
-            margin-top: 40px;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             color: rgba(255,255,255,0.5);
             font-size: 0.9rem;
         }
-
+        /* ========================================
+           BACK TO TOP - RESPONSIVE
+        ======================================== */
         #back-to-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
+            bottom: clamp(20px, 5vw, 30px);
+            right: clamp(20px, 5vw, 30px);
+            width: clamp(40px, 8vw, 45px);
+            height: clamp(40px, 8vw, 45px);
             background: var(--gradient);
             border: none;
             border-radius: 50%;
             color: white;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
             cursor: pointer;
             display: none;
             z-index: 99;
@@ -1341,113 +1216,42 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
-        @media (max-width: 991px) {
-            .page-header h1 {
-                font-size: 2.8rem;
-            }
-            .map-wrapper {
-                margin-top: 30px;
-            }
+        /* ========================================
+           UTILITY CLASSES
+        ======================================== */
+        .container {
+            padding-left: clamp(15px, 4vw, 24px);
+            padding-right: clamp(15px, 4vw, 24px);
         }
 
-        @media (max-width: 768px) {
+        .row.g-4 {
+            --bs-gutter-x: clamp(1rem, 3vw, 1.5rem);
+            --bs-gutter-y: clamp(1rem, 3vw, 1.5rem);
+        }
+
+        .row.g-5 {
+            --bs-gutter-x: clamp(1.5rem, 4vw, 3rem);
+            --bs-gutter-y: clamp(1.5rem, 4vw, 3rem);
+        }
+
+        /* iOS Fix */
+        @supports (-webkit-touch-callout: none) {
+            .navbar-collapse {
+                height: -webkit-fill-available;
+            }
             .page-header {
-                padding: 120px 0 60px;
-            }
-            .page-header h1 {
-                font-size: 2.3rem;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
-            .form-wrapper {
-                padding: 30px 25px;
-            }
-            .form-header-text h2 {
-                font-size: 1.5rem;
-            }
-            .form-header-icon {
-                width: 45px;
-                height: 45px;
-            }
-            .form-header-icon i {
-                font-size: 1.5rem;
-            }
-            .form-floating > .form-control,
-            .form-floating > .form-select {
-                height: 60px;
-                border-radius: 16px;
-            }
-            .info-card {
-                padding: 25px;
-            }
-            .map-container {
-                height: 250px !important;
-                min-height: 250px !important;
-            }
-            .btn-submit, .btn-whatsapp {
-                padding: 16px 25px;
-                font-size: 1rem;
-            }
-            .newsletter-form {
-                flex-direction: column;
-            }
-            .btn-newsletter {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .navbar-brand img {
-                height: 45px;
-            }
-            .page-header h1 {
-                font-size: 1.8rem;
-            }
-            .form-wrapper {
-                padding: 25px 20px;
-            }
-            .form-header {
-                gap: 10px;
-            }
-            .form-header-text h2 {
-                font-size: 1.3rem;
-            }
-            .form-header-text p {
-                font-size: 0.85rem;
-            }
-            .form-check-wrapper {
-                padding: 15px;
-            }
-            .btn-submit, .btn-whatsapp {
-                padding: 14px 25px;
-                font-size: 1rem;
-            }
-            .map-container {
-                height: 220px !important;
-                min-height: 220px !important;
-            }
-            .hours-card {
-                padding: 20px;
+                background-attachment: scroll;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation - Updated with Sidebar (Same as Portfolio) -->
+    <!-- Navigation - FIXED SIDEBAR -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="index.html">
@@ -1457,23 +1261,18 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <!-- Sidebar overlay -->
             <div class="sidebar-overlay" id="sidebarOverlay"></div>
             
-            <!-- Sidebar Navigation -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Sidebar Header with Logo -->
                 <div class="sidebar-header">
                     <img src="images/ALUKAZ.png" alt="Alukaz">
                     <span>Alukaz</span>
                 </div>
                 
-                <!-- Close Button -->
                 <button class="sidebar-close" id="sidebarClose">
                     <i class="fa-solid fa-times"></i>
                 </button>
                 
-                <!-- Navigation Links with icons -->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
@@ -1481,7 +1280,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="about.html">
                             <i class="fa-solid fa-info-circle"></i> About
                         </a>
                     </li>
@@ -1518,7 +1317,7 @@
         <div class="container">
             <div class="row g-4">
                 <!-- Director Card -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-4 col-md-6">
                     <div class="info-card director">
                         <div class="info-icon">
                             <i class="fa-solid fa-user-tie"></i>
@@ -1534,7 +1333,7 @@
                 </div>
                 
                 <!-- Contact Card -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-4 col-md-6">
                     <div class="info-card">
                         <div class="info-icon">
                             <i class="fa-solid fa-phone"></i>
@@ -1550,7 +1349,7 @@
                 </div>
                 
                 <!-- Location Card -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-lg-4 col-md-6">
                     <div class="info-card">
                         <div class="info-icon">
                             <i class="fa-solid fa-location-dot"></i>
@@ -1568,10 +1367,10 @@
 
     <!-- Main Contact Section -->
     <section class="contact-main-section">
-        <div class="container-fluid p-5">
+        <div class="container">
             <div class="row g-5">
                 <!-- Contact Form -->
-                <div class="col-lg-7" data-aos="fade-right">
+                <div class="col-lg-7">
                     <div class="form-wrapper">
                         <div class="form-header">
                             <div class="form-header-icon">
@@ -1583,10 +1382,8 @@
                             </div>
                         </div>
                         
-                        <!-- Alert Message (removed - using SweetAlert) -->
-                        
                         <form id="contactForm">
-                            <div class="row">
+                            <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="name" placeholder=" " required>
@@ -1601,7 +1398,7 @@
                                 </div>
                             </div>
                             
-                            <div class="row">
+                            <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="tel" class="form-control" id="phone" placeholder=" " required>
@@ -1630,7 +1427,7 @@
                             </div>
                             
                             <div class="form-floating">
-                                <textarea class="form-control" id="message" placeholder=" " style="height: 140px" required></textarea>
+                                <textarea class="form-control" id="message" placeholder=" " required></textarea>
                                 <label for="message"><i class="fa-regular fa-message"></i> Your Message *</label>
                             </div>
                             
@@ -1659,7 +1456,7 @@
                 </div>
                 
                 <!-- Map & Hours -->
-                <div class="col-lg-5" data-aos="fade-left">
+                <div class="col-lg-5">
                     <div class="map-wrapper">
                         <!-- Map Container -->
                         <div class="map-container">
@@ -1748,17 +1545,16 @@
         </div>
     </section>
 
-    <!-- Footer - Updated with Logo (Same as Portfolio) -->
+       <!-- Footer -->
     <footer>
         <div class="container">
-            <!-- Newsletter Section -->
             <div class="row">
                 <div class="col-12">
                     <div class="newsletter-section" data-aos="fade-up">
                         <div class="row align-items-center">
                             <div class="col-lg-6">
-                                <h3><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
-                                <p>Stay updated with our latest projects, offers, and aluminium fabrication insights. No spam, only valuable updates.</p>
+                                <h3 class="text-dark"><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> Subscribe to Our Newsletter</h3>
+                                <p class="text-dark">Stay updated with our latest projects, offers, and aluminium fabrication insights.</p>
                             </div>
                             <div class="col-lg-6">
                                 <form class="newsletter-form" id="newsletterForm">
@@ -1769,7 +1565,7 @@
                                 </form>
                                 <div class="newsletter-checkbox">
                                     <input type="checkbox" id="privacyPolicy" checked>
-                                    <label for="privacyPolicy">I agree to the privacy policy and terms of service</label>
+                                    <label class="text-dark" for="privacyPolicy">I agree to the privacy policy</label>
                                 </div>
                             </div>
                         </div>
@@ -1777,14 +1573,13 @@
                 </div>
             </div>
 
-            <!-- Footer Widgets with Logo -->
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-widget">
                         <div class="footer-logo">
                             <img src="images/ALUKAZ.png" alt="Alukaz Logo">
                         </div>
-                        <p>ALUKAZ FABRICATION HOUSE - We Deal in all Type of Metal Fabrication. Premium aluminium fabrication solutions provider in Karachi since 2010.</p>
+                        <p>ALUKAZ FABRICATION HOUSE - Premium aluminium fabrication solutions in Karachi since 2010.</p>
                         <p><strong>Director:</strong> Syed Fahad Ali</p>
                         <div class="social-links">
                             <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -1800,7 +1595,7 @@
                         <h5>Quick Links</h5>
                         <ul class="footer-links">
                             <li><a href="index.html">Home</a></li>
-                            <li><a href="index.html">About Us</a></li>
+                            <li><a href="about.html">About Us</a></li>
                             <li><a href="portfolio.html">Our Portfolio</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
@@ -1810,22 +1605,22 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-widget">
                         <h5>Contact Info</h5>
-                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali (Director)</p>
+                        <p><i class="fa-solid fa-user-tie me-2" style="color: var(--primary);"></i> Syed Fahad Ali</p>
                         <p><i class="fa-solid fa-location-dot me-2" style="color: var(--primary);"></i> Plot-No.AS-24, ST-3, Korangi Industrial Area, Karachi</p>
-                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> syedfahadalikazmi@alukaz.com.pk</p>
-                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339 | 0331-3175114</p>
+                        <p><i class="fa-regular fa-envelope me-2" style="color: var(--primary);"></i> info@alukaz.com.pk</p>
+                        <p><i class="fa-solid fa-phone me-2" style="color: var(--primary);"></i> 021-35120339</p>
                     </div>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved. Designed with <i class="fa-solid fa-heart" style="color: var(--primary);"></i> for Alukaz</p>
+                <p>&copy; 2024 Alukaz Fabrication House. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="btn btn-primary rounded-circle">
+    <button id="back-to-top">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
@@ -1837,9 +1632,10 @@
     <script>
         // Initialize AOS
         AOS.init({
-            duration: 1000,
+            duration: 800,
             once: true,
-            offset: 50
+            offset: 50,
+            disable: window.innerWidth < 768
         });
 
         // Navbar scroll effect
@@ -1850,7 +1646,6 @@
                 $('#mainNav').removeClass('scrolled');
             }
             
-            // Back to top button
             if ($(this).scrollTop() > 300) {
                 $('#back-to-top').addClass('show');
             } else {
@@ -1862,31 +1657,40 @@
             $('html, body').animate({ scrollTop: 0 }, 600);
         });
 
-        // Sidebar functionality
+        // Sidebar functionality - FIXED
         $(document).ready(function() {
             const $sidebar = $('#navbarNav');
             const $overlay = $('#sidebarOverlay');
             const $toggle = $('#sidebarToggle');
             const $closeBtn = $('#sidebarClose');
+            const $body = $('body');
+            const $window = $(window);
 
             function openSidebar() {
+                const scrollY = $window.scrollTop();
                 $sidebar.addClass('show');
                 $overlay.addClass('show');
-                $('body').css('overflow', 'hidden');
+                $body.addClass('sidebar-open').data('scroll-position', scrollY).css('top', -scrollY + 'px');
+                $toggle.attr('aria-expanded', 'true');
             }
 
             function closeSidebar() {
+                const scrollY = $body.data('scroll-position');
                 $sidebar.removeClass('show');
                 $overlay.removeClass('show');
-                $('body').css('overflow', '');
+                $body.removeClass('sidebar-open').css('top', '');
+                if (scrollY !== undefined) $window.scrollTop(scrollY);
+                $toggle.attr('aria-expanded', 'false');
             }
 
             $toggle.on('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
-                openSidebar();
+                $sidebar.hasClass('show') ? closeSidebar() : openSidebar();
             });
 
             $closeBtn.on('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
                 closeSidebar();
             });
@@ -1902,16 +1706,14 @@
             });
 
             $('.nav-link').on('click', function() {
-                if ($(window).width() < 992) {
+                if ($window.width() < 992) {
                     closeSidebar();
                 }
             });
 
-            $(window).on('resize', function() {
-                if ($(window).width() >= 992) {
-                    $sidebar.removeClass('show');
-                    $overlay.removeClass('show');
-                    $('body').css('overflow', '');
+            $window.on('resize', function() {
+                if ($window.width() >= 992 && $sidebar.hasClass('show')) {
+                    closeSidebar();
                 }
             });
         });
@@ -1989,8 +1791,7 @@
                     icon: 'warning',
                     title: 'Terms & Conditions',
                     text: 'Please agree to the terms and conditions',
-                    confirmButtonColor: '#d8492a',
-                    confirmButtonText: 'OK'
+                    confirmButtonColor: '#d8492a'
                 });
                 return;
             }
@@ -2010,35 +1811,22 @@
                 message: formData.message
             })
             .then(function() {
-                // Success SweetAlert
                 Swal.fire({
                     icon: 'success',
                     title: 'Message Sent!',
-                    html: `<span style="font-size: 1.1rem">Thank you <strong>${formData.name}</strong>!<br>We'll contact you soon.</span>`,
-                    showConfirmButton: true,
+                    html: `<span>Thank you <strong>${formData.name}</strong>!<br>We'll contact you soon.</span>`,
                     confirmButtonColor: '#d8492a',
-                    confirmButtonText: 'Great!',
                     timer: 5000,
-                    timerProgressBar: true,
-                    background: '#fff',
-                    backdrop: `
-                        rgba(216,73,42,0.2)
-                        left top
-                        no-repeat
-                    `
-                }).then(() => {
-                    // Optional: Any action after alert closes
+                    timerProgressBar: true
                 });
-                
                 document.getElementById('contactForm').reset();
             })
             .catch(function(error) {
-                // Error SweetAlert
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Error sending message. Please try again.',
-                    confirmButtonColor: '#d8492a',
+                    confirmButtonColor: '#d8492a'
                 });
             })
             .finally(function() {
@@ -2075,6 +1863,14 @@
             });
             $(this).find('input[type="email"]').val('');
         });
+
+        // iOS height fix
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        setVH();
+        $(window).on('resize', setVH);
     </script>
 </body>
-</html> 
+</html>
