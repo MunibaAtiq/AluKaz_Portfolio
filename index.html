@@ -937,105 +937,171 @@
         }
 
         /* ========================================
-           MEMBERS SECTION
-        ======================================== */
-        .members-section {
-            position: relative;
-            background: url('images/groupBg.jpg') center/cover fixed;
-            padding: 5rem 0;
-            z-index: 1;
-        }
+   MEMBERS SECTION - FIXED LOGO SIZE
+======================================== */
+.members-section {
+    position: relative;
+    background: url('images/groupBg.jpg') center/cover fixed;
+    padding: 5rem 0;
+    z-index: 1;
+}
 
-        .members-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: -1;
-        }
+.members-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: -1;
+}
 
-        .top-logo {
-            max-height: 60px;
-            width: auto;
-            margin: 0 auto 25px;
-            display: block;
-        }
+.top-logo {
+    max-height: 70px;
+    width: auto;
+    margin: 0 auto 25px;
+    display: block;
+}
 
-        .members-section .section-title {
-            color: white;
-        }
+.members-section .section-title {
+    color: white;
+}
 
-        .members-section .section-title::after {
-            background: var(--primary);
-        }
+.members-section .section-title::after {
+    background: var(--primary);
+}
 
-        .member-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 2px solid var(--primary);
-            padding: 2rem;
-            height: 100%;
-            transition: var(--transition);
-        }
+.member-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 2px solid var(--primary);
+    padding: 2rem;
+    transition: var(--transition);
+}
 
-        .member-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary);
-            background: rgba(255,255,255,0.15);
-            box-shadow: 0 20px 40px rgba(216,73,42,0.3);
-        }
+.member-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--secondary);
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 20px 40px rgba(216,73,42,0.3);
+}
 
-        .member-logo {
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 15px;
-            margin-right: 1.5rem;
-        }
+.member-logo {
+    width: 140px;
+    height: 140px;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 20px;
+    margin-right: 2rem;
+    transition: all 0.3s ease;
+}
 
-        .member-logo img {
-            max-width: 100%;
-            max-height: 80px;
-            object-fit: contain;
-        }
+.member-logo img {
+    width: 100%;
+    height: 100%;
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+    /* filter: brightness(0) invert(1); */
+}
 
-        .member-card h4 {
-            color: white;
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
+.member-card h4 {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
 
-        .member-card .company-subtitle {
-            color: rgba(255,255,255,0.8);
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
+.member-card .company-subtitle {
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
 
-        .member-card p {
-            color: rgba(255,255,255,0.9);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
+.member-card p {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
 
-        @media (max-width: 768px) {
-            .member-card {
-                flex-direction: column !important;
-                text-align: center;
-            }
-            .member-logo {
-                margin-right: 0 !important;
-                margin-bottom: 1.5rem;
-            }
-        }
+/* Responsive */
+@media (max-width: 992px) {
+    .member-logo {
+        width: 130px;
+        height: 130px;
+        min-width: 130px;
+        padding: 18px;
+        margin-right: 1.5rem;
+    }
+    
+    .member-logo img {
+        max-width: 90px;
+        max-height: 90px;
+    }
+    
+    .member-card h4 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .member-card {
+        flex-direction: column !important;
+        text-align: center;
+        padding: 1.8rem;
+    }
+    
+    .member-logo {
+        margin-right: 0 !important;
+        margin-bottom: 1.5rem;
+        width: 120px;
+        height: 120px;
+        min-width: 120px;
+    }
+    
+    .member-logo img {
+        max-width: 80px;
+        max-height: 80px;
+    }
+    
+    .member-card h4 {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .member-logo {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        padding: 15px;
+    }
+    
+    .member-logo img {
+        max-width: 70px;
+        max-height: 70px;
+    }
+    
+    .member-card h4 {
+        font-size: 1.3rem;
+    }
+    
+    .company-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .member-card p {
+        font-size: 0.85rem;
+    }
+}
 
         /* ========================================
            FEATURED PROJECTS
@@ -2096,60 +2162,30 @@
             <img src="images/ALUKAZ.png" alt="Alukaz" class="top-logo">
         </div>
         
-        <h2 class="section-title">Members of Alukaz Group of Companies</h2>
+        <h2 class="section-title">ALUKAZ Fabrication House</h2>
+        <p class="text-center text-white mb-5" style="max-width: 700px; margin: 0 auto 2rem auto; opacity: 0.9;">Pakistan's Leading Aluminium Fabrication Experts Since 2010</p>
         
-        <div class="row g-4">
-            <div class="col-lg-6" data-aos="fade-right">
+        <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up">
                 <div class="member-card d-flex flex-column flex-md-row align-items-center">
                     <div class="member-logo">
-                        <img src="images/Alukaz_blackLogo.png" alt="ALUKAZ Corporation">
+                        <img src="images/ALUKAZ.png" alt="ALUKAZ Corporation">
                     </div>
                     <div class="text-center text-md-start">
                         <h4>ALUKAZ Corporation</h4>
-                        <p>State of the art Windows, Partitions and Aluminum Panel Claddings.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="member-card d-flex flex-column flex-md-row align-items-center">
-                    <div class="member-logo">
-                        <img src="images/spclogo.png" alt="SPC">
-                    </div>
-                    <div class="text-center text-md-start">
-                        <h4>SPC</h4>
-                        <p>Silicone Products Corporation - Chemicals manufacturing since 20+ years.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-                <div class="member-card d-flex flex-column flex-md-row align-items-center">
-                    <div class="member-logo">
-                        <img src="images/usplogo.png" alt="Urethane Systems">
-                    </div>
-                    <div class="text-center text-md-start">
-                        <h4>Urethane Systems</h4>
-                        <p>Better building solutions through application standards.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
-                <div class="member-card d-flex flex-column flex-md-row align-items-center">
-                    <div class="member-logo">
-                        <img src="images/ppclogo.png" alt="PPC">
-                    </div>
-                    <div class="text-center text-md-start">
-                        <h4>PPC</h4>
-                        <p>Polymer Products Corporation - Rubber, Plastics, Chemical solutions.</p>
+                        <p class="company-subtitle">Premium Aluminium Fabrication & Architectural Solutions</p>
+                        <p>State-of-the-art aluminium windows, doors, partitions, curtain walls, and aluminum panel claddings. We deliver excellence in every project with precision engineering, superior quality materials, and unmatched craftsmanship. From residential to commercial high-rises, ALUKAZ is the trusted name for modern aluminium solutions across Pakistan.</p>
+                        <div class="mt-3 d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+                            <span class="badge px-3 py-2 rounded-pill" style="background: rgba(216,73,42,0.2); color: var(--primary);"><i class="fa-regular fa-circle-check me-1"></i> 150+ Projects</span>
+                            <span class="badge px-3 py-2 rounded-pill" style="background: rgba(216,73,42,0.2); color: var(--primary);"><i class="fa-regular fa-circle-check me-1"></i> 10+ Years Experience</span>
+                            <span class="badge px-3 py-2 rounded-pill" style="background: rgba(216,73,42,0.2); color: var(--primary);"><i class="fa-regular fa-circle-check me-1"></i> 100% Satisfaction</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <!-- FEATURED PROJECTS SECTION -->
 <section class="featured-projects" id="portfolio">
     <div class="container">
@@ -2222,8 +2258,8 @@
                             <i class="fa-solid fa-user-circle"></i>
                         </div>
                         <div class="client-info">
-                            <h6>Mr. Saad Bhatti</h6>
-                            <small>Building Owner, DHA</small>
+                            <h6>Zara Ahmed</h6>
+                            <small>Building Owner</small>
                         </div>
                     </div>
                 </div>
@@ -2240,8 +2276,8 @@
                             <i class="fa-solid fa-user-tie"></i>
                         </div>
                         <div class="client-info">
-                            <h6>Junaid Vohra</h6>
-                            <small>VP, The Product Group</small>
+                            <h6>Junaid Rehman</h6>
+                            <small>The Product Group</small>
                         </div>
                     </div>
                 </div>
@@ -2312,7 +2348,7 @@
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="news-card">
                     <div class="news-img-wrapper">
-                        <img src="images/Projects/artisticagi.jpg" alt="New Showroom">
+                        <img src="images/Projects/projj.jpeg" alt="New Showroom">
                         <div class="news-category">Announcement</div>
                     </div>
                     <div class="news-content">
